@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC NET CS — Unit 4: Operating Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #1a2235;
+    --card2: #1e2840;
+    --border: #2a3550;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff7f;
+    --accent4: #ffcc00;
+    --accent5: #c084fc;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --correct-bg: #0d2a1a;
+    --correct-bd: #22c55e;
+    --wrong-bg: #2a0d0d;
+    --wrong-bd: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 52px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 50%, rgba(0,212,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 80% 30%, rgba(255,107,53,0.06) 0%, transparent 60%);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.3);
+    color: var(--accent);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 40px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(30px, 5.5vw, 56px);
+    color: #fff;
+    line-height: 1.1;
+    position: relative;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  header p {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 620px;
+    margin-left: auto; margin-right: auto;
+    position: relative;
+  }
+  .topic-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+    position: relative;
+  }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 15px 18px;
+    cursor: pointer; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  main { max-width: 980px; margin: 0 auto; padding: 44px 24px 100px; }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp 0.35s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TOPIC HEADER */
+  .topic-header {
+    display: flex; align-items: flex-start; gap: 20px;
+    margin-bottom: 36px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-icon {
+    width: 56px; height: 56px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .topic-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; color: #fff;
+    line-height: 1.1;
+  }
+  .topic-header .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .card-accent-left { border-left: 3px solid var(--accent); }
+  .card-accent-orange { border-left: 3px solid var(--accent2); }
+  .card-accent-green { border-left: 3px solid var(--accent3); }
+  .card-accent-yellow { border-left: 3px solid var(--accent4); }
+  .card-accent-purple { border-left: 3px solid var(--accent5); }
+
+  .card h3 {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .card-orange h3 { color: var(--accent2); }
+  .card-green h3 { color: var(--accent3); }
+  .card-yellow h3 { color: var(--accent4); }
+  .card-purple h3 { color: var(--accent5); }
+
+  .card p { font-size: 15px; margin-bottom: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 7px; font-size: 15px; }
+
+  /* HIGHLIGHT TEXT */
+  .hl { color: var(--accent); font-weight: 600; }
+  .hl2 { color: var(--accent2); font-weight: 600; }
+  .hl3 { color: var(--accent3); font-weight: 600; }
+  .hl4 { color: var(--accent4); font-weight: 600; }
+  .hl5 { color: var(--accent5); font-weight: 600; }
+
+  /* INFO BOXES */
+  .box {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .box-blue { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); }
+  .box-orange { background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.2); }
+  .box-green { background: rgba(127,255,127,0.05); border: 1px solid rgba(127,255,127,0.2); }
+  .box-yellow { background: rgba(255,204,0,0.06); border: 1px solid rgba(255,204,0,0.2); }
+  .box-purple { background: rgba(192,132,252,0.06); border: 1px solid rgba(192,132,252,0.2); }
+
+  .box-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .box-blue .box-label { color: var(--accent); }
+  .box-orange .box-label { color: var(--accent2); }
+  .box-green .box-label { color: var(--accent3); }
+  .box-yellow .box-label { color: var(--accent4); }
+  .box-purple .box-label { color: var(--accent5); }
+
+  .box ul { padding-left: 18px; }
+  .box li { margin-bottom: 5px; }
+
+  /* CODE / FORMULA */
+  .code {
+    background: #060a12;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+    margin: 14px 0;
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+  .code .comment { color: var(--muted); }
+  .code .keyword { color: var(--accent); }
+  .code .value { color: var(--accent4); }
+  .code .label2 { color: var(--accent2); }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th {
+    background: rgba(0,212,255,0.08);
+    color: var(--accent);
+    font-weight: 700; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 11px 14px; text-align: left;
+    border: 1px solid var(--border);
+  }
+  td { padding: 10px 14px; border: 1px solid var(--border); font-size: 14px; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  td strong { color: var(--accent4); }
+
+  /* STEPS */
+  .steps { margin: 14px 0; counter-reset: s; }
+  .step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+  .snum {
+    counter-increment: s;
+    min-width: 30px; height: 30px;
+    background: var(--accent);
+    color: #000; font-weight: 900; font-size: 13px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .scontent strong { color: var(--accent); font-size: 13px; display: block; margin-bottom: 3px; }
+  .scontent p { font-size: 14px; }
+
+  /* GRID */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .g2, .g3 { grid-template-columns: 1fr; } }
+
+  /* MEMORY TIP */
+  .tip {
+    background: rgba(255,204,0,0.05);
+    border: 1px solid rgba(255,204,0,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .tip-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent4); margin-bottom: 6px; }
+
+  /* DIAGRAM */
+  .diagram {
+    background: #060a12;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    overflow-x: auto;
+    color: var(--text);
+  }
+  .diagram .dbox { color: var(--accent); }
+  .diagram .darrow { color: var(--muted); }
+  .diagram .dlabel { color: var(--accent4); }
+  .diagram .ddata { color: var(--accent3); }
+
+  /* SECTION SEPARATOR */
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* MCQ */
+  .quiz-wrap { margin-top: 44px; }
+  .quiz-hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 16px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .quiz-hdr h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; color: #fff;
+  }
+  .qcount {
+    background: var(--accent);
+    color: #000; font-weight: 700; font-size: 12px;
+    padding: 4px 12px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .pbar { background: var(--border); border-radius: 4px; height: 5px; margin-bottom: 24px; overflow: hidden; }
+  .pfill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent5)); border-radius: 4px; transition: width 0.5s ease; }
+
+  .qcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .qcard:hover { border-color: rgba(0,212,255,0.3); }
+  .qno { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+  .qtext { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 20px; line-height: 1.5; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 580px) { .opts { grid-template-columns: 1fr; } }
+
+  .opt {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 13px 16px;
+    text-align: left; cursor: pointer;
+    transition: all 0.18s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+  .olabel {
+    min-width: 24px; height: 24px;
+    background: var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct-bd); }
+  .opt.correct .olabel { background: var(--correct-bd); color: #000; }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong-bd); }
+  .opt.wrong .olabel { background: var(--wrong-bd); color: #fff; }
+  .opt:disabled { cursor: default; }
+
+  .expl {
+    display: none;
+    margin-top: 16px;
+    background: rgba(0,212,255,0.04);
+    border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .expl.show { display: block; animation: fadeUp 0.3s ease; }
+  .expl strong { color: var(--accent3); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="chip">🖥️ NTA UGC NET · CS Code 87 · Unit 4</div>
+  <h1>Operating <em>Systems</em></h1>
+  <p>Deep comprehensive guide covering processes, memory management, synchronization, deadlocks, file systems, I/O, CPU scheduling, and practical OS concepts with solved examples & practice MCQs</p>
+  <div class="topic-pills">
+    <span class="pill">Process Management</span>
+    <span class="pill">Memory Systems</span>
+    <span class="pill">Synchronization</span>
+    <span class="pill">Deadlocks</span>
+    <span class="pill">File Systems</span>
+    <span class="pill">I/O Management</span>
+    <span class="pill">Scheduling</span>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="show('proc')">⚙️ Processes & Threads</button>
+  <button class="nav-btn" onclick="show('mem')">💾 Memory Management</button>
+  <button class="nav-btn" onclick="show('sync')">🔒 Synchronization</button>
+  <button class="nav-btn" onclick="show('dead')">💥 Deadlocks</button>
+  <button class="nav-btn" onclick="show('file')">📁 File Systems</button>
+  <button class="nav-btn" onclick="show('io')">🔌 I/O Management</button>
+  <button class="nav-btn" onclick="show('sched')">📅 CPU Scheduling</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════ PROCESSES & THREADS ══════════════════ -->
+<div id="proc" class="section active">
+  <div class="topic-header">
+    <div class="t-icon">⚙️</div>
+    <div>
+      <h2>Processes & Threads</h2>
+      <div class="sub">Process Concept · States · Control Block · Context Switching · Thread Fundamentals</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🌍 What is a Process?</h3>
+    <p>A <span class="hl">process</span> is an instance of a program in execution. It's the fundamental unit of work in an OS. Unlike a program (static code), a process is dynamic and has state, memory, and resources.</p>
+    <div class="box box-blue">
+      <div class="box-label">Process vs Program</div>
+      <ul>
+        <li><strong>Program:</strong> Static, passive — code on disk</li>
+        <li><strong>Process:</strong> Dynamic, active — running instance with allocated resources</li>
+        <li>One program can have multiple processes (e.g., multiple browser windows)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📋 Process Control Block (PCB)</h3>
+    <p>OS data structure containing all information about a process. Also called Task Control Block (TCB).</p>
+    <div class="box box-blue">
+      <div class="box-label">PCB Components</div>
+      <ul>
+        <li><strong>Process ID (PID):</strong> Unique identifier</li>
+        <li><strong>Process State:</strong> New, Ready, Running, Waiting, Terminated</li>
+        <li><strong>Program Counter:</strong> Next instruction address</li>
+        <li><strong>CPU Registers:</strong> Current register values</li>
+        <li><strong>Memory Management Info:</strong> Page tables, base, limit registers</li>
+        <li><strong>I/O Status:</strong> Allocated devices, open files</li>
+        <li><strong>Accounting Info:</strong> CPU time, memory used, priority</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔄 Process State Transitions</h3>
+    <p>Processes move through distinct states as they execute. Understanding transitions is crucial for scheduling.</p>
+    <div class="diagram">
+         ┌─────────┐
+         │   NEW   │
+         └────┬────┘
+              │ Admitted
+              ▼
+    ┌─────────────────┐
+    │ READY QUEUE     │ ◄─┐
+    └────┬────────────┘   │ Time slice expired / I/O complete
+         │ Scheduler      │
+         │ dispatch       │
+         ▼                │
+    ┌──────────────────┐  │
+    │ RUNNING          ├──┘
+    └────┬───────┬────┘
+         │       │ I/O request
+         │ Exit  │
+         │       ▼
+         │    ┌───────────┐
+         │    │ WAITING   │
+         │    │ (I/O Wait)│
+         │    └───────────┘
+         │
+         ▼
+    ┌──────────────┐
+    │ TERMINATED   │
+    └──────────────┘
+    </div>
+    <div class="box box-blue">
+      <div class="box-label">State Details</div>
+      <ul>
+        <li><strong>New:</strong> Process created but not yet admitted to ready queue</li>
+        <li><strong>Ready:</strong> Waiting in queue to execute on CPU</li>
+        <li><strong>Running:</strong> Currently executing on CPU</li>
+        <li><strong>Waiting:</strong> Blocked for event (I/O, semaphore, etc.)</li>
+        <li><strong>Terminated:</strong> Finished or killed, waiting for cleanup</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔀 Context Switching</h3>
+    <p>OS saves current process's context (registers, program counter, memory info) into PCB, then restores another process's context. Expensive operation!</p>
+    <div class="box box-blue">
+      <div class="box-label">Context Switch Steps</div>
+      <div class="steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div class="scontent"><strong>Save</strong> current process context to PCB1</div>
+        </div>
+        <div class="step">
+          <div class="snum">2</div>
+          <div class="scontent"><strong>Update</strong> PCB1 state (e.g., Ready if suspended)</div>
+        </div>
+        <div class="step">
+          <div class="snum">3</div>
+          <div class="scontent"><strong>Select</strong> next process via scheduler</div>
+        </div>
+        <div class="step">
+          <div class="snum">4</div>
+          <div class="scontent"><strong>Restore</strong> PCB2 context (registers, PC, memory)</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">⚠️ Context Switch Overhead</div>
+      <p>Pure overhead — no productive work done. Time: microseconds to milliseconds (varies by architecture). Too many context switches = thrashing.</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent4); margin:32px 0 16px;">Threads vs Processes</h3>
+
+  <div class="card card-accent-yellow">
+    <h3>🧵 Thread Fundamentals</h3>
+    <p>A <span class="hl4">thread</span> is lightweight process — shares process memory but has separate stack and registers.</p>
+    <div class="g2">
+      <div>
+        <p><strong>Process:</strong></p>
+        <ul style="margin-top:8px;">
+          <li>Heavy resource usage</li>
+          <li>Separate memory space</li>
+          <li>Slower creation/switching</li>
+          <li>Isolated execution</li>
+        </ul>
+      </div>
+      <div>
+        <p><strong>Thread:</strong></p>
+        <ul style="margin-top:8px;">
+          <li>Light resource usage</li>
+          <li>Shared memory space</li>
+          <li>Faster creation/switching</li>
+          <li>Concurrent execution</li>
+        </ul>
+      </div>
+    </div>
+    <div class="code" style="margin-top:14px;">
+<span class="comment">// Java - Running threads within same process</span>
+<span class="keyword">class</span> MyThread <span class="keyword">extends</span> Thread {
+  <span class="keyword">public void</span> run() {
+    System.out.println(<span class="value">"Thread: "</span> + 
+      Thread.currentThread().getName());
+  }
+}
+
+<span class="keyword">public void</span> main(String[] args) {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < 5; i++) {
+    <span class="keyword">new</span> MyThread().start();  <span class="comment">// Concurrent threads</span>
+  }
+}
+    </div>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3>Multithreading Models</h3>
+    <p>How many-to-many relationship between user and kernel threads is implemented.</p>
+    <table>
+      <tr><th>Model</th><th>Mapping</th><th>Pros</th><th>Cons</th></tr>
+      <tr><td><strong>Many-to-One</strong></td><td>Multiple user threads → 1 kernel thread</td><td>Efficient, no kernel support needed</td><td>One blocks → all block; no true parallelism</td></tr>
+      <tr><td><strong>One-to-One</strong></td><td>User thread → kernel thread</td><td>True parallelism, one blocks not others</td><td>Overhead; thread limits</td></tr>
+      <tr><td><strong>Many-to-Many</strong></td><td>Multiple user → multiple kernel threads</td><td>Best of both; flexible</td><td>Complex; harder to implement</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ══════════════════ MEMORY MANAGEMENT ══════════════════ -->
+<div id="mem" class="section">
+  <div class="topic-header">
+    <div class="t-icon">💾</div>
+    <div>
+      <h2>Memory Management</h2>
+      <div class="sub">Allocation · Fragmentation · Paging · Segmentation · Virtual Memory · Page Replacement</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📊 Memory Layout</h3>
+    <p>How process memory is organized in typical OS with protection boundaries.</p>
+    <div class="diagram">
+    HIGH ADDRESS
+    ┌─────────────────┐
+    │ KERNEL SPACE    │ (Protected, for OS only)
+    │ (OS, drivers)   │
+    ├─────────────────┤
+    │ STACK           │ (Local vars, return addresses)
+    │ ↓ (grows down)  │
+    │                 │
+    │ ↑ (grows up)    │
+    │ HEAP            │ (Dynamic memory, malloc/new)
+    ├─────────────────┤
+    │ DATA SEGMENT    │ (Global/static vars)
+    │ (initialized)   │
+    ├─────────────────┤
+    │ TEXT SEGMENT    │ (Read-only code)
+    └─────────────────┘
+    LOW ADDRESS
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Stack vs Heap Collision</div>
+      <p>If stack grows too much (recursion) or heap grows too much (alloc), they collide → segmentation fault!</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>💔 Memory Fragmentation</h3>
+    <p>Unwanted gaps in memory preventing efficient allocation.</p>
+    <div class="g2">
+      <div>
+        <p><span class="hl">External Fragmentation</span></p>
+        <p style="font-size:13px; margin-top:6px;">Free space scattered in small holes. Process needing large contiguous block can't find it despite total free space available.</p>
+        <div class="diagram" style="font-size:11px; margin-top:8px;">
+[ALLOC-20][FREE-10][ALLOC-30]
+[FREE-5][ALLOC-15][FREE-8]
+
+Process needing 15KB fails
+despite 23KB total free!
+        </div>
+      </div>
+      <div>
+        <p><span class="hl">Internal Fragmentation</span></p>
+        <p style="font-size:13px; margin-top:6px;">Allocated block larger than needed. Wasted space within block.</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+Allocate: [20 bytes]
+Given: [32-byte page]
+Wasted: [12 bytes]
+        </div>
+      </div>
+    </div>
+    <div class="box box-blue">
+      <div class="box-label">Solutions</div>
+      <ul>
+        <li><strong>Compaction:</strong> Defragmentation of memory (expensive)</li>
+        <li><strong>Paging:</strong> Fixed-size blocks eliminate external fragmentation</li>
+        <li><strong>Segmentation:</strong> Variable-size but coherent units</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📄 Paging - Fixed Size Chunks</h3>
+    <p>Divide physical memory into fixed-size frames and logical memory into pages. Virtual address → Physical address via page table.</p>
+    <div class="box box-blue">
+      <div class="box-label">How Paging Works</div>
+      <p><strong>Virtual Address:</strong> [Page Number | Offset]</p>
+      <p>Page number used to index page table → frame number. Final address: [Frame Number | Offset]</p>
+    </div>
+    <div class="code">
+<span class="comment">// Virtual address translation</span>
+Virtual Addr = 1234 (decimal)
+Page Size = 4KB (4096 bytes)
+
+Page Number = 1234 / 4096 = 0
+Offset = 1234 % 4096 = 1234
+
+Page Table[0] = Frame 5
+Physical Addr = 5 * 4096 + 1234 = 20480 + 1234 = 21714
+    </code>
+    <div class="box box-blue">
+      <div class="box-label">Advantages</div>
+      <ul>
+        <li>Eliminates external fragmentation</li>
+        <li>Simple allocation — any free frame works</li>
+        <li>Enables virtual memory > physical RAM</li>
+      </ul>
+    </div>
+    <div class="box box-orange">
+      <div class="box-label">Disadvantage</div>
+      <p>Internal fragmentation (last page often not fully used). Page table overhead (memory + TLB lookup time).</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔍 Virtual Memory - Illusion of Unlimited Memory</h3>
+    <p>OS manages memory such that process thinks it has entire address space available, though only fraction in RAM.</p>
+    <div class="box box-blue">
+      <div class="box-label">Virtual Memory Mechanism</div>
+      <ul>
+        <li><strong>Page Fault:</strong> Process accesses page not in RAM</li>
+        <li><strong>Trap:</strong> Hardware generates interrupt</li>
+        <li><strong>Fetch:</strong> OS loads page from disk to RAM</li>
+        <li><strong>Resume:</strong> Process continues execution</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <div class="tip-label">⚡ Performance Note</div>
+      <p>Disk access ≈ 100,000x slower than RAM! Page fault = expensive. Minimize with good page replacement policy.</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🗑️ Page Replacement Algorithms</h3>
+    <p>When page fault occurs and RAM full, which page to evict? Goal: minimize page faults.</p>
+    <table>
+      <tr><th>Algorithm</th><th>Evict Policy</th><th>Performance</th><th>Notes</th></tr>
+      <tr><td><strong>FIFO</strong></td><td>Oldest page</td><td>Poor</td><td>Simple but Belady's anomaly</td></tr>
+      <tr><td><strong>LRU</strong></td><td>Least recently used</td><td>Good</td><td>Popular; requires tracking</td></tr>
+      <tr><td><strong>Optimal</strong></td><td>Future unused page</td><td>Best</td><td>Impossible; prediction-based</td></tr>
+      <tr><td><strong>Clock</strong></td><td>Not recently used bit</td><td>Very Good</td><td>Approximates LRU; efficient</td></tr>
+    </table>
+    <div class="code" style="margin-top:14px;">
+<span class="comment">// LRU Example: Frames=3, Page sequence: 1,2,3,4,1,2,5,1,2,3</span>
+Frames: [1,2,3] → request 4
+  REMOVE 1 (least recently used at time 0)
+  Frames: [2,3,4]
+  
+<span class="comment">// Faults: 1,2,3,4 (miss), 5 (miss), 3 (miss) = 6 page faults</span>
+    </code>
+  </div>
+
+</div>
+
+<!-- ══════════════════ SYNCHRONIZATION ══════════════════ -->
+<div id="sync" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🔒</div>
+    <div>
+      <h2>Process Synchronization</h2>
+      <div class="sub">Critical Section · Mutex · Semaphore · Monitors · Race Conditions</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⚠️ Race Condition - The Problem</h3>
+    <p>Multiple processes access shared data simultaneously, outcome depends on execution order. Results unpredictable.</p>
+    <div class="code">
+<span class="comment">// Classic example: count++ (non-atomic)</span>
+<span class="comment">// Two processes increment shared variable</span>
+
+Process 1:
+  <span class="keyword">load</span> count, R1   <span class="comment">// R1 = 5</span>
+  <span class="keyword">inc</span> R1           <span class="comment">// R1 = 6</span>
+  <span class="keyword">store</span> R1, count  <span class="comment">// count = 6</span>
+
+Process 2:
+  <span class="keyword">load</span> count, R2   <span class="comment">// R2 = 5 (INTERLEAVED!)</span>
+  <span class="keyword">inc</span> R2
+  <span class="keyword">store</span> R2, count  <span class="comment">// count = 6 (WRONG! Should be 7)</span>
+
+<span class="comment">// If P2 interferes after P1's load, P2 overwrites P1's increment!</span>
+    </code>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🛡️ Critical Section - Safe Access</h3>
+    <p>Code segment accessing shared data. Only one process at a time allowed inside.</p>
+    <div class="box box-blue">
+      <div class="box-label">Requirements for Critical Section Solution</div>
+      <ul>
+        <li><strong>Mutual Exclusion:</strong> At most one in critical section</li>
+        <li><strong>Progress:</strong> Process not blocked indefinitely</li>
+        <li><strong>Bounded Waiting:</strong> Max iterations waiting before entry</li>
+      </ul>
+    </div>
+    <div class="diagram">
+do {
+  <span class="label2">ENTRY SECTION</span>
+    (acquire lock)
+  
+  <span class="dlabel">CRITICAL SECTION</span>
+    (access shared data)
+  
+  <span class="label2">EXIT SECTION</span>
+    (release lock)
+  
+  <span class="ddata">REMAINDER SECTION</span>
+    (other work)
+} while (true);
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔐 Mutex (Mutual Exclusion Lock)</h3>
+    <p>Binary lock: locked or unlocked. Only one thread holds it. Simple but powerful.</p>
+    <div class="code">
+<span class="comment">// Pseudocode</span>
+<span class="keyword">mutex</span> lock;
+<span class="keyword">int</span> count = 0;
+
+<span class="comment">// Process 1 & 2</span>
+lock.acquire();   <span class="comment">// Wait until unlocked</span>
+count++;
+lock.release();   <span class="comment">// Free lock for others</span>
+    </code>
+    <div class="box box-blue">
+      <div class="box-label">Real-world Mutex</div>
+      <ul>
+        <li><strong>Busy-waiting (Spin lock):</strong> Keep checking until acquired (wastes CPU)</li>
+        <li><strong>Sleep-waiting:</strong> OS stores process, wakes when lock released (better)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📊 Semaphore - General Synchronization</h3>
+    <p>Counter-based synchronization. Can represent multiple resources or complex conditions.</p>
+    <div class="code">
+<span class="comment">// Semaphore as resource counter</span>
+<span class="keyword">semaphore</span> S = N;  <span class="comment">// N resources available</span>
+
+<span class="keyword">wait(S)</span> {        <span class="comment">// Acquire resource</span>
+  <span class="keyword">while</span> (S <= 0);  <span class="comment">// Spin if none available</span>
+  S--;
+}
+
+<span class="keyword">signal(S)</span> {      <span class="comment">// Release resource</span>
+  S++;
+}
+    </code>
+    <div class="g2">
+      <div>
+        <p><span class="hl">Binary Semaphore</span></p>
+        <p style="font-size:13px; margin-top:6px;">Values 0 or 1 — essentially a mutex. Used for mutual exclusion.</p>
+      </div>
+      <div>
+        <p><span class="hl">Counting Semaphore</span></p>
+        <p style="font-size:13px; margin-top:6px;">Values ≥ 0 — tracks N identical resources. Processes wait if depleted.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">🎯 Producer-Consumer Problem (Classic)</div>
+    <p><strong>Scenario:</strong> Producer generates data, consumer uses it. Buffer bounded size.<br>
+    <strong>Solution Uses:</strong> Two semaphores (empty, full) + one mutex for buffer access.</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════ DEADLOCKS ══════════════════ -->
+<div id="dead" class="section">
+  <div class="topic-header">
+    <div class="t-icon">💥</div>
+    <div>
+      <h2>Deadlock</h2>
+      <div class="sub">Conditions · Prevention · Avoidance · Detection · Recovery</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>💀 What is Deadlock?</h3>
+    <p>Situation where set of processes permanently blocked, each waiting for resource held by another. System makes no progress.</p>
+    <div class="box box-blue">
+      <div class="box-label">Real-world Example</div>
+      <p><strong>Person A holds fork 1, waiting for fork 2.</strong><br>
+      <strong>Person B holds fork 2, waiting for fork 1.</strong><br>
+      Both starve forever! (Dining Philosophers problem)</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📋 Four Necessary Conditions for Deadlock</h3>
+    <p>ALL four must be true simultaneously. Break any one → no deadlock.</p>
+    <table>
+      <tr><th>Condition</th><th>Meaning</th><th>Prevention Method</th></tr>
+      <tr><td><strong>Mutual Exclusion</strong></td><td>Resource can't be shared</td><td>Make resources shareable (hard)</td></tr>
+      <tr><td><strong>Hold & Wait</strong></td><td>Process holds resource while waiting</td><td>Force acquire all or nothing</td></tr>
+      <tr><td><strong>No Preemption</strong></td><td>Can't forcefully take resource</td><td>Allow preemption (risky)</td></tr>
+      <tr><td><strong>Circular Wait</strong></td><td>Cycle of waiters</td><td>Order resources → no cycles</td></tr>
+    </table>
+    <div class="tip">
+      <div class="tip-label">💡 Deadlock = All 4 True</div>
+      <p>Remove even one condition → deadlock impossible!</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🛡️ Deadlock Prevention vs Avoidance</h3>
+    <div class="g2">
+      <div>
+        <p><span class="hl">Prevention</span></p>
+        <p style="font-size:13px; margin-top:6px; line-height:1.6;">Guarantee deadlock impossible by design. Ensure at least one condition false always.</p>
+        <div class="box box-blue">
+          <div class="box-label">Method</div>
+          <ul>
+            <li>Order resources strictly</li>
+            <li>Request all resources upfront</li>
+            <li>Preempt periodically</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <p><span class="hl">Avoidance</span></p>
+        <p style="font-size:13px; margin-top:6px; line-height:1.6;">Allow all conditions, but deny requests leading to unsafe state.</p>
+        <div class="box box-blue">
+          <div class="box-label">Method (Banker's Algorithm)</div>
+          <ul>
+            <li>Track resource availability</li>
+            <li>Check if request leads to safe state</li>
+            <li>Grant if safe, deny if unsafe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔍 Deadlock Detection & Recovery</h3>
+    <p>Allow deadlock to happen, then detect and recover.</p>
+    <div class="box box-blue">
+      <div class="box-label">Detection</div>
+      <ul>
+        <li>Build resource allocation graph (RAG)</li>
+        <li>Cycle in graph → potential deadlock</li>
+        <li>Overhead: runs periodically (costly)</li>
+      </ul>
+    </div>
+    <div class="box box-orange">
+      <div class="box-label">Recovery Methods</div>
+      <ul>
+        <li><strong>Abort deadlocked processes:</strong> Kill some → release resources</li>
+        <li><strong>Resource preemption:</strong> Take resource, restart process</li>
+        <li><strong>Rollback:</strong> Revert process to earlier checkpoint</li>
+      </ul>
+    </div>
+    <div class="tip">
+      <div class="tip-label">⚠️ Trade-off</div>
+      <p>Prevention = safe but restrictive. Avoidance = complex overhead. Detection = reactive but recovers. Choose based on application!</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ FILE SYSTEMS ══════════════════ -->
+<div id="file" class="section">
+  <div class="topic-header">
+    <div class="t-icon">📁</div>
+    <div>
+      <h2>File Systems</h2>
+      <div class="sub">File Structure · Directory · Allocation Methods · Free Space Management · Reliability</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📄 File Concept</h3>
+    <p>Named collection of data/code stored on secondary storage. Provides OS abstraction for persistent storage.</p>
+    <div class="box box-blue">
+      <div class="box-label">File Attributes</div>
+      <ul>
+        <li><strong>Name:</strong> Human-readable identifier</li>
+        <li><strong>Type:</strong> Determines how OS interprets (text, binary, executable)</li>
+        <li><strong>Size:</strong> File length in bytes</li>
+        <li><strong>Protection:</strong> Read/Write/Execute permissions</li>
+        <li><strong>Timestamp:</strong> Creation/modification time</li>
+        <li><strong>Location:</strong> Where data stored (block addresses)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>💾 File Allocation Methods</h3>
+    <p>How file blocks spread across disk. Different strategies balance access speed vs fragmentation.</p>
+    <table>
+      <tr><th>Method</th><th>Block Arrangement</th><th>Access Speed</th><th>Fragmentation</th></tr>
+      <tr><td><strong>Contiguous</strong></td><td>All blocks adjacent on disk</td><td>Fast (random access)</td><td>External—bad for growth</td></tr>
+      <tr><td><strong>Linked</strong></td><td>Blocks scattered; linked via pointers</td><td>Slow (sequential only)</td><td>No external fragmentation</td></tr>
+      <tr><td><strong>Indexed</strong></td><td>Index block contains pointers to all file blocks</td><td>Good (random access via index)</td><td>Index overhead</td></tr>
+    </table>
+    <div class="box box-blue">
+      <div class="box-label">Modern Filesystems</div>
+      <p>Most use <strong>indexed allocation (inode/i-node)</strong>. Fast random access, manageable overhead. Example: ext4, NTFS.</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📋 Directory Structure</h3>
+    <p>Hierarchical organization for managing files. Directory is file containing file metadata.</p>
+    <div class="diagram">
+/
+├─ bin/
+│  ├─ ls
+│  ├─ cat
+│  └─ mkdir
+├─ home/
+│  └─ user/
+│     ├─ Documents/
+│     ├─ Downloads/
+│     └─ profile.txt
+├─ etc/
+└─ var/
+    </div>
+    <div class="box box-blue">
+      <div class="box-label">Linear Directory vs Tree Directory</div>
+      <ul>
+        <li><strong>Linear:</strong> Flat list of files — simple but poor scalability</li>
+        <li><strong>Tree (Hierarchical):</strong> Directories containing files/subdirs — organized, efficient search</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🗑️ Free Space Management</h3>
+    <p>OS tracks which disk blocks are available for new files/growth.</p>
+    <div class="g2">
+      <div>
+        <p><strong>Bit Vector</strong></p>
+        <p style="font-size:13px; margin-top:6px;">Each bit = 1 block. Bit=1 means used, bit=0 means free. Simple, O(1) allocation.</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+Bitmap: 11010110100...
+Blocks: [U][U][F][U][F][U][U][U][F][U][F]...
+        </div>
+      </div>
+      <div>
+        <p><strong>Linked List</strong></p>
+        <p style="font-size:13px; margin-top:6px;">Free blocks linked together. O(1) to add free block, but search slow.</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+FREE → Block7 → Block15 → Block22 → ...
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ I/O MANAGEMENT ══════════════════ -->
+<div id="io" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🔌</div>
+    <div>
+      <h2>I/O Management</h2>
+      <div class="sub">I/O Organization · Disk Scheduling · Buffering · Caching · Interrupt Handling</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⚡ I/O Subsystem Architecture</h3>
+    <p>OS mediates between CPU and I/O devices. Devices vary greatly; controllers provide standard interface.</p>
+    <div class="diagram">
+CPU ◄────► Memory
+      │
+      ▼
+Memory Controller
+      │
+      ▼
+I/O Bus
+  │    │    │
+  ▼    ▼    ▼
+Disk  NIC  USB
+Ctrl  Ctrl Ctrl
+  │    │    │
+  ▼    ▼    ▼
+Disk  NIC  USB
+      Device
+    </div>
+    <div class="box box-blue">
+      <div class="box-label">Device Controller</div>
+      <p>Hardware interface between device and bus. Manages device operations, handles interrupts.</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📊 Disk Scheduling Algorithms</h3>
+    <p>Minimize average access time by optimizing seek time and rotational latency. Arm scheduling selects order of servicing disk requests.</p>
+    <table>
+      <tr><th>Algorithm</th><th>Policy</th><th>Seek Pattern</th><th>Performance</th></tr>
+      <tr><td><strong>FCFS</strong></td><td>First come, first serve</td><td>Random jumps</td><td>Unfair; high seek time</td></tr>
+      <tr><td><strong>SSTF</strong></td><td>Shortest seek</td><td>Nearest next</td><td>Better; starvation risk</td></tr>
+      <tr><td><strong>SCAN</strong></td><td>Sweep arm like elevator</td><td>One direction until end, reverse</td><td>Good; fair</td></tr>
+      <tr><td><strong>C-SCAN</strong></td><td>Circular SCAN</td><td>One direction, return to start</td><td>Very good; uniform wait</td></tr>
+      <tr><td><strong>LOOK</strong></td><td>SCAN but stop at last request</td><td>Efficient sweep</td><td>Excellent; practical</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔄 Interrupt-Driven I/O</h3>
+    <p>Device signals completion via interrupt. CPU pauses current task, services device.</p>
+    <div class="box box-blue">
+      <div class="box-label">Interrupt Timeline</div>
+      <div class="steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div class="scontent"><strong>I/O Request:</strong> CPU initiates disk read</div>
+        </div>
+        <div class="step">
+          <div class="snum">2</div>
+          <div class="scontent"><strong>CPU Continues:</strong> Doesn't wait; executes other tasks</div>
+        </div>
+        <div class="step">
+          <div class="snum">3</div>
+          <div class="scontent"><strong>Device Ready:</strong> Disk signals interrupt</div>
+        </div>
+        <div class="step">
+          <div class="snum">4</div>
+          <div class="scontent"><strong>Context Switch:</strong> CPU saves state, handles interrupt</div>
+        </div>
+        <div class="step">
+          <div class="snum">5</div>
+          <div class="scontent"><strong>Service:</strong> Transfer data; restore original context</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">vs Polling</div>
+      <p>Polling: CPU repeatedly checks device status → wasteful. Interrupts: Device notifies CPU → efficient!</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>💾 Caching & Buffering</h3>
+    <p>Improve I/O performance by bridging CPU-device speed gap.</p>
+    <div class="g2">
+      <div>
+        <p><strong>Cache</strong></p>
+        <p style="font-size:13px; margin-top:6px;">Store frequently accessed data. Transparent to apps. Write-through vs write-back policies.</p>
+      </div>
+      <div>
+        <p><strong>Buffer</strong></p>
+        <p style="font-size:13px; margin-top:6px;">Temporary storage between fast and slow devices. Often queue of requests.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ CPU SCHEDULING ══════════════════ -->
+<div id="sched" class="section">
+  <div class="topic-header">
+    <div class="t-icon">📅</div>
+    <div>
+      <h2>CPU Scheduling</h2>
+      <div class="sub">Algorithms · Preemption · Priority · Real-time Scheduling · Performance Metrics</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🎯 CPU Scheduling Goal</h3>
+    <p>Select next process from ready queue to run on CPU. Maximize efficiency and fairness.</p>
+    <div class="box box-blue">
+      <div class="box-label">Key Metrics</div>
+      <ul>
+        <li><strong>CPU Utilization:</strong> % of time CPU busy (goal: high)</li>
+        <li><strong>Throughput:</strong> Processes completed per time unit (goal: high)</li>
+        <li><strong>Turnaround Time:</strong> Time from submission to completion (goal: low)</li>
+        <li><strong>Wait Time:</strong> Time in ready queue (goal: low)</li>
+        <li><strong>Response Time:</strong> Time from request to first response (goal: low)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⏱️ Scheduling Algorithms</h3>
+    <table>
+      <tr><th>Algorithm</th><th>Principle</th><th>Pros</th><th>Cons</th></tr>
+      <tr><td><strong>FCFS</strong></td><td>First come, first served</td><td>Simple, fair</td><td>Long processes block others; poor interactive response</td></tr>
+      <tr><td><strong>SJF</strong></td><td>Shortest job first</td><td>Min average wait time</td><td>Favorable to short jobs; starvation</td></tr>
+      <tr><td><strong>Round Robin (RR)</strong></td><td>Time slice → ready queue</td><td>Fair; good response time</td><td>Time slice overhead; many context switches</td></tr>
+      <tr><td><strong>Priority</strong></td><td>Highest priority first</td><td>Favor important tasks</td><td>Starvation; complexity</td></tr>
+      <tr><td><strong>Multilevel Queue</strong></td><td>Multiple queues by priority</td><td>Balanced; flexible</td><td>Complex; overhead</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔄 Round Robin Detailed Example</h3>
+    <p>Most common in modern OS. Each process gets time quantum (slice) then goes to back of queue.</p>
+    <div class="code">
+<span class="comment">// Example: Time quantum = 4ms</span>
+<span class="comment">// Processes: P1(8ms), P2(4ms), P3(2ms)</span>
+
+READY QUEUE: [P1][P2][P3]
+
+Time 0-4:   P1 runs → P1 has 4ms left
+READY QUEUE: [P2][P3][P1]
+
+Time 4-8:   P2 runs → DONE
+READY QUEUE: [P3][P1]
+
+Time 8-10:  P3 runs → DONE
+READY QUEUE: [P1]
+
+Time 10-14: P1 runs → DONE
+
+Total completion: 14ms
+Context switches: 3
+    </code>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⚡ Preemption vs Non-preemption</h3>
+    <div class="g2">
+      <div>
+        <p><strong>Preemptive</strong></p>
+        <p style="font-size:13px; margin-top:6px;">OS can interrupt running process. Used by Round Robin, Priority scheduling.</p>
+        <div class="box box-blue">
+          <div class="box-label">Advantage</div>
+          <p>Responsive; prevents CPU hogs</p>
+        </div>
+      </div>
+      <div>
+        <p><strong>Non-preemptive</strong></p>
+        <p style="font-size:13px; margin-top:6px;">Process runs until completion/I/O. Used by FCFS, SJF (basic).</p>
+        <div class="box box-blue">
+          <div class="box-label">Advantage</div>
+          <p>Less overhead; simpler</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">📌 Modern Scheduling</div>
+    <p>Linux uses <strong>Completely Fair Scheduler (CFS)</strong>. Windows uses priority-based preemptive with aging. Real-time systems (hard deadlines) use different strategies.</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════ QUICK QUIZ ══════════════════ -->
+<div id="quiz-section">
+  <div style="margin-top:40px;">
+    <h2 style="font-size:24px; margin-bottom:24px; color:#fff;">📝 Practice Questions</h2>
+    
+    <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:24px; font-size:13px; color:var(--muted);">
+      <span>Question <span id="qnum">1</span> of 12</span> <span id="score" style="color:var(--accent4); font-weight:700;">0/12 (0%)</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="qcard">
+      <div class="qno">Question 1</div>
+      <div class="qtext">What is the key difference between a process and a program?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>A process is active instance; program is static</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Programs run on CPU; processes on disk</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Processes are faster than programs</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>No real difference; synonymous</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> A program is passive code on storage. A process is a dynamic instance with state, memory, and resources. One program can spawn multiple processes.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qcard">
+      <div class="qno">Question 2</div>
+      <div class="qtext">In what state can a process be interrupted by scheduler to run another process?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Waiting state</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Running state</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Terminated state</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>New state</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Running process is interrupted (context switch) to give CPU to ready process. This is preemption. Waiting/New/Terminated don't occupy CPU, so no interruption needed.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qcard">
+      <div class="qno">Question 3</div>
+      <div class="qtext">External fragmentation occurs in which memory allocation method?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Contiguous allocation</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Paging</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Segmentation with paging</span></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Non-contiguous allocation</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Contiguous allocation requires adjacent free blocks. Scattered free holes prevent allocation of large blocks → external fragmentation. Paging avoids this via fixed-size blocks.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qcard">
+      <div class="qno">Question 4</div>
+      <div class="qtext">What happens when a page fault occurs and RAM is full?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Process immediately terminates</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>OS uses page replacement algorithm to evict a page</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>CPU halts; system hangs</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>New page is directly loaded to disk</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Page replacement is key to virtual memory. When RAM full, OS selects victim page (via algorithm like LRU), writes to disk, loads needed page. Process resumes.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qcard">
+      <div class="qno">Question 5</div>
+      <div class="qtext">What is the solution to prevent race conditions in critical sections?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Disable interrupts for all code</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Use mutual exclusion (mutex/semaphore)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Increase CPU speed</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Use only single-threaded processes</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Mutex/semaphore ensure only one process accesses critical section at a time. Disabling interrupts is costly; increasing CPU speed doesn't fix logic. Multithreading is necessary.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qcard">
+      <div class="qno">Question 6</div>
+      <div class="qtext">For deadlock to occur, how many of the four conditions must be true?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Exactly one</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>At least two</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>At least three</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">D</span>All four</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Deadlock requires ALL four conditions: Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait. Break any one → deadlock prevented.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="qcard">
+      <div class="qno">Question 7</div>
+      <div class="qtext">Which disk scheduling algorithm minimizes average seek time but risks starvation?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>FCFS</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>SSTF (Shortest Seek Time First)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>SCAN</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>C-SCAN</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> SSTF always selects nearest request → low average seek. But distant requests wait indefinitely (starvation). SCAN/C-SCAN address starvation via systematic sweeping.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="qcard">
+      <div class="qno">Question 8</div>
+      <div class="qtext">What metric measures time process spends in ready queue?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Response time</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Wait time</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Turnaround time</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>CPU burst</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Wait time = time in ready queue. Turnaround = total time submission to completion. Response = time to first output. CPU burst = actual execution time.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="qcard">
+      <div class="qno">Question 9</div>
+      <div class="qtext">Which memory management technique eliminates external fragmentation?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Paging</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Contiguous allocation</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Variable partitions</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>First-fit allocation</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Paging divides memory into fixed-size frames. Any free frame suitable — no fragmentation. Trade-off: internal fragmentation (last page may be partially unused).</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="qcard">
+      <div class="qno">Question 10</div>
+      <div class="qtext">What is the primary advantage of context switching with threads vs processes?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Threads never need context switch</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Threads share memory; less switching overhead</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Processes are outdated; use threads only</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Context switch time irrelevant for threads</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Threads share process memory space; no memory management updates needed during context switch. Processes have separate memory → more overhead. Threads faster to switch.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="qcard">
+      <div class="qno">Question 11</div>
+      <div class="qtext">In Round Robin scheduling with time quantum=5ms, what happens after 5ms?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Process runs another 5ms automatically</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Process goes to back of ready queue</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>If not done, process terminates</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Process waits for I/O</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Round Robin: each process gets time slice (quantum). After slice expires, OS interrupts and schedules next ready process. Original process goes to back of queue if not done.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="qcard">
+      <div class="qno">Question 12</div>
+      <div class="qtext">What protection does the Page Table provide?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Prevents disk corruption</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Isolates process memory; prevents unauthorized access</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Speeds up CPU</C></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Eliminates all fragmentation</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Page table translates virtual→physical addresses & enforces access permissions. Each process has own page table → memory isolation. One process can't access another's memory.</div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+let correctCount = 0;
+
+function show(tab) {
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(s => s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  window.scrollTo(0, 0);
+}
+
+function checkAns(btn, isCorrect) {
+  const opts = btn.parentElement.querySelectorAll('.opt');
+  opts.forEach(b => b.disabled = true);
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    correctCount++;
+  } else {
+    btn.classList.add('wrong');
+    for (let b of opts) {
+      if (b.classList.contains('correct') && b !== btn) {
+        b.classList.add('correct');
+      }
+    }
+  }
+  
+  const expl = btn.closest('.qcard').querySelector('.expl');
+  if (expl) expl.classList.add('show');
+  
+  updateScore();
+}
+
+function updateScore() {
+  const total = document.querySelectorAll('.qcard').length;
+  const percent = Math.round((correctCount / total) * 100);
+  document.getElementById('score').textContent = `${correctCount}/${total} (${percent}%)`;
+  document.querySelector('.pfill').style.width = percent + '%';
+}
+</script>
+
+</body>
+</html>
