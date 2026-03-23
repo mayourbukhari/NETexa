@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGC NET - Unit 5: Database Systems</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00d4ff;
+            --accent2: #ff6b35;
+            --accent2-5: #ff8c5a;
+            --accent3: #7fff7f;
+            --accent4: #ffcc00;
+            --accent5: #c084fc;
+            --text-primary: #ffffff;
+            --text-muted: #b0b0b0;
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --bg-tertiary: #252d4a;
+            --correct-bg: rgba(127, 255, 127, 0.15);
+            --correct-bd: #7fff7f;
+            --wrong-bg: rgba(255, 107, 53, 0.15);
+            --wrong-bd: #ff6b35;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #0f1535 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .header {
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #00d4ff15 0%, #ff6b3515 100%);
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--text-muted);
+            color: var(--text-primary);
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .nav-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .content-section {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .topic-header h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2em;
+            flex: 1;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+        }
+
+        .card-accent-left {
+            border-left-color: var(--accent);
+        }
+
+        .card-orange {
+            border-left-color: var(--accent2);
+        }
+
+        .card-green {
+            border-left-color: var(--accent3);
+        }
+
+        .card-yellow {
+            border-left-color: var(--accent4);
+        }
+
+        .card-purple {
+            border-left-color: var(--accent5);
+        }
+
+        .card h3 {
+            font-family: 'DM Serif Display', serif;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .code-block {
+            background: #0a0e27;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            color: var(--text-primary);
+        }
+
+        .comment {
+            color: #7f8a7f;
+        }
+
+        .keyword {
+            color: var(--accent);
+        }
+
+        .value {
+            color: var(--accent2);
+        }
+
+        .label2 {
+            color: var(--accent3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: var(--bg-tertiary);
+        }
+
+        th {
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        tr:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .diagram {
+            background: #0a0e27;
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            color: var(--accent);
+            white-space: pre;
+        }
+
+        .box-blue {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .box-blue label {
+            color: var(--accent);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .box-orange {
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid var(--accent2);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .box-orange label {
+            color: var(--accent2);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .box-green {
+            background: rgba(127, 255, 127, 0.1);
+            border: 2px solid var(--accent3);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .box-green label {
+            color: var(--accent3);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .box-yellow {
+            background: rgba(255, 204, 0, 0.1);
+            border: 2px solid var(--accent4);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .box-yellow label {
+            color: var(--accent4);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .box-purple {
+            background: rgba(192, 132, 252, 0.1);
+            border: 2px solid var(--accent5);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .box-purple label {
+            color: var(--accent5);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .quiz-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid var(--accent);
+        }
+
+        .quiz-section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: var(--accent);
+        }
+
+        .question {
+            background: var(--bg-secondary);
+            border-left: 5px solid var(--accent5);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        .question h4 {
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .option-btn {
+            padding: 12px 15px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--text-muted);
+            color: var(--text-primary);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .option-btn.correct {
+            background: var(--correct-bg);
+            border-color: var(--correct-bd);
+            color: var(--correct-bd);
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-bg);
+            border-color: var(--wrong-bd);
+            color: var(--wrong-bd);
+        }
+
+        .explanation {
+            background: rgba(192, 132, 252, 0.15);
+            border-left: 4px solid var(--accent5);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 3px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation strong {
+            color: var(--accent5);
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Database Systems</h1>
+        <p>Master database design, SQL, transactions, indexing, and modern database technologies for UGC NET Computer Science</p>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="show('fundamentals')">Fundamentals</button>
+        <button class="nav-tab" onclick="show('sql')">SQL & Queries</button>
+        <button class="nav-tab" onclick="show('normalization')">Normalization</button>
+        <button class="nav-tab" onclick="show('indexing')">Indexing & Optimization</button>
+        <button class="nav-tab" onclick="show('transactions')">Transactions & Concurrency</button>
+        <button class="nav-tab" onclick="show('recovery')">Recovery & Backup</button>
+        <button class="nav-tab" onclick="show('advanced')">Advanced Topics</button>
+    </div>
+
+    <!-- Section 1: Database Fundamentals -->
+    <div id="fundamentals" class="content-section active">
+        <div class="topic-header">
+            <h2>Database Fundamentals</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>What is a Database?</h3>
+            <p>A database is an organized collection of structured data stored and accessed electronically. It provides tools for data storage, retrieval, modification, and protection while maintaining data integrity and consistency.</p>
+            <div class="box-blue">
+                <label>Key Characteristics</label>
+                <ul>
+                    <li><strong>Persistence:</strong> Data survives program termination</li>
+                    <li><strong>Concurrency:</strong> Multiple users can access simultaneously</li>
+                    <li><strong>Query Language:</strong> SQL for data manipulation</li>
+                    <li><strong>Integrity:</strong> Constraints ensure data validity</li>
+                    <li><strong>Atomicity:</strong> All-or-nothing transaction semantics</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-orange">
+            <h3>Data Models</h3>
+            <p>Data models define the structure of data and relationships between entities in a database.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Model</th>
+                        <th>Description</th>
+                        <th>Use Cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Relational</strong></td>
+                        <td>Tables with rows/columns, primary/foreign keys</td>
+                        <td>Most business applications, SQL databases</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hierarchical</strong></td>
+                        <td>Tree structure with parent-child relationships</td>
+                        <td>File systems, XML documents</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Network</strong></td>
+                        <td>Nodes connected by labeled edges, many-to-many</td>
+                        <td>Complex relationships, social networks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Document (NoSQL)</strong></td>
+                        <td>Semi-structured JSON/BSON documents</td>
+                        <td>MongoDB, flexible schemas, rapid development</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph</strong></td>
+                        <td>Nodes and edges for relationship queries</td>
+                        <td>Neo4j, recommendation engines, relationship analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-green">
+            <h3>Schema and Instances</h3>
+            <p><strong>Schema:</strong> The structural definition of the database (table definitions, columns, data types, constraints). It remains relatively static.</p>
+            <p><strong>Instance:</strong> The actual data contained in the database at a particular point in time. It changes frequently.</p>
+            <div class="code-block">
+<span class="comment">-- Schema Definition</span>
+<span class="keyword">CREATE TABLE</span> Students (
+    StudentID <span class="value">INT PRIMARY KEY</span>,
+    Name <span class="value">VARCHAR(100) NOT NULL</span>,
+    Age <span class="value">INT</span>,
+    GPA <span class="value">DECIMAL(3,2)</span>
+);
+
+<span class="comment">-- Instance (Sample Data)</span>
+<span class="keyword">INSERT INTO</span> Students <span class="keyword">VALUES</span>
+(101, 'Alice', 20, 3.8),
+(102, 'Bob', 21, 3.5);
+            </div>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>DBMS Architecture</h3>
+            <div class="diagram">External View (User Interface)
+       ↓
+Conceptual Schema (Logical DB Structure)
+       ↓
+Internal Schema (Physical Storage)
+       ↓
+Storage Layer (Disk/Memory)</div>
+            <p><strong>Three-Level Architecture:</strong></p>
+            <ul>
+                <li><strong>External Level:</strong> Multiple user views of data</li>
+                <li><strong>Conceptual Level:</strong> Unified logical schema independent of storage</li>
+                <li><strong>Internal Level:</strong> Physical storage organization on disk</li>
+            </ul>
+        </div>
+
+        <div class="card card-purple">
+            <h3>Integrity Constraints</h3>
+            <p>Rules that ensure data quality and consistency:</p>
+            <ul>
+                <li><strong>Entity Integrity:</strong> Primary key cannot be NULL and must be unique</li>
+                <li><strong>Referential Integrity:</strong> Foreign keys must reference valid primary keys</li>
+                <li><strong>Domain Integrity:</strong> Data types and formats are enforced</li>
+                <li><strong>Key Constraints:</strong> Uniqueness constraints on designated columns</li>
+                <li><strong>Check Constraints:</strong> Custom business logic validation</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Section 2: SQL & Queries -->
+    <div id="sql" class="content-section">
+        <div class="topic-header">
+            <h2>SQL & Query Processing</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>SQL Fundamentals</h3>
+            <p><strong>SQL (Structured Query Language)</strong> is the standard language for database operations. It has four main categories:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Commands</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DML</strong></td>
+                        <td>SELECT, INSERT, UPDATE, DELETE</td>
+                        <td>Manipulate data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DDL</strong></td>
+                        <td>CREATE, ALTER, DROP, TRUNCATE</td>
+                        <td>Define database structure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DCL</strong></td>
+                        <td>GRANT, REVOKE</td>
+                        <td>Control access permissions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TCL</strong></td>
+                        <td>COMMIT, ROLLBACK, SAVEPOINT</td>
+                        <td>Transaction control</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-orange">
+            <h3>JOIN Operations</h3>
+            <p>JOINs combine rows from multiple tables based on related columns:</p>
+            <div class="code-block">
+<span class="comment">-- INNER JOIN: Only matching rows</span>
+<span class="keyword">SELECT</span> S.Name, C.CourseTitle
+<span class="keyword">FROM</span> Students S
+<span class="keyword">INNER JOIN</span> Courses C <span class="keyword">ON</span> S.StudentID = C.StudentID;
+
+<span class="comment">-- LEFT JOIN: All left table rows + matches</span>
+<span class="keyword">SELECT</span> S.Name, COUNT(E.CourseID)
+<span class="keyword">FROM</span> Students S
+<span class="keyword">LEFT JOIN</span> Enrollments E <span class="keyword">ON</span> S.StudentID = E.StudentID
+<span class="keyword">GROUP BY</span> S.StudentID;
+
+<span class="comment">-- FULL OUTER JOIN: All rows from both tables</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Table1
+<span class="keyword">FULL OUTER JOIN</span> Table2 <span class="keyword">ON</span> Table1.ID = Table2.ID;
+            </div>
+        </div>
+
+        <div class="card card-green">
+            <h3>Subqueries & Aggregation</h3>
+            <p>Nested queries and aggregate functions for complex data analysis:</p>
+            <div class="code-block">
+<span class="comment">-- Subquery in WHERE clause</span>
+<span class="keyword">SELECT</span> Name, Salary
+<span class="keyword">FROM</span> Employees
+<span class="keyword">WHERE</span> Salary &gt; (<span class="keyword">SELECT AVG</span>(Salary) <span class="keyword">FROM</span> Employees);
+
+<span class="comment">-- GROUP BY with HAVING</span>
+<span class="keyword">SELECT</span> Department, <span class="keyword">COUNT</span>(*) as Count, <span class="keyword">AVG</span>(Salary)
+<span class="keyword">FROM</span> Employees
+<span class="keyword">GROUP BY</span> Department
+<span class="keyword">HAVING COUNT</span>(*) &gt; 5;
+
+<span class="comment">-- Correlated Subquery</span>
+<span class="keyword">SELECT</span> E.Name
+<span class="keyword">FROM</span> Employees E
+<span class="keyword">WHERE</span> E.Salary &gt; (<span class="keyword">SELECT AVG</span>(Salary) <span class="keyword">FROM</span> Employees E2 
+                     <span class="keyword">WHERE</span> E2.Department = E.Department);
+            </div>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>Query Optimization</h3>
+            <p>Strategies to improve query performance and reduce execution time:</p>
+            <ul>
+                <li><strong>Use Indexes:</strong> Create indexes on frequently searched columns</li>
+                <li><strong>Avoid SELECT *:</strong> Select only needed columns</li>
+                <li><strong>Minimize JOINs:</strong> Join only necessary tables</li>
+                <li><strong>Use WHERE Early:</strong> Filter rows before joining</li>
+                <li><strong>Avoid Functions on Indexed Columns:</strong> Prevents index usage</li>
+                <li><strong>Use LIMIT:</strong> Reduce result set size when possible</li>
+            </ul>
+        </div>
+
+        <div class="card card-purple">
+            <h3>Window Functions</h3>
+            <p>Perform calculations across a set of rows, useful for ranking and running totals:</p>
+            <div class="code-block">
+<span class="comment">-- Ranking employees by salary within department</span>
+<span class="keyword">SELECT</span> Name, Salary, Department,
+       <span class="keyword">RANK</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION BY</span> Department <span class="keyword">ORDER BY</span> Salary <span class="keyword">DESC</span>)
+       <span class="keyword">AS</span> Rank
+<span class="keyword">FROM</span> Employees;
+
+<span class="comment">-- Running total of sales</span>
+<span class="keyword">SELECT</span> Date, Amount,
+       <span class="keyword">SUM</span>(Amount) <span class="keyword">OVER</span> (<span class="keyword">ORDER BY</span> Date)
+       <span class="keyword">AS</span> RunningTotal
+<span class="keyword">FROM</span> Sales;
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Normalization -->
+    <div id="normalization" class="content-section">
+        <div class="topic-header">
+            <h2>Data Normalization</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>Why Normalization?</h3>
+            <p>Normalization is the process of organizing attributes into tables to:</p>
+            <ul>
+                <li>Eliminate data redundancy</li>
+                <li>Reduce storage space</li>
+                <li>Improve data integrity and consistency</li>
+                <li>Facilitate data updates without anomalies</li>
+                <li>Simplify database maintenance</li>
+            </ul>
+            <div class="box-orange">
+                <label>Anomalies Without Normalization</label>
+                <ul>
+                    <li><strong>Insertion Anomaly:</strong> Cannot insert data without certain attributes</li>
+                    <li><strong>Deletion Anomaly:</strong> Deleting one fact removes unrelated data</li>
+                    <li><strong>Update Anomaly:</strong> Updating one value requires multiple changes</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-orange">
+            <h3>Normal Forms Overview</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Normal Form</th>
+                        <th>Condition</th>
+                        <th>Key Achievement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1NF</strong></td>
+                        <td>Atomic attributes only (no multi-valued attributes)</td>
+                        <td>Eliminate repeating groups</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2NF</strong></td>
+                        <td>1NF + No partial dependencies</td>
+                        <td>Remove partial FD on composite keys</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3NF</strong></td>
+                        <td>2NF + No transitive dependencies</td>
+                        <td>Remove non-key attribute dependencies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BCNF</strong></td>
+                        <td>3NF + Every determinant is a candidate key</td>
+                        <td>Strong normalization, removes all anomalies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4NF</strong></td>
+                        <td>BCNF + No multi-valued dependencies</td>
+                        <td>Handle complex relationships</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-green">
+            <h3>First Normal Form (1NF)</h3>
+            <p><strong>Definition:</strong> All attributes must be atomic (indivisible). No repeating groups or multi-valued attributes.</p>
+            <p><strong>Before 1NF:</strong></p>
+            <div class="code-block">StudentID | Name     | Courses
+1         | Alice    | Math, Physics, Chemistry
+2         | Bob      | English, History
+            </div>
+            <p><strong>After 1NF:</strong></p>
+            <div class="code-block">StudentID | Name     | Course
+1         | Alice    | Math
+1         | Alice    | Physics
+1         | Alice    | Chemistry
+2         | Bob      | English
+2         | Bob      | History
+            </div>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>Second & Third Normal Forms</h3>
+            <p><strong>2NF:</strong> 1NF + No partial dependencies (all non-key attributes depend on entire primary key)</p>
+            <p><strong>3NF:</strong> 2NF + No transitive dependencies (non-key attributes don't depend on other non-key attributes)</p>
+            <div class="box-yellow">
+                <label>Example: Converting to 3NF</label>
+                <p>Student(StudentID, Name, DepartmentID, DepartmentName, DepartmentLocation)</p>
+                <p>Problem: DepartmentName and DepartmentLocation depend on DepartmentID (transitive)</p>
+                <p><strong>Solution:</strong></p>
+                <p>Student(StudentID, Name, DepartmentID)</p>
+                <p>Department(DepartmentID, DepartmentName, DepartmentLocation)</p>
+            </div>
+        </div>
+
+        <div class="card card-purple">
+            <h3>Functional Dependencies</h3>
+            <p><strong>Definition:</strong> Attribute Y is functionally dependent on attribute X if each value of X determines exactly one value of Y.</p>
+            <div class="box-purple">
+                <label>Notation: X → Y (X determines Y)</label>
+                <ul>
+                    <li><strong>Partial Dependency:</strong> Y depends on part of composite key X</li>
+                    <li><strong>Transitive Dependency:</strong> X → Y and Y → Z, therefore X → Z</li>
+                    <li><strong>Full Dependency:</strong> Y depends on entire composite key</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Indexing & Optimization -->
+    <div id="indexing" class="content-section">
+        <div class="topic-header">
+            <h2>Indexing & Query Optimization</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>Indexing Concepts</h3>
+            <p>An index is a data structure that improves the speed of data retrieval. It's a sorted collection of references to data organized for fast searching.</p>
+            <div class="box-blue">
+                <label>Index Trade-offs</label>
+                <ul>
+                    <li>✓ Speeds up SELECT queries and WHERE clauses</li>
+                    <li>✗ Slows down INSERT, UPDATE, DELETE (must maintain index)</li>
+                    <li>✗ Consumes additional storage space</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-orange">
+            <h3>B-Tree Indexing</h3>
+            <p><strong>B-Tree:</strong> Most common index structure. Self-balancing tree where each node can have multiple children.</p>
+            <div class="diagram">           [40]
+         /      \
+    [20, 30]   [50, 60, 70]
+    /  |  \     /  |  |  \
+   10 25 35   45  55 65  75</div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>Logarithmic search time O(log n)</li>
+                <li>Balanced tree maintains this guarantee</li>
+                <li>All leaf nodes at same level</li>
+                <li>Supports range queries efficiently</li>
+                <li>Each node typically matches disk block size</li>
+            </ul>
+        </div>
+
+        <div class="card card-green">
+            <h3>Hash Indexing</h3>
+            <p><strong>Hash Index:</strong> Uses hash function to map keys to bucket addresses. Fast for equality searches but poor for range queries.</p>
+            <p><strong>Hash Function Example:</strong> h(key) = key mod bucket_count</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>B-Tree</th>
+                        <th>Hash</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Equality Search</td>
+                        <td>O(log n)</td>
+                        <td>O(1) average</td>
+                    </tr>
+                    <tr>
+                        <td>Range Search</td>
+                        <td>O(log n + result)</td>
+                        <td>Not efficient</td>
+                    </tr>
+                    <tr>
+                        <td>Insertion/Deletion</td>
+                        <td>O(log n)</td>
+                        <td>O(1) average</td>
+                    </tr>
+                    <tr>
+                        <td>Space Utilization</td>
+                        <td>Better</td>
+                        <td>Can be wasteful</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>Query Optimization Techniques</h3>
+            <p><strong>Query Optimizer:</strong> Component that determines the most efficient way to execute a query.</p>
+            <ul>
+                <li><strong>Index Selection:</strong> Choose appropriate indexes for WHERE clause conditions</li>
+                <li><strong>Join Order:</strong> Reorder joins to minimize intermediate results</li>
+                <li><strong>Predicate Pushdown:</strong> Apply filters early before joins</li>
+                <li><strong>Materialization:</strong> Cache intermediate results if reused</li>
+                <li><strong>Parallel Execution:</strong> Execute independent operations concurrently</li>
+            </ul>
+            <div class="box-yellow">
+                <label>Cost-Based Optimization</label>
+                <p>Compare multiple execution plans and choose lowest cost based on:</p>
+                <ul>
+                    <li>I/O operations</li>
+                    <li>CPU time</li>
+                    <li>Network transmission (distributed DB)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-purple">
+            <h3>EXPLAIN and Query Plans</h3>
+            <p>Examine query execution plans to understand performance:</p>
+            <div class="code-block">
+<span class="keyword">EXPLAIN ANALYZE</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Orders
+<span class="keyword">WHERE</span> OrderDate &gt; <span class="value">'2024-01-01'</span>;
+
+<span class="comment">-- Output shows:
+-- Seq Scan on Orders  (cost=0.00..156.00)
+-- Filter: (OrderDate > '2024-01-01')  (rows estimated)</span>
+
+<span class="comment">-- With index:</span>
+<span class="keyword">CREATE INDEX</span> idx_order_date <span class="keyword">ON</span> Orders(OrderDate);
+<span class="comment">-- Now uses: Index Scan on idx_order_date (faster)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 5: Transactions & Concurrency -->
+    <div id="transactions" class="content-section">
+        <div class="topic-header">
+            <h2>Transactions & Concurrency Control</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>ACID Properties</h3>
+            <p><strong>ACID</strong> are fundamental guarantees for database transactions:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Definition</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Atomicity</strong></td>
+                        <td>All-or-nothing: transaction completes fully or rolls back completely</td>
+                        <td>Money transfer: debit and credit both succeed or both fail</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consistency</strong></td>
+                        <td>DB moves from one valid state to another; all constraints satisfied</td>
+                        <td>Account balance never goes negative if constrained</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Isolation</strong></td>
+                        <td>Concurrent transactions don't interfere with each other</td>
+                        <td>Two simultaneous transfers don't cause balance errors</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Durability</strong></td>
+                        <td>Committed data persists even after system failures</td>
+                        <td>Data survives crashes once COMMIT confirmed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-orange">
+            <h3>Concurrency Problems</h3>
+            <p><strong>Race Conditions:</strong> When multiple transactions access same data concurrently:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Description</th>
+                        <th>Scenario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dirty Read</strong></td>
+                        <td>Transaction T2 reads uncommitted changes from T1</td>
+                        <td>T1 updates balance but rolls back; T2 used wrong value</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lost Update</strong></td>
+                        <td>Concurrent updates overwrite each other</td>
+                        <td>T1 and T2 both read X=10, both add 5, final result 15 (lost one +5)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phantom Read</strong></td>
+                        <td>Transaction T2 inserts rows visible to T1 in second read</td>
+                        <td>T1 selects age>20, T2 inserts new age>20 record, T1 re-queries finds different result</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Non-Repeatable Read</strong></td>
+                        <td>Uncommitted update changes value between reads</td>
+                        <td>T1 reads X=10, T2 updates X=20, T1 re-reads gets 20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-green">
+            <h3>Locking Mechanisms</h3>
+            <p><strong>Lock:</strong> Mechanism to prevent concurrent access to shared resources.</p>
+            <ul>
+                <li><strong>Shared Lock (Read Lock):</strong> Multiple transactions can read; no writes allowed</li>
+                <li><strong>Exclusive Lock (Write Lock):</strong> Only one transaction can access; blocks all other locks</li>
+                <li><strong>Two-Phase Locking (2PL):</strong> Growing phase (acquire locks) then shrinking phase (release locks)</li>
+                <li><strong>Deadlock:</strong> When T1 waits for resource held by T2 which waits for resource held by T1</li>
+            </ul>
+            <div class="box-green">
+                <label>Lock Compatibility</label>
+                <div class="code-block">        | Shared | Exclusive
+Shared  |   ✓    |    ✗
+Exclusive |  ✗    |    ✗</div>
+            </div>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>Isolation Levels</h3>
+            <p>SQL standard defines four isolation levels (in increasing strictness):</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Dirty Read</th>
+                        <th>Non-Repeatable</th>
+                        <th>Phantom Read</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Read Uncommitted</strong></td>
+                        <td>✗ Possible</td>
+                        <td>✗ Possible</td>
+                        <td>✗ Possible</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Read Committed</strong></td>
+                        <td>✓ Prevented</td>
+                        <td>✗ Possible</td>
+                        <td>✗ Possible</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Repeatable Read</strong></td>
+                        <td>✓ Prevented</td>
+                        <td>✓ Prevented</td>
+                        <td>✗ Possible</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Serializable</strong></td>
+                        <td>✓ Prevented</td>
+                        <td>✓ Prevented</td>
+                        <td>✓ Prevented</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-purple">
+            <h3>Deadlock Detection & Prevention</h3>
+            <div class="code-block">
+<span class="comment">-- Example Deadlock Scenario</span>
+T1: <span class="keyword">LOCK</span> A, <span class="keyword">wait for</span> B  <span class="comment">← Blocked by T2</span>
+T2: <span class="keyword">LOCK</span> B, <span class="keyword">wait for</span> A  <span class="comment">← Blocked by T1</span>
+
+<span class="comment">-- Detection Methods:</span>
+<span class="comment">-- 1. Wait-for graph: Detect cycles</span>
+<span class="comment">-- 2. Timeout: Assume deadlock after delay</span>
+<span class="comment">-- 3. Victim selection: Rollback one transaction</span>
+
+<span class="comment">-- Prevention Strategies:</span>
+<span class="comment">-- 1. Order lock requests consistently (ascending resource ID)</span>
+<span class="comment">-- 2. Set transaction timeout limits</span>
+<span class="comment">-- 3. Use optimistic locking (version numbers)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 6: Recovery & Backup -->
+    <div id="recovery" class="content-section">
+        <div class="topic-header">
+            <h2>Recovery & Backup Strategies</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>Why Database Recovery?</h3>
+            <p>Systems can fail for various reasons: power outages, disk errors, software crashes. Recovery mechanisms ensure data isn't lost and database returns to consistent state.</p>
+            <div class="box-blue">
+                <label>Failure Types</label>
+                <ul>
+                    <li><strong>Transaction Failure:</strong> Within transaction (constraint violation)</li>
+                    <li><strong>System Failure:</strong> Sudden shutdown (main memory lost, disk OK)</li>
+                    <li><strong>Disk Failure:</strong> Permanent storage corruption (catastrophic)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-orange">
+            <h3>Write-Ahead Logging (WAL)</h3>
+            <p><strong>WAL:</strong> Before writing data to disk, write a log record. Ensures durability and enables recovery.</p>
+            <div class="diagram">Transaction → Log Buffer → Disk Log
+                ↓
+            Data Buffer (can be cached)
+                ↓
+            Write to Data Disk</div>
+            <p><strong>Recovery Process:</strong></p>
+            <ul>
+                <li><strong>Redo:</strong> Reapply committed transactions that weren't written to disk</li>
+                <li><strong>Undo:</strong> Rollback uncommitted transactions that were partially written</li>
+            </ul>
+        </div>
+
+        <div class="card card-green">
+            <h3>Checkpoints</h3>
+            <p><strong>Checkpoint:</strong> Periodic point where all committed data is written to disk and a checkpoint record is created.</p>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+                <li>Reduces recovery time by marking a known consistent state</li>
+                <li>No need to redo transactions older than most recent checkpoint</li>
+                <li>Simplifies crash recovery process</li>
+            </ul>
+            <div class="code-block">
+<span class="comment">-- Timeline Example</span>
+T1 Start
+T2 Start
+T1 Commit
+Checkpoint (writes T1 to disk)
+T2 Update (in memory only)
+CRASH!
+
+After recovery: T1 is restored, T2 is rolled back
+No need to redo T1 (it's already in checkpoint)
+            </div>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>Backup Strategies</h3>
+            <p>Strategies to protect against permanent data loss:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Backup Type</th>
+                        <th>Description</th>
+                        <th>Recovery Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Full Backup</strong></td>
+                        <td>Complete copy of entire database</td>
+                        <td>Longer backup, faster recovery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Incremental</strong></td>
+                        <td>Only changes since last backup</td>
+                        <td>Faster backup, slower recovery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Differential</strong></td>
+                        <td>Changes since last full backup</td>
+                        <td>Balance of backup/recovery speed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Continuous</strong></td>
+                        <td>Real-time replication to secondary copy</td>
+                        <td>Near-zero data loss (RTO/RPO)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="box-yellow">
+                <label>3-2-1 Backup Rule</label>
+                <ul>
+                    <li>3 copies of data</li>
+                    <li>2 on different storage media</li>
+                    <li>1 copy offsite/remote location</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-purple">
+            <h3>Disaster Recovery Planning</h3>
+            <p><strong>RTO (Recovery Time Objective):</strong> Maximum acceptable downtime</p>
+            <p><strong>RPO (Recovery Point Objective):</strong> Maximum data loss acceptable (measured in time)</p>
+            <div class="code-block">
+<span class="comment">-- Example SLA</span>
+<span class="comment">-- Critical system: RTO = 1 hour, RPO = 15 minutes</span>
+<span class="comment">-- Means: Must be running within 1 hour and lose at most 15 min of data</span>
+
+<span class="comment">-- Strategies to achieve this:</span>
+<span class="comment">-- - Database replication to multiple sites</span>
+<span class="comment">-- - Transaction log shipping (redo logs to standby)</span>
+<span class="comment">-- - Continuous backup/mirroring</span>
+<span class="comment">-- - Failover automation</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 7: Advanced Topics -->
+    <div id="advanced" class="content-section">
+        <div class="topic-header">
+            <h2>Advanced Database Topics</h2>
+        </div>
+
+        <div class="card card-accent-left">
+            <h3>NoSQL Databases</h3>
+            <p><strong>NoSQL:</strong> Non-relational databases designed for scalability, flexibility, and high performance with unstructured/semi-structured data.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Example</th>
+                        <th>Use Case</th>
+                        <th>Trade-off</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Document</strong></td>
+                        <td>MongoDB</td>
+                        <td>Content management, mobile apps</td>
+                        <td>No ACID guarantees, complex queries</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Key-Value</strong></td>
+                        <td>Redis, Memcached</td>
+                        <td>Caching, sessions, real-time data</td>
+                        <td>Limited query capabilities</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Graph</strong></td>
+                        <td>Neo4j</td>
+                        <td>Social networks, recommendations</td>
+                        <td>Scaling challenges</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time-Series</strong></td>
+                        <td>InfluxDB, TimescaleDB</td>
+                        <td>Metrics, monitoring, IoT</td>
+                        <td>Specialized for time data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-orange">
+            <h3>Distributed Databases</h3>
+            <p><strong>Distributed DB:</strong> Database spread across multiple nodes/locations for availability and scalability.</p>
+            <ul>
+                <li><strong>Horizontal Partitioning (Sharding):</strong> Split data across nodes by key range</li>
+                <li><strong>Vertical Partitioning:</strong> Different columns on different nodes</li>
+                <li><strong>Replication:</strong> Copy data to multiple nodes for redundancy</li>
+            </ul>
+            <div class="box-orange">
+                <label>CAP Theorem</label>
+                <p>Choose only 2 of 3: <strong>Consistency</strong>, <strong>Availability</strong>, <strong>Partition Tolerance</strong></p>
+                <ul>
+                    <li>Traditional RDBMS: Choose CA (no partition tolerance)</li>
+                    <li>Most distributed systems: Choose AP or CP</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-green">
+            <h3>Cloud Databases</h3>
+            <p><strong>Managed cloud databases</strong> abstract infrastructure, provide scalability and high availability:</p>
+            <ul>
+                <li><strong>Azure SQL Database:</strong> Managed relational DB with auto-scaling</li>
+                <li><strong>Amazon RDS:</strong> Relational database service (MySQL, PostgreSQL, Oracle, MariaDB)</li>
+                <li><strong>Google Firestore:</strong> Managed NoSQL document database</li>
+                <li><strong>Cosmos DB:</strong> Multi-model globally distributed database</li>
+            </ul>
+            <div class="box-green">
+                <label>Key Benefits</label>
+                <ul>
+                    <li>No infrastructure management</li>
+                    <li>Automatic backups and recovery</li>
+                    <li>Global replication and failover</li>
+                    <li>Pay-per-use pricing model</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-yellow">
+            <h3>Data Warehousing & OLAP</h3>
+            <p><strong>OLTP vs OLAP:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>OLTP</th>
+                        <th>OLAP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Purpose</td>
+                        <td>Online transactions (operational)</td>
+                        <td>Analytical queries (business intelligence)</td>
+                    </tr>
+                    <tr>
+                        <td>Queries</td>
+                        <td>Simple, short-running</td>
+                        <td>Complex, long-running aggregations</td>
+                    </tr>
+                    <tr>
+                        <td>Data</td>
+                        <td>Current state, normalized</td>
+                        <td>Historical trends, denormalized</td>
+                    </tr>
+                    <tr>
+                        <td>Volume</td>
+                        <td>Frequent small updates</td>
+                        <td>Batch loads, read-intensive</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-purple">
+            <h3>Data Privacy & Security</h3>
+            <p>Critical aspects of modern database management:</p>
+            <ul>
+                <li><strong>Encryption:</strong> Encrypt data at rest (storage) and in transit (network)</li>
+                <li><strong>Authentication:</strong> User verification before access (passwords, multi-factor)</li>
+                <li><strong>Authorization:</strong> Role-based access control (RBAC) and permissions</li>
+                <li><strong>Audit Logging:</strong> Track who accessed what data and when</li>
+                <li><strong>Data Masking:</strong> Hide sensitive data in non-production environments</li>
+                <li><strong>Compliance:</strong> GDPR, HIPAA, PCI-DSS regulations</li>
+            </ul>
+            <div class="box-purple">
+                <label>Application-Level Security</label>
+                <ul>
+                    <li>Parameterized queries prevent SQL injection</li>
+                    <li>Input validation and sanitization</li>
+                    <li>Least privilege principle for database users</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div class="content-section" style="display: block; padding: 40px 20px; max-width: 1000px; margin: 0 auto;">
+        <div class="quiz-section">
+            <h2>Practice MCQs - Database Systems</h2>
+
+            <div class="question">
+                <h4>1. Which normal form ensures that no attribute depends on part of a composite primary key?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">Second Normal Form (2NF)</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">First Normal Form (1NF)</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Boyce Codd Normal Form</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Domain Key Normal Form</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> 2NF requires 1NF compliance plus removal of partial dependencies, meaning all non-key attributes must depend on the entire primary key, not just part of it.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>2. What is the correct SQL syntax to create an index on the 'Email' column of the 'Users' table?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">CREATE INDEX idx_email ON Users(Email);</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">CREATE INDEX Users ON Email(idx_email);</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">INDEX Email Users(idx_email);</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">CREATE Users Email INDEX;</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> The correct SQL syntax is CREATE INDEX index_name ON table_name(column_name). The index name is conventionally prefixed with 'idx_' for clarity.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>3. Which ACID property ensures that committed data survives system failures?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, false)">Atomicity</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Consistency</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Isolation</button>
+                    <button class="option-btn" onclick="checkAns(this, true)">Durability</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> Durability ensures that once a transaction is committed, the data is permanently stored and won't be lost even if the system crashes immediately after.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>4. What does a FULL OUTER JOIN return?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, false)">Only matching rows from both tables</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">All rows from the left table and matching rows from right</button>
+                    <button class="option-btn" onclick="checkAns(this, true)">All rows from both tables; NULLs where no match</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">The Cartesian product of both tables</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> FULL OUTER JOIN combines all rows from both tables. Rows without matches in either table show NULL values for columns from the table with no match.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>5. Which isolation level prevents all dirty reads, non-repeatable reads, and phantom reads?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, false)">Read Committed</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Repeatable Read</button>
+                    <button class="option-btn" onclick="checkAns(this, true)">Serializable</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Read Uncommitted</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> Serializable is the strictest isolation level and prevents all concurrency anomalies (dirty reads, non-repeatable reads, and phantom reads) by essentially making transactions execute sequentially.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>6. What is the primary advantage of B-Tree indexing over Hash indexing?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">Supports efficient range queries</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Faster equality searches</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Uses less disk space</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Better for text searches</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> B-Trees maintain sorted order allowing efficient range queries (e.g., WHERE age BETWEEN 18 AND 65), while Hash indexes are optimized only for exact match queries and cannot efficiently handle range conditions.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>7. Which statement best describes functional dependency X → Y?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">Each value of X determines exactly one value of Y</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">X and Y must appear in the database together</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Y depends on the order X appears</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">X and Y must be in separate tables</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> Functional dependency X → Y means that if two rows have the same X value, they must have the same Y value. This is fundamental to normalization and data consistency.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>8. What is the purpose of Write-Ahead Logging (WAL)?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">Ensure durability by writing logs before data to disk</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Speed up query execution</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Compress database files</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Prevent SQL injection attacks</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> WAL is a crash recovery technique where transaction log entries are written to disk before the actual data changes. This ensures that even if the system crashes, committed transactions can be reconstructed from the log.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>9. In Two-Phase Locking (2PL), what happens after the shrinking phase begins?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, false)">New locks can be acquired</button>
+                    <button class="option-btn" onclick="checkAns(this, true)">No new locks can be acquired; only releases allowed</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">All locks are immediately released</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Locks are converted to shared mode</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> 2PL has two phases: Growing (acquire locks) and Shrinking (release locks). Once a transaction starts releasing locks (shrinking phase), it cannot acquire any new locks. This prevents cascading aborts and ensures serializability.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>10. Which of the following best describes denormalization?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">Intentionally introducing redundancy for performance</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Process of removing all anomalies from data</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Converting from SQL to NoSQL</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Splitting large tables into smaller ones</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> Denormalization is the deliberate introduction of redundancy (like storing duplicate data) to improve query performance by reducing joins needed. Common in data warehouses (OLAP systems) where analysis speed is prioritized over insertion speed.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>11. What does the CAP Theorem state about distributed systems?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">You can have at most 2 of: Consistency, Availability, Partition Tolerance</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">You must have all three properties in any system</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Consistency and Availability are incompatible</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Partition Tolerance is the most important property</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> The CAP Theorem proves that distributed databases can guarantee at most two of the three properties: Consistency (all nodes see same data), Availability (system always responds), and Partition Tolerance (system works despite network splits). Most systems choose to sacrifice strong consistency.
+                </div>
+            </div>
+
+            <div class="question">
+                <h4>12. Which of the following is a characteristic of NoSQL databases like MongoDB?</h4>
+                <div class="options">
+                    <button class="option-btn" onclick="checkAns(this, true)">Flexible schema allowing varied document structures</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Strict ACID compliance with serializable isolation</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Required to normalize all data</button>
+                    <button class="option-btn" onclick="checkAns(this, false)">Only supports SQL queries</button>
+                </div>
+                <div class="explanation">
+                    <strong>Explanation:</strong> NoSQL databases like MongoDB trade some ACID guarantees for flexibility and scalability. They support flexible schemas where different documents can have different fields, making them ideal for applications where data structure evolves rapidly.
+                </div>
+            </div>
+
+            <div class="score-display">
+                Score: <span id="score">0</span>/12
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let correctCount = 0;
+        let totalQuestions = 12;
+
+        function show(tab) {
+            const sections = document.querySelectorAll('.content-section');
+            const tabs = document.querySelectorAll('.nav-tab');
+            
+            sections.forEach(s => s.classList.remove('active'));
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function checkAns(btn, isCorrect) {
+            const options = btn.parentElement.querySelectorAll('.option-btn');
+            options.forEach(opt => opt.disabled = true);
+            
+            if (isCorrect) {
+                btn.classList.add('correct');
+                correctCount++;
+                updateScore();
+            } else {
+                btn.classList.add('wrong');
+                options.forEach(opt => {
+                    if (opt !== btn) {
+                        for (let i = 0; i < opt.parentElement.parentElement.children.length; i++) {
+                            if (opt.parentElement.parentElement.children[i].children[0] === opt && 
+                                opt.classList.contains('option-btn')) {
+                                const exp = opt.parentElement.parentElement.nextElementSibling;
+                                if (exp && exp.classList.contains('explanation')) {
+                                    let foundCorrect = false;
+                                    opt.parentElement.querySelectorAll('.option-btn').forEach(o => {
+                                        if (o !== opt && !o.classList.contains('wrong')) {
+                                            o.classList.add('correct');
+                                            foundCorrect = true;
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Find and mark the correct answer
+                const questionDiv = btn.closest('.question');
+                const allOptions = questionDiv.querySelectorAll('.option-btn');
+                allOptions.forEach(opt => {
+                    if (!opt.classList.contains('wrong') && opt !== btn) {
+                        opt.style.opacity = '0.5';
+                    }
+                });
+            }
+            
+            const explanation = btn.closest('.question').querySelector('.explanation');
+            if (explanation) {
+                explanation.classList.add('show');
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = correctCount;
+            const percentage = (correctCount / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+    </script>
+</body>
+</html>
