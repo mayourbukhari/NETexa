@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC NET CS — Unit 3: Programming Languages, Data Structures & Algorithms</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #1a2235;
+    --card2: #1e2840;
+    --border: #2a3550;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff7f;
+    --accent4: #ffcc00;
+    --accent5: #c084fc;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --correct-bg: #0d2a1a;
+    --correct-bd: #22c55e;
+    --wrong-bg: #2a0d0d;
+    --wrong-bd: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 52px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 50%, rgba(0,212,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 80% 30%, rgba(255,107,53,0.06) 0%, transparent 60%);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.3);
+    color: var(--accent);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 40px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(30px, 5.5vw, 56px);
+    color: #fff;
+    line-height: 1.1;
+    position: relative;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  header p {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 620px;
+    margin-left: auto; margin-right: auto;
+    position: relative;
+  }
+  .topic-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+    position: relative;
+  }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 15px 18px;
+    cursor: pointer; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  main { max-width: 980px; margin: 0 auto; padding: 44px 24px 100px; }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp 0.35s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TOPIC HEADER */
+  .topic-header {
+    display: flex; align-items: flex-start; gap: 20px;
+    margin-bottom: 36px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-icon {
+    width: 56px; height: 56px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .topic-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; color: #fff;
+    line-height: 1.1;
+  }
+  .topic-header .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .card-accent-left { border-left: 3px solid var(--accent); }
+  .card-accent-orange { border-left: 3px solid var(--accent2); }
+  .card-accent-green { border-left: 3px solid var(--accent3); }
+  .card-accent-yellow { border-left: 3px solid var(--accent4); }
+  .card-accent-purple { border-left: 3px solid var(--accent5); }
+
+  .card h3 {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .card-orange h3 { color: var(--accent2); }
+  .card-green h3 { color: var(--accent3); }
+  .card-yellow h3 { color: var(--accent4); }
+  .card-purple h3 { color: var(--accent5); }
+
+  .card p { font-size: 15px; margin-bottom: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 7px; font-size: 15px; }
+
+  /* HIGHLIGHT TEXT */
+  .hl { color: var(--accent); font-weight: 600; }
+  .hl2 { color: var(--accent2); font-weight: 600; }
+  .hl3 { color: var(--accent3); font-weight: 600; }
+  .hl4 { color: var(--accent4); font-weight: 600; }
+  .hl5 { color: var(--accent5); font-weight: 600; }
+
+  /* INFO BOXES */
+  .box {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .box-blue { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); }
+  .box-orange { background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.2); }
+  .box-green { background: rgba(127,255,127,0.05); border: 1px solid rgba(127,255,127,0.2); }
+  .box-yellow { background: rgba(255,204,0,0.06); border: 1px solid rgba(255,204,0,0.2); }
+  .box-purple { background: rgba(192,132,252,0.06); border: 1px solid rgba(192,132,252,0.2); }
+
+  .box-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .box-blue .box-label { color: var(--accent); }
+  .box-orange .box-label { color: var(--accent2); }
+  .box-green .box-label { color: var(--accent3); }
+  .box-yellow .box-label { color: var(--accent4); }
+  .box-purple .box-label { color: var(--accent5); }
+
+  .box ul { padding-left: 18px; }
+  .box li { margin-bottom: 5px; }
+
+  /* CODE / FORMULA */
+  .code {
+    background: #060a12;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+    margin: 14px 0;
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+  .code .comment { color: var(--muted); }
+  .code .keyword { color: var(--accent); }
+  .code .value { color: var(--accent4); }
+  .code .label2 { color: var(--accent2); }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th {
+    background: rgba(0,212,255,0.08);
+    color: var(--accent);
+    font-weight: 700; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 11px 14px; text-align: left;
+    border: 1px solid var(--border);
+  }
+  td { padding: 10px 14px; border: 1px solid var(--border); font-size: 14px; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  td strong { color: var(--accent4); }
+
+  /* STEPS */
+  .steps { margin: 14px 0; counter-reset: s; }
+  .step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+  .snum {
+    counter-increment: s;
+    min-width: 30px; height: 30px;
+    background: var(--accent);
+    color: #000; font-weight: 900; font-size: 13px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .scontent strong { color: var(--accent); font-size: 13px; display: block; margin-bottom: 3px; }
+  .scontent p { font-size: 14px; }
+
+  /* GRID */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .g2, .g3 { grid-template-columns: 1fr; } }
+
+  /* MEMORY TIP */
+  .tip {
+    background: rgba(255,204,0,0.05);
+    border: 1px solid rgba(255,204,0,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .tip-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent4); margin-bottom: 6px; }
+
+  /* DIAGRAM */
+  .diagram {
+    background: #060a12;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    overflow-x: auto;
+    color: var(--text);
+  }
+  .diagram .dbox { color: var(--accent); }
+  .diagram .darrow { color: var(--muted); }
+  .diagram .dlabel { color: var(--accent4); }
+  .diagram .ddata { color: var(--accent3); }
+
+  /* SECTION SEPARATOR */
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* MCQ */
+  .quiz-wrap { margin-top: 44px; }
+  .quiz-hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 16px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .quiz-hdr h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; color: #fff;
+  }
+  .qcount {
+    background: var(--accent);
+    color: #000; font-weight: 700; font-size: 12px;
+    padding: 4px 12px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .score-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px; font-size: 13px; color: var(--muted);
+  }
+  .score-row span { color: var(--accent4); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .pbar { background: var(--border); border-radius: 4px; height: 5px; margin-bottom: 24px; overflow: hidden; }
+  .pfill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent5)); border-radius: 4px; transition: width 0.5s ease; }
+
+  .qcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .qcard:hover { border-color: rgba(0,212,255,0.3); }
+  .qno { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+  .qtext { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 20px; line-height: 1.5; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 580px) { .opts { grid-template-columns: 1fr; } }
+
+  .opt {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 13px 16px;
+    text-align: left; cursor: pointer;
+    transition: all 0.18s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+  .olabel {
+    min-width: 24px; height: 24px;
+    background: var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct-bd); }
+  .opt.correct .olabel { background: var(--correct-bd); color: #000; }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong-bd); }
+  .opt.wrong .olabel { background: var(--wrong-bd); color: #fff; }
+  .opt:disabled { cursor: default; }
+
+  .expl {
+    display: none;
+    margin-top: 16px;
+    background: rgba(0,212,255,0.04);
+    border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .expl.show { display: block; animation: fadeUp 0.3s ease; }
+  .expl strong { color: var(--accent3); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="chip">🖥️ NTA UGC NET · CS Code 87 · Unit 3</div>
+  <h1>Programming Languages,<br><em>Data Structures & Algorithms</em></h1>
+  <p>Deep comprehensive guide covering language paradigms, advanced data structures, algorithmic analysis, design patterns, and solved problems with practice MCQs</p>
+  <div class="topic-pills">
+    <span class="pill">Language Paradigms</span>
+    <span class="pill">Data Structures</span>
+    <span class="pill">Algorithm Analysis</span>
+    <span class="pill">Design Patterns</span>
+    <span class="pill">Sorting & Searching</span>
+    <span class="pill">Advanced Techniques</span>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="show('prog')">💻 Programming Paradigms</button>
+  <button class="nav-btn" onclick="show('ds')">📦 Data Structures</button>
+  <button class="nav-btn" onclick="show('algo')">🔍 Algorithm Analysis</button>
+  <button class="nav-btn" onclick="show('sort')">📊 Sorting Algorithms</button>
+  <button class="nav-btn" onclick="show('search')">🎯 Searching & Trees</button>
+  <button class="nav-btn" onclick="show('dsgn')">🏗️ Design Patterns</button>
+  <button class="nav-btn" onclick="show('adv')">⚡ Advanced Topics</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════ PROGRAMMING PARADIGMS ══════════════════ -->
+<div id="prog" class="section active">
+  <div class="topic-header">
+    <div class="t-icon">💻</div>
+    <div>
+      <h2>Programming Paradigms</h2>
+      <div class="sub">Procedural · Object-Oriented · Functional · Declarative</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🌍 What are Programming Paradigms?</h3>
+    <p>A programming paradigm is a <span class="hl">fundamental style or approach</span> to writing code. It represents how we think about organizing and solving problems through code.</p>
+    <div class="box box-blue">
+      <div class="box-label">Analogy</div>
+      <p>Think of paradigms as different architectural styles (Gothic, Modern, Classical). Each has different principles, but they all serve the same purpose — building structures.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px; margin-bottom:16px; color:var(--accent4);">1️⃣ Procedural Programming</h3>
+
+  <div class="card card-accent-orange">
+    <h3>Procedural Programming Basics</h3>
+    <p>Code flows as a <span class="hl2">sequence of procedures or functions</span>. Data and logic are separate. You tell the computer HOW to do things step-by-step.</p>
+    <ul>
+      <li><span class="hl2">Languages:</span> C, Pascal, FORTRAN, BASIC</li>
+      <li><span class="hl2">Core Idea:</span> Break problem into functions</li>
+      <li><span class="hl2">Data Organization:</span> Global/local variables passed to functions</li>
+    </ul>
+    <div class="box box-orange" style="margin-top:14px;">
+      <div class="box-label">Key Characteristics</div>
+      <ul>
+        <li>Sequential execution with loops and conditionals</li>
+        <li>Functions/subroutines for code reuse</li>
+        <li>Focus on algorithms and control flow</li>
+        <li>Shared global data (less encapsulation)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3>Procedural Example: Calculate Factorial</h3>
+    <div class="code">
+<span class="comment">// C - Procedural Style</span>
+<span class="keyword">int</span> factorial(<span class="keyword">int</span> n) {
+  <span class="keyword">if</span> (n <= 1) <span class="keyword">return</span> 1;
+  <span class="keyword">return</span> n * factorial(n-1);
+}
+
+<span class="keyword">int</span> main() {
+  <span class="keyword">int</span> result = factorial(5);  <span class="comment">// 120</span>
+  printf(<span class="value">"%d"</span>, result);
+  <span class="keyword">return</span> 0;
+}</span>
+    </div>
+    <div class="box box-orange">
+      <div class="box-label">Analysis</div>
+      <p><strong>Procedural thinking:</strong> "To get factorial, call this function in sequence → recursion → return result"</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px; margin-bottom:16px; color:var(--accent5);">2️⃣ Object-Oriented Programming (OOP)</h3>
+
+  <div class="card card-accent-purple">
+    <h3>OOP Core Concepts</h3>
+    <p>Code is organized around <span class="hl5">objects</span> — data and functions bundled together. You model real-world entities as classes and interact with objects.</p>
+    <ul>
+      <li><span class="hl5">Languages:</span> Java, C++, Python, C#, Ruby</li>
+      <li><span class="hl5">Core Idea:</span> Everything is an object with properties (state) and methods (behavior)</li>
+    </ul>
+  </div>
+
+  <div class="card card-accent-purple">
+    <h3>🔑 Four Pillars of OOP</h3>
+    <div class="g2">
+      <div>
+        <p><span class="hl5">1. Encapsulation</span></p>
+        <p style="font-size:13px; margin-top:6px;">Bundling data & methods together. Hide internal details with access modifiers (public/private/protected).</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+<span class="keyword">class</span> BankAccount {
+  <span class="keyword">private</span> <span class="keyword">double</span> balance;
+  <span class="keyword">public void</span> deposit(<span class="keyword">double</span> amt) {
+    balance += amt;
+  }
+}</span>
+        </div>
+      </div>
+      <div>
+        <p><span class="hl5">2. Inheritance</span></p>
+        <p style="font-size:13px; margin-top:6px;">Child class inherits properties/methods from parent class. Enables code reuse and hierarchical relationships.</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+<span class="keyword">class</span> Animal { ... }
+<span class="keyword">class</span> Dog <span class="keyword">extends</span> Animal {
+  <span class="keyword">void</span> bark() { ... }
+}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-purple">
+    <h3 style="margin-top:0;">🔑 (continued...)</h3>
+    <div class="g2">
+      <div>
+        <p><span class="hl5">3. Polymorphism</span></p>
+        <p style="font-size:13px; margin-top:6px;">Same interface, multiple implementations. Method overriding allows behavior to differ in subclasses.</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+<span class="keyword">class</span> Dog <span class="keyword">extends</span> Animal {
+  <span class="keyword">void</span> makeSound() { 
+    System.out.println(<span class="value">"Woof!"</span>); 
+  }
+}
+<span class="keyword">class</span> Cat <span class="keyword">extends</span> Animal {
+  <span class="keyword">void</span> makeSound() { 
+    System.out.println(<span class="value">"Meow!"</span>); 
+  }
+}</span>
+        </div>
+      </div>
+      <div>
+        <p><span class="hl5">4. Abstraction</span></p>
+        <p style="font-size:13px; margin-top:6px;">Hiding complexity. Show only essential features. Use abstract classes & interfaces.</p>
+        <div class="code" style="font-size:11px; margin-top:8px;">
+<span class="keyword">abstract class</span> Shape {
+  <span class="keyword">abstract void</span> draw();
+}
+<span class="keyword">class</span> Circle <span class="keyword">extends</span> Shape {
+  <span class="keyword">void</span> draw() { ... }
+}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px; margin-bottom:16px; color:var(--accent3);">3️⃣ Functional Programming</h3>
+
+  <div class="card card-accent-green">
+    <h3>Functional Programming Principles</h3>
+    <p>Code treats computation as evaluation of <span class="hl3">mathematical functions</span>. Emphasizes immutability and avoids changing state.</p>
+    <ul>
+      <li><span class="hl3">Languages:</span> Lisp, Haskell, Scheme, Elixir, Clojure</li>
+      <li><span class="hl3">Modern Support:</span> Python, JavaScript, Java (lambdas), Kotlin</li>
+    </ul>
+    <div class="box box-green" style="margin-top:14px;">
+      <div class="box-label">Core Principles</div>
+      <ul>
+        <li><strong>Pure Functions:</strong> Same input → same output, no side effects</li>
+        <li><strong>Immutability:</strong> Data doesn't change after creation</li>
+        <li><strong>First-Class Functions:</strong> Functions as values (passed as arguments, returned)</li>
+        <li><strong>Higher-Order Functions:</strong> Functions that take/return other functions</li>
+        <li><strong>Recursion:</strong> Primary looping mechanism instead of mutations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3>Functional Example: Map, Filter, Reduce</h3>
+    <div class="code">
+<span class="comment">// JavaScript - Functional Style</span>
+<span class="keyword">const</span> numbers = [1, 2, 3, 4, 5];
+
+<span class="comment">// Map: Transform each element</span>
+<span class="keyword">const</span> doubled = numbers.map(n => n * 2);
+<span class="comment">// [2, 4, 6, 8, 10]</span>
+
+<span class="comment">// Filter: Keep elements that satisfy a condition</span>
+<span class="keyword">const</span> evens = numbers.filter(n => n % 2 === 0);
+<span class="comment">// [2, 4]</span>
+
+<span class="comment">// Reduce: Combine elements into single value</span>
+<span class="keyword">const</span> sum = numbers.reduce((acc, n) => acc + n, 0);
+<span class="comment">// 15</span>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">💡 Key Difference: Procedural vs OOP vs Functional</div>
+    <p><strong>Procedural:</strong> "How to calculate sum? Loop through array, add each element"<br>
+    <strong>OOP:</strong> "Create a List object with sum() method that knows how to add"<br>
+    <strong>Functional:</strong> "Apply reduce function to sum all elements without changing state"</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════ DATA STRUCTURES ══════════════════ -->
+<div id="ds" class="section">
+  <div class="topic-header">
+    <div class="t-icon">📦</div>
+    <div>
+      <h2>Data Structures</h2>
+      <div class="sub">Arrays · Linked Lists · Stacks · Queues · Trees · Graphs · Hash Tables</div>
+    </div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">What is a Data Structure?</div>
+    <p>A data structure is a specialized format for organizing, processing, and storing data. The right data structure can dramatically improve algorithm efficiency.</p>
+  </div>
+
+  <h3 style="margin-top:32px; margin-bottom:16px; color:var(--accent);">Linear Data Structures</h3>
+
+  <div class="card card-accent-left">
+    <h3>Arrays - Static Linear Collections</h3>
+    <p>A fixed-size collection storing elements of the <span class="hl">same type</span> in contiguous memory.</p>
+    <div class="box box-blue">
+      <div class="box-label">Characteristics</div>
+      <ul>
+        <li><strong>Access:</strong> O(1) — Direct access via index</li>
+        <li><strong>Search:</strong> O(n) — Linear search; O(log n) if sorted (binary search)</li>
+        <li><strong>Insert/Delete:</strong> O(n) — Requires shifting elements</li>
+        <li><strong>Space:</strong> O(n)</li>
+      </ul>
+    </div>
+    <div class="code">
+<span class="keyword">int</span> arr[5] = {10, 20, 30, 40, 50};
+<span class="comment">// Access in O(1)</span>
+<span class="keyword">int</span> x = arr[2];  <span class="comment">// 30</span>
+<span class="comment">// Insert 25 at index 2 — O(n) operation</span>
+<span class="comment">// {10, 20, 25, 30, 40, 50}</span>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>Linked Lists - Dynamic Linear Structures</h3>
+    <p>Nodes connected via pointers/references. Unlike arrays, can grow/shrink dynamically.</p>
+    <div class="g2">
+      <div>
+        <p><span class="hl">Singly Linked List:</span></p>
+        <div class="diagram">
+[10]→[20]→[30]→[40]→NULL
+</div>
+        <p style="margin-top:10px;"><strong>Access:</strong> O(n)<br>
+        <strong>Insert at head:</strong> O(1)<br>
+        <strong>Insert at position:</strong> O(n)<br>
+        <strong>Delete:</strong> O(n)</p>
+      </div>
+      <div>
+        <p><span class="hl">Doubly Linked List:</span></p>
+        <div class="diagram">
+NULL←[10]⇄[20]⇄[30]→NULL
+</div>
+        <p style="margin-top:10px;"><strong>Reverse traversal:</strong> O(n)<br>
+        <strong>More flexibility</strong> but more memory per node</p>
+      </div>
+    </div>
+    <div class="code">
+<span class="keyword">struct</span> Node {
+  <span class="keyword">int</span> data;
+  Node* next;
+};
+<span class="comment">// Insert at beginning: O(1)</span>
+</div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>Stacks - LIFO (Last In, First Out)</h3>
+    <p>Imagine a stack of plates — you add/remove from the top. Perfect for recursion, undo operations, expression evaluation.</p>
+    <div class="g2">
+      <div>
+        <div class="diagram">
+    [3] ← TOP (pop/peek)
+    [2]
+    [1]
+BOTTOM
+</div>
+      </div>
+      <div>
+        <div class="box box-blue">
+          <div class="box-label">Operations</div>
+          <ul>
+            <li><strong>Push(x):</strong> Add x to top — O(1)</li>
+            <li><strong>Pop():</strong> Remove from top — O(1)</li>
+            <li><strong>Peek():</strong> View top — O(1)</li>
+            <li><strong>isEmpty():</strong> O(1)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="code">
+<span class="keyword">class</span> Stack {
+  push(x) { this.arr.push(x); }
+  pop() { <span class="keyword">return</span> this.arr.pop(); }
+  peek() { <span class="keyword">return</span> this.arr[this.arr.length-1]; }
+}
+<span class="comment">// Expression evaluation: "3 + 4 * 2"
+// Check balanced parentheses
+// DFS traversal</span>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>Queues - FIFO (First In, First Out)</h3>
+    <p>Like a line at a store — first person entered is first to leave. Used in scheduling, BFS, printer queues.</p>
+    <div class="g2">
+      <div>
+        <div class="diagram">
+ENQUEUE → [1][2][3] ← DEQUEUE
+HEAD/FRONT         REAR/BACK
+</div>
+      </div>
+      <div>
+        <div class="box box-blue">
+          <div class="box-label">Operations</div>
+          <ul>
+            <li><strong>Enqueue(x):</strong> Add to rear — O(1)</li>
+            <li><strong>Dequeue():</strong> Remove from front — O(1)</li>
+            <li><strong>Front():</strong> View first elem — O(1)</li>
+            <li><strong>isEmpty():</strong> O(1)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px; margin-bottom:16px; color:var(--accent);">Non-Linear Data Structures</h3>
+
+  <div class="card card-accent-left">
+    <h3>Trees - Hierarchical Structures</h3>
+    <p>Nodes arranged in parent-child hierarchy. Root has no parent; leaves have no children.</p>
+    <div class="diagram">
+        ROOT (A)
+        /      \
+       B        C
+      / \      /
+     D   E    F
+</div>
+    <ul style="margin-top:14px;">
+      <li><strong>Binary Tree:</strong> Each node has ≤ 2 children</li>
+      <li><strong>Binary Search Tree (BST):</strong> Left child < Parent < Right child</li>
+      <li><strong>Balanced Trees:</strong> AVL, Red-Black Trees keep height O(log n)</li>
+    </ul>
+    <div class="box box-blue">
+      <div class="box-label">Tree Traversals</div>
+      <p><strong>In-Order (Left-Root-Right):</strong> For BST gives sorted sequence<br>
+      <strong>Pre-Order (Root-Left-Right):</strong> Root first, useful for copying tree<br>
+      <strong>Post-Order (Left-Right-Root):</strong> Root last, useful for deletion<br>
+      <strong>Level-Order:</strong> BFS — process by levels</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>Hash Tables - Fast Lookups</h3>
+    <p>Maps keys to values using hash function. Provides average O(1) access.</p>
+    <div class="box box-blue">
+      <div class="box-label">How Hash Tables Work</div>
+      <p>Hash function transforms key → index in array. Example: h(key) = key % table_size</p>
+    </div>
+    <div class="code">
+<span class="comment">// Collision handling: Chaining</span>
+<span class="keyword">int</span> table[10];
+<span class="comment">// Multiple elements at same hash address stored as linked list</span>
+
+<span class="comment">// Common use: Dictionary, Cache, Symbol Table</span>
+</div>
+    <div class="box box-orange">
+      <div class="box-label">Collision Handling Methods</div>
+      <ul>
+        <li><strong>Chaining:</strong> Store multiple items at same index using linked list</li>
+        <li><strong>Open Addressing:</strong> Find another empty slot (linear probe, quadratic probe, double hashing)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>Graphs - General Network Structure</h3>
+    <p>Vertices (nodes) connected by edges. Can be directed/undirected, weighted/unweighted.</p>
+    <div class="g2">
+      <div>
+        <p><strong>Directed Graph:</strong> A→B (edges have direction)</p>
+        <p><strong>Undirected Graph:</strong> A—B (two-way connection)</p>
+      </div>
+      <div>
+        <p><strong>Weighted Graph:</strong> Edges have costs/distances</p>
+        <p><strong>Unweighted Graph:</strong> All edges equal</p>
+      </div>
+    </div>
+    <div class="box box-blue">
+      <div class="box-label">Representations</div>
+      <ul>
+        <li><strong>Adjacency Matrix:</strong> Space O(V²), access O(1) — good for dense graphs</li>
+        <li><strong>Adjacency List:</strong> Space O(V+E), traverse O(V+E) — good for sparse graphs</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ ALGORITHM ANALYSIS ══════════════════ -->
+<div id="algo" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🔍</div>
+    <div>
+      <h2>Algorithm Analysis</h2>
+      <div class="sub">Time Complexity · Space Complexity · Big-O Notation · Asymptotic Analysis</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⏱️ What is Algorithm Analysis?</h3>
+    <p>Algorithm analysis measures how efficiently an algorithm uses computational resources — primarily <span class="hl">time</span> and <span class="hl">space</span> — as input size grows.</p>
+    <div class="box box-blue">
+      <div class="box-label">Why Does It Matter?</div>
+      <ul>
+        <li>Two algorithms solving same problem, different speeds</li>
+        <li>For n=10 vs n=1,000,000 → difference is crucial</li>
+        <li>Helps choose between data structures</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📊 Big-O Notation (Asymptotic Analysis)</h3>
+    <p>Describes how algorithm performance grows with input size. Focuses on <span class="hl">worst-case</span> upper bound.</p>
+    <table>
+      <tr><th>Notation</th><th>Name</th><th>Example</th><th>Impression</th></tr>
+      <tr><td><span class="hl">O(1)</span></td><td>Constant</td><td>Array access [i]</td><td>Perfect ✓</td></tr>
+      <tr><td><span class="hl">O(log n)</span></td><td>Logarithmic</td><td>Binary Search</td><td>Excellent ✓</td></tr>
+      <tr><td><span class="hl">O(n)</span></td><td>Linear</td><td>Linear Search</td><td>Good</td></tr>
+      <tr><td><span class="hl">O(n log n)</span></td><td>Linearithmic</td><td>Merge Sort, Quick Sort</td><td>Acceptable</td></tr>
+      <tr><td><span class="hl">O(n²)</span></td><td>Quadratic</td><td>Bubble Sort, Nested loops</td><td>Fair ⚠️</td></tr>
+      <tr><td><span class="hl">O(n³)</span></td><td>Cubic</td><td>3 nested loops</td><td>Poor ✗</td></tr>
+      <tr><td><span class="hl">O(2ⁿ)</span></td><td>Exponential</td><td>Subset generation</td><td>Very Poor ✗</td></tr>
+      <tr><td><span class="hl">O(n!)</span></td><td>Factorial</td><td>Permutations</td><td>Extremely Poor ✗</td></tr>
+    </table>
+    <div class="tip" style="margin-top:16px;">
+      <div class="tip-label">Visual Comparison</div>
+      <p style="font-family:'JetBrains Mono'">
+      n=10: O(n²)=100, O(n³)=1000, O(2ⁿ)=1024<br>
+      n=20: O(n²)=400, O(n³)=8000, O(2ⁿ)=1M<br>
+      n=100: O(n²)=10K, O(n³)=1M, O(2ⁿ)=10³⁰ (impossible!)
+      </p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📈 How to Calculate Time Complexity</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="snum">1</div>
+        <div class="scontent">
+          <strong>Count Basic Operations</strong>
+          <p>Find loops, recursive calls, nested structures. Each costs O(1).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum">2</div>
+        <div class="scontent">
+          <strong>For Simple Loops: Multiply Count</strong>
+          <p>Loop running n times → O(n). Nested loop n×n → O(n²).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum">3</div>
+        <div class="scontent">
+          <strong>Drop Constants & Lower Terms</strong>
+          <p>O(2n + 5) = O(n). O(n² + n) = O(n²). Keep only highest order.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:20px;">Examples</h3>
+    <div class="code">
+<span class="comment">// Example 1: Simple loop — O(n)</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < n; i++) {
+  print(arr[i]);  <span class="comment">// O(1) operation, runs n times</span>
+}
+<span class="comment">// Total: O(n)</span>
+
+<span class="comment">// Example 2: Nested loops — O(n²)</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < n; i++) {
+  <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j < n; j++) {
+    print(arr[i][j]);  <span class="comment">// O(1), runs n×n times</span>
+  }
+}
+<span class="comment">// Total: O(n²)</span>
+
+<span class="comment">// Example 3: Halving input — O(log n)</span>
+<span class="keyword">while</span> (n > 1) {
+  n = n / 2;  <span class="comment">// Loop runs log₂(n) times</span>
+}
+<span class="comment">// Total: O(log n)</span>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>💾 Space Complexity</h3>
+    <p>Measures extra memory used by algorithm (excluding input). Calculated similarly to time.</p>
+    <div class="box box-blue">
+      <div class="box-label">Common Space Complexities</div>
+      <ul>
+        <li><strong>O(1):</strong> Constant extra space (swaps, counters)</li>
+        <li><strong>O(n):</strong> Linear — creating array of size n</li>
+        <li><strong>O(log n):</strong> Recursion depth (binary search call stack)</li>
+        <li><strong>O(n²):</strong> 2D array of size n×n</li>
+      </ul>
+    </div>
+    <div class="code">
+<span class="comment">// Space O(n) — temp array</span>
+<span class="keyword">int</span>[] temp = <span class="keyword">new int</span>[n];
+<span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < n; i++) {
+  temp[i] = arr[i];
+}
+
+<span class="comment">// Space O(1) — in-place swap</span>
+<span class="keyword">int</span> x = arr[0];
+arr[0] = arr[n-1];
+arr[n-1] = x;
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">⚠️ Important: Trade-offs</div>
+    <p><strong>Time vs Space:</strong> Often inverse. Caching increases space to reduce time. Recursion may reduce time but increase space (call stack).</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════ SORTING ALGORITHMS ══════════════════ -->
+<div id="sort" class="section">
+  <div class="topic-header">
+    <div class="t-icon">📊</div>
+    <div>
+      <h2>Sorting Algorithms</h2>
+      <div class="sub">Bubble · Selection · Insertion · Merge · Quick · Heap · Counting · Radix</div>
+    </div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">Why Study Sorting?</div>
+    <p>Sorting is fundamental — enables faster searching, provides organized data, often subproblem of larger algorithms. Understanding sorting teaches complexity analysis.</p>
+  </div>
+
+  <h3 style="color:var(--accent4); margin:32px 0 16px;">Simple Sorts (Inefficient but Educational)</h3>
+
+  <div class="card card-accent-yellow">
+    <h3>Bubble Sort - The Simple Approach</h3>
+    <p>Repeatedly swap adjacent elements if they're in wrong order. "Bubbles" largest element to end each pass.</p>
+    <table>
+      <tr><th>Time (Best)</th><th>Time (Avg)</th><th>Time (Worst)</th><th>Space</th><th>Stable?</th></tr>
+      <tr><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>✓ Yes</td></tr>
+    </table>
+    <div class="code">
+<span class="keyword">void</span> bubbleSort(<span class="keyword">int</span>[] arr) {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < arr.length; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j < arr.length-i-1; j++) {
+      <span class="keyword">if</span> (arr[j] > arr[j+1]) {
+        <span class="comment">// Swap</span>
+        <span class="keyword">int</span> temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;
+      }
+    }
+  }
+}
+<span class="comment">// Input: [5, 2, 8, 1, 9]
+// Pass 1: [2, 5, 1, 8, 9]
+// Pass 2: [2, 1, 5, 8, 9]
+// Pass 3: [1, 2, 5, 8, 9] ✓</span>
+    </div>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3>Selection Sort - Divide & Minimize</h3>
+    <p>Partition array into sorted/unsorted. Repeatedly find minimum in unsorted, move to sorted.</p>
+    <table>
+      <tr><th>Time (All Cases)</th><th>Space</th><th>Stable?</th></tr>
+      <tr><td>O(n²)</td><td>O(1)</td><td>✗ No</td></tr>
+    </table>
+    <div class="code">
+<span class="keyword">void</span> selectionSort(<span class="keyword">int</span>[] arr) {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < arr.length; i++) {
+    <span class="keyword">int</span> minIdx = i;
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = i+1; j < arr.length; j++)
+      <span class="keyword">if</span> (arr[j] < arr[minIdx]) minIdx = j;
+    <span class="comment">// Swap minimum with position i</span>
+    <span class="keyword">int</span> temp = arr[i];
+    arr[i] = arr[minIdx];
+    arr[minIdx] = temp;
+  }
+}
+    </div>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3>Insertion Sort - Efficient for Small Arrays</h3>
+    <p>Build sorted array element by element. Insert next element into correct position in sorted portion.</p>
+    <table>
+      <tr><th>Time (Best)</th><th>Time (Avg)</th><th>Time (Worst)</th><th>Space</th></tr>
+      <tr><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+    </table>
+    <div class="code">
+<span class="keyword">void</span> insertionSort(<span class="keyword">int</span>[] arr) {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = 1; i < arr.length; i++) {
+    <span class="keyword">int</span> key = arr[i];
+    <span class="keyword">int</span> j = i-1;
+    <span class="keyword">while</span> (j >= 0 && arr[j] > key) {
+      arr[j+1] = arr[j];
+      j--;
+    }
+    arr[j+1] = key;
+  }
+}
+    </div>
+    <div class="box box-yellow">
+      <div class="box-label">Best Use Case</div>
+      <p>Nearly sorted arrays, small arrays (< 50 elements), online sorting</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent3); margin:32px 0 16px;">Efficient Sorts (Production Quality)</h3>
+
+  <div class="card card-accent-green">
+    <h3>Merge Sort - Divide & Conquer Giant</h3>
+    <p>Divide array in half recursively, then merge sorted halves. Guaranteed O(n log n).</p>
+    <table>
+      <tr><th>Time (All Cases)</th><th>Space</th><th>Stable?</th></tr>
+      <tr><td>O(n log n)</td><td>O(n)</td><td>✓ Yes</td></tr>
+    </table>
+    <div class="box box-green">
+      <div class="box-label">Algorithm Steps</div>
+      <div class="steps">
+        <div class="step">
+          <div class="snum">1</div>
+          <div class="scontent"><strong>Divide</strong> array at midpoint</div>
+        </div>
+        <div class="step">
+          <div class="snum">2</div>
+          <div class="scontent"><strong>Recursively</strong> sort left and right halves</div>
+        </div>
+        <div class="step">
+          <div class="snum">3</div>
+          <div class="scontent"><strong>Merge</strong> sorted halves maintaining order</div>
+        </div>
+      </div>
+    </div>
+    <div class="code">
+<span class="keyword">void</span> mergeSort(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
+  <span class="keyword">if</span> (left < right) {
+    <span class="keyword">int</span> mid = left + (right - left) / 2;
+    mergeSort(arr, left, mid);
+    mergeSort(arr, mid+1, right);
+    merge(arr, left, mid, right);  <span class="comment">// Merge sorted parts</span>
+  }
+}
+<span class="comment">// Example: [5,2,8,1] → [2,1,5,8] → [1,2,5,8]</span>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3>Quick Sort - Average Case King</h3>
+    <p>Partition array using pivot, recursively sort partitions. Average O(n log n), worst O(n²).</p>
+    <table>
+      <tr><th>Time (Best)</th><th>Time (Avg)</th><th>Time (Worst)</th><th>Space</th></tr>
+      <tr><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)*</td></tr>
+    </table>
+    <p style="font-size:12px; color:var(--muted);">* Call stack depth</p>
+    <div class="box box-green">
+      <div class="box-label">Smart Pivot Selection</div>
+      <ul>
+        <li>Random pivot → expected O(n log n)</li>
+        <li>Median-of-three → reduces worst case probability</li>
+        <li>Bad pivot → O(n²) (avoid!)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3>Heap Sort - Space Efficient & Guaranteed</h3>
+    <p>Build max heap, repeatedly extract max. O(n log n) guaranteed, O(1) space.</p>
+    <table>
+      <tr><th>Time (All Cases)</th><th>Space</th><th>Stable?</th></tr>
+      <tr><td>O(n log n)</td><td>O(1)</td><td>✗ No</td></tr>
+    </table>
+    <div class="box box-green">
+      <div class="box-label">Advantage</div>
+      <p>Worst-case guaranteed unlike Quick Sort. Used in priority queues, heap-based algorithms.</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent5); margin:32px 0 16px;">Specialized Sorts (Non-Comparative)</h3>
+
+  <div class="card card-accent-purple">
+    <h3>Counting Sort - For Integer-Keyed Data</h3>
+    <p>Count occurrences of each value, reconstruct sorted array. O(n + k) where k = range of values.</p>
+    <div class="box box-purple">
+      <div class="box-label">When to Use</div>
+      <ul>
+        <li>Small range of integers: k ≈ n</li>
+        <li>Not comparative — doesn't use comparisons</li>
+        <li>Example: Sort 1 million numbers in range 1-100</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-purple">
+    <h3>Radix Sort - Multi-Digit Integers</h3>
+    <p>Sort by each digit/position from least to most significant. O(d × (n + k)) where d = digit positions.</p>
+    <div class="box box-purple">
+      <div class="box-label">Use Case</div>
+      <p>Sorting integers with many digits, string sorting, practical for huge datasets with small k.</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-label">🎯 Sorting Algorithm Comparison Guide</div>
+    <p><strong>Quick Sort:</strong> Industry standard (Java, C++). Fast in practice despite O(n²) worst case.<br>
+    <strong>Merge Sort:</strong> When guaranteed O(n log n) needed & stability matters. Preferred for linked lists.<br>
+    <strong>Heap Sort:</strong> When worst-case must be O(n log n) & space critical.<br>
+    <strong>Counting/Radix:</strong> Restricted domains, huge datasets.</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════ SEARCHING & TREES ══════════════════ -->
+<div id="search" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🎯</div>
+    <div>
+      <h2>Searching & Tree Structures</h2>
+      <div class="sub">Linear Search · Binary Search · BST · AVL · B-Trees · Hashing</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔎 Linear Search - Brute Force</h3>
+    <p>Check each element sequentially until found. Simple but O(n).</p>
+    <table>
+      <tr><th>Time</th><th>Space</th><th>Data Requirement</th></tr>
+      <tr><td>O(n)</td><td>O(1)</td><td>Unsorted works fine</td></tr>
+    </table>
+    <div class="code">
+<span class="keyword">int</span> linearSearch(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> target) {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < arr.length; i++)
+    <span class="keyword">if</span> (arr[i] == target) <span class="keyword">return</span> i;
+  <span class="keyword">return</span> -1;  <span class="comment">// Not found</span>
+}
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⚡ Binary Search - Efficient Log Approach</h3>
+    <p>Repeatedly divide sorted array in half. O(log n) — exponentially faster than linear!</p>
+    <table>
+      <tr><th>Time</th><th>Space</th><th>Requirement</th></tr>
+      <tr><td>O(log n)</td><td>O(1)</td><td><strong>MUST be sorted</strong></td></tr>
+    </table>
+    <div class="code">
+<span class="keyword">int</span> binarySearch(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> target) {
+  <span class="keyword">int</span> left = 0, right = arr.length - 1;
+  <span class="keyword">while</span> (left <= right) {
+    <span class="keyword">int</span> mid = left + (right - left) / 2;
+    <span class="keyword">if</span> (arr[mid] == target) <span class="keyword">return</span> mid;
+    <span class="keyword">else if</span> (arr[mid] < target) left = mid + 1;
+    <span class="keyword">else</span> right = mid - 1;
+  }
+  <span class="keyword">return</span> -1;
+}
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Why Mid = left + (right-left)/2?</div>
+      <p>Prevents integer overflow! (left + right) might exceed MAX_INT, but (right - left)/2 is safe.</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🌳 Binary Search Trees (BST)</h3>
+    <p>Each node: Left subtree < node < Right subtree. Enables O(log n) search in balanced tree.</p>
+    <div class="box box-blue">
+      <div class="box-label">BST Operations</div>
+      <ul>
+        <li><strong>Search:</strong> O(log n) average, O(n) worst (unbalanced)</li>
+        <li><strong>Insert:</strong> Find position, add node — O(log n) average</li>
+        <li><strong>Delete:</strong> Requires rebalancing — O(log n) average</li>
+      </ul>
+    </div>
+    <div class="diagram">
+        8
+       /  \
+      5    12
+     / \   / \
+    3   7 10  15
+</div>
+    <p style="margin-top:14px;"><strong>In-order traversal (3,5,7,8,10,12,15):</strong> Gives sorted sequence from BST!</p>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>⚖️ Balanced Trees - AVL & Red-Black</h3>
+    <p>Self-balancing BSTs maintain height O(log n), guaranteeing O(log n) operations always.</p>
+    <div class="g2">
+      <div>
+        <p><span class="hl">AVL Tree</span></p>
+        <div class="box box-blue">
+          <p style="font-size:13px;"><strong>Height balance:</strong> Height difference ≤ 1</p>
+          <p style="font-size:13px;"><strong>Rotations:</strong> Rebalance via rotations on insert/delete</p>
+        </div>
+      </div>
+      <div>
+        <p><span class="hl">Red-Black Tree</span></p>
+        <div class="box box-blue">
+          <p style="font-size:13px;"><strong>Color property:</strong> Nodes colored red/black</p>
+          <p style="font-size:13px;"><strong>Fewer rotations:</strong> Less overhead than AVL</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🌲 B-Trees - Databases Love These</h3>
+    <p>Multi-way trees where each node can have many children. Used in databases, file systems.</p>
+    <div class="box box-blue">
+      <div class="box-label">B-Tree Properties</div>
+      <ul>
+        <li>Each node has ≤ m children (m = order)</li>
+        <li>All leaves at same level</li>
+        <li>Minimizes disk accesses (groups keys together)</li>
+        <li>Perfect for external storage</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ DESIGN PATTERNS ══════════════════ -->
+<div id="dsgn" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🏗️</div>
+    <div>
+      <h2>Design Patterns</h2>
+      <div class="sub">Creational · Structural · Behavioral patterns for scalable software</div>
+    </div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-label">What are Design Patterns?</div>
+    <p>Reusable solutions to common software design problems. Proven blueprints for creating flexible, maintainable code. Like architectural patterns for buildings.</p>
+  </div>
+
+  <h3 style="color:var(--accent4); margin:32px 0 16px;">Creational Patterns (Object Creation)</h3>
+
+  <div class="card card-accent-yellow">
+    <h3>Singleton Pattern</h3>
+    <p>Single instance of a class, globally accessible. Prevents multiple instantiation.</p>
+    <div class="box box-yellow">
+      <div class="box-label">Use Cases</div>
+      <p>Database connection pool, Logger, Configuration manager, Thread pool</p>
+    </div>
+    <div class="code">
+<span class="keyword">class</span> Singleton {
+  <span class="keyword">private static</span> Singleton instance;
+  
+  <span class="keyword">private</span> Singleton() {}  <span class="comment">// Private constructor</span>
+  
+  <span class="keyword">public static</span> Singleton getInstance() {
+    <span class="keyword">if</span> (instance == <span class="keyword">null</span>)
+      instance = <span class="keyword">new</span> Singleton();
+    <span class="keyword">return</span> instance;
+  }
+}
+
+<span class="comment">// Usage:</span>
+Singleton s = Singleton.getInstance();
+</div>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3>Factory Pattern</h3>
+    <p>Create objects without specifying exact classes. Encapsulates object creation logic.</p>
+    <div class="box box-yellow">
+      <div class="box-label">Benefit</div>
+      <p>Decouples creation from usage. Easy to add new types without changing client code.</p>
+    </div>
+    <div class="code">
+<span class="keyword">class</span> DatabaseFactory {
+  <span class="keyword">public static</span> Database createDB(String type) {
+    <span class="keyword">if</span> (type.equals(<span class="value">"mysql"</span>)) 
+      <span class="keyword">return new</span> MySQLDatabase();
+    <span class="keyword">else if</span> (type.equals(<span class="value">"mongodb"</span>)) 
+      <span class="keyword">return new</span> MongoDatabase();
+    <span class="keyword">return null</span>;
+  }
+}
+
+<span class="comment">// Usage:</span>
+Database db = DatabaseFactory.createDB(<span class="value">"mysql"</span>);
+</div>
+  </div>
+
+  <h3 style="color:var(--accent2); margin:32px 0 16px;">Behavioral Patterns (Object Interaction)</h3>
+
+  <div class="card card-accent-orange">
+    <h3>Observer Pattern</h3>
+    <p>Subjects notify multiple observers of state changes. Enables loose coupling.</p>
+    <div class="box box-orange">
+      <div class="box-label">Real-world Example</div>
+      <p>Event listeners in UI — button click notifies multiple handlers</p>
+    </div>
+    <div class="code">
+<span class="keyword">interface</span> Observer {
+  <span class="keyword">void</span> update(String event);
+}
+
+<span class="keyword">class</span> Button {
+  <span class="keyword">private</span> List&lt;Observer&gt; observers;
+  
+  <span class="keyword">void</span> click() {
+    <span class="keyword">for</span> (Observer obs : observers)
+      obs.update(<span class="value">"Button Clicked"</span>);  <span class="comment">// Notify all</span>
+  }
+}
+</code>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3>Strategy Pattern</h3>
+    <p>Different algorithms interchangeable at runtime. Choose strategy dynamically.</p>
+    <div class="box box-orange">
+      <div class="box-label">Use Case</div>
+      <p>Payment methods (Credit Card, PayPal, Bitcoin), Sorting strategies</p>
+    </div>
+    <div class="code">
+<span class="keyword">interface</span> PaymentStrategy {
+  <span class="keyword">void</span> pay(<span class="keyword">double</span> amount);
+}
+
+<span class="keyword">class</span> CreditCardPayment <span class="keyword">implements</span> PaymentStrategy {
+  <span class="keyword">public void</span> pay(<span class="keyword">double</span> amount) {
+    System.out.println(<span class="value">"Pay "</span> + amount + <span class="value">" via Credit Card"</span>);
+  }
+}
+
+<span class="comment">// Runtime selection:</span>
+PaymentStrategy strategy = <span class="keyword">new</span> CreditCardPayment();
+strategy.pay(100);
+</code>
+  </div>
+
+</div>
+
+<!-- ══════════════════ ADVANCED TOPICS ══════════════════ -->
+<div id="adv" class="section">
+  <div class="topic-header">
+    <div class="t-icon">⚡</div>
+    <div>
+      <h2>Advanced Topics</h2>
+      <div class="sub">Dynamic Programming · Greedy · Divide & Conquer · Graph Algorithms</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🔄 Dynamic Programming - Overlapping Subproblems</h3>
+    <p>Solve complex problems by breaking into overlapping subproblems, reusing solutions (memoization).</p>
+    <div class="box box-blue">
+      <div class="box-label">When to Use DP</div>
+      <ul>
+        <li>Problem has <strong>optimal substructure</strong> (optimal solution contains optimal subsolutions)</li>
+        <li>Problem has <strong>overlapping subproblems</strong> (recalculates same subproblems)</li>
+      </ul>
+    </div>
+    <div class="code">
+<span class="comment">// Fibonacci with DP (Memoization)</span>
+<span class="keyword">int</span> memo[100];
+
+<span class="keyword">int</span> fib(<span class="keyword">int</span> n) {
+  <span class="keyword">if</span> (n <= 1) <span class="keyword">return</span> n;
+  <span class="keyword">if</span> (memo[n] != 0) <span class="keyword">return</span> memo[n];
+  memo[n] = fib(n-1) + fib(n-2);
+  <span class="keyword">return</span> memo[n];
+}
+<span class="comment">// Without DP: O(2ⁿ) exponential
+// With DP: O(n) linear! (compute each once)</span>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🎯 Greedy Algorithms - Local Optimization</h3>
+    <p>Make locally optimal choice at each step. Works when greedy choice leads to global optimum.</p>
+    <div class="box box-blue">
+      <div class="box-label">Classic Examples</div>
+      <ul>
+        <li><strong>Huffman Coding:</strong> Build optimal prefix codes for compression</li>
+        <li><strong>Activity Selection:</strong> Select maximum non-overlapping activities</li>
+        <li><strong>Minimum Spanning Tree:</strong> Kruskal's & Prim's algorithms</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>✂️ Divide & Conquer - Split, Solve, Combine</h3>
+    <p>Break problem into smaller independent subproblems, solve recursively, combine solutions.</p>
+    <div class="box box-blue">
+      <div class="box-label">Characteristics</div>
+      <ul>
+        <li>Divide problem into independent parts</li>
+        <li>Recursively solve subproblems</li>
+        <li>Combine subsolutions</li>
+        <li>Usually O(n log n) complexity</li>
+      </ul>
+    </div>
+    <div class="box box-blue" style="margin-top:14px;">
+      <div class="box-label">Examples</div>
+      <p>Merge Sort, Quick Sort, Binary Search, Strassen's Matrix Multiplication</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>🕸️ Graph Algorithms</h3>
+    <div class="g2">
+      <div>
+        <p><span class="hl">Depth-First Search (DFS)</span></p>
+        <div class="code" style="font-size:11px;">
+<span class="keyword">void</span> dfs(node) {
+  visited[node] = <span class="keyword">true</span>;
+  <span class="keyword">for each</span> neighbor:
+    <span class="keyword">if</span> (!visited[neighbor])
+      dfs(neighbor);
+}
+<span class="comment">// Uses stack/recursion
+// Time: O(V+E)</span>
+</div>
+      </div>
+      <div>
+        <p><span class="hl">Breadth-First Search (BFS)</span></p>
+        <div class="code" style="font-size:11px;">
+<span class="keyword">void</span> bfs(start) {
+  Queue q;
+  q.enqueue(start);
+  <span class="keyword">while</span> (!q.empty()) {
+    node = q.dequeue();
+    <span class="keyword">for each</span> neighbor:
+      q.enqueue(neighbor);
+  }
+}
+<span class="comment">// Uses queue
+// Time: O(V+E)</span>
+</div>
+      </div>
+    </div>
+    <div class="box box-blue" style="margin-top:14px;">
+      <div class="box-label">Shortest Path Algorithms</div>
+      <ul>
+        <li><strong>Dijkstra:</strong> Single-source shortest paths, non-negative weights — O((V+E)log V)</li>
+        <li><strong>Bellman-Ford:</strong> Handles negative weights — O(VE)</li>
+        <li><strong>Floyd-Warshall:</strong> All pairs shortest paths — O(V³)</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ MCQs ══════════════════ -->
+<div id="quiz" style="display:none;">
+  <div style="margin-top:40px; margin-bottom:60px;">
+    <h2 style="font-size:24px; margin-bottom:24px; color:#fff;">📝 Practice Questions</h2>
+    
+    <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    <div class="score-row"><span>Question <span id="qnum">1</span> of 15</span> <span id="score">0/15 (0%)</span></div>
+
+    <!-- Q1 -->
+    <div class="qcard">
+      <div class="qno">Question 1</div>
+      <div class="qtext">Which of the following is NOT a programming paradigm?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Functional Programming</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Object-Oriented Programming</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">C</span>Graphical Programming</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Procedural Programming</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Paradigms are fundamental approaches (OOP, Functional, Procedural, Declarative). "Graphical programming" is a tool/interface, not a fundamental paradigm.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="qcard">
+      <div class="qno">Question 2</div>
+      <div class="qtext">What is the time complexity of binary search?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>O(n)</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>O(log n)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>O(n²)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>O(n log n)</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Binary search repeatedly halves the search space. Each operation: n → n/2 → n/4 → ... → 1, requiring log₂(n) iterations.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="qcard">
+      <div class="qno">Question 3</div>
+      <div class="qtext">Which data structure uses LIFO (Last In, First Out) principle?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Stack</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Queue</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Array</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Linked List</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Stacks use LIFO — last pushed element is first popped. Queues use FIFO (First In, First Out).</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="qcard">
+      <div class="qno">Question 4</div>
+      <div class="qtext">What is the worst-case time complexity of quicksort?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>O(n log n)</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>O(n²)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>O(n)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>O(2ⁿ)</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Worst case occurs with poor pivot selection (e.g., always picking smallest/largest). Average case is O(n log n), but worst is O(n²).</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="qcard">
+      <div class="qno">Question 5</div>
+      <div class="qtext">In an AVL tree, what is maintained to ensure balance?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Height difference of left/right subtrees ≤ 1</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Number of nodes must be equal on both sides</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>All leaves at different levels</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Tree must be complete binary tree</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> AVL trees maintain a balance factor (height difference) of at most ±1 between left and right subtrees, ensuring O(log n) operations.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="qcard">
+      <div class="qno">Question 6</div>
+      <div class="qtext">Which sorting algorithm has the best average case time complexity?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Bubble Sort</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Merge Sort / Quick Sort</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Selection Sort</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Insertion Sort</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Both Merge Sort and Quick Sort have O(n log n) average case. Merge Sort is guaranteed; Quick Sort depends on pivot. Bubble/Selection are O(n²).</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="qcard">
+      <div class="qno">Question 7</div>
+      <div class="qtext">What does Big-O notation describe?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Upper bound on algorithm growth rate (worst case)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Exact running time in milliseconds</span></button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Lower bound on algorithm efficiency</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Average case complexity only</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Big-O describes worst-case upper bound on growth rate as input size increases. For example, O(n²) means at most quadratic operations.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="qcard">
+      <div class="qno">Question 8</div>
+      <div class="qtext">Which pattern ensures only one instance of a class exists?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Singleton Pattern</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Factory Pattern</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Observer Pattern</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Strategy Pattern</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Singleton pattern uses private constructor and static method to ensure only one instance. Used for loggers, database connections.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="qcard">
+      <div class="qno">Question 9</div>
+      <div class="qtext">What is the space complexity of merge sort?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>O(1)</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>O(n)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>O(log n)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>O(n²)</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Merge sort requires temporary arrays during merge operations, necessitating O(n) extra space. Unlike quick sort which is O(log n).</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="qcard">
+      <div class="qno">Question 10</div>
+      <div class="qtext">In a hash table, what is the average time complexity of search, insert, and delete?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>O(1)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>O(log n)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>O(n)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>O(n log n)</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> With good hash function and collision handling, average is O(1). Worst case (all collisions) is O(n), but rare with proper implementation.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="qcard">
+      <div class="qno">Question 11</div>
+      <div class="qtext">Which approach uses "optimal substructure" and "overlapping subproblems"?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">A</span>Dynamic Programming</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">B</span>Greedy Algorithms</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Divide & Conquer</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Brute Force</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> DP solves overlapping subproblems via memoization. Greedy doesn't need overlapping. D&C typically solves independent subproblems.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="qcard">
+      <div class="qno">Question 12</div>
+      <div class="qtext">What time complexity does BFS have for traversing a graph?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>O(V²)</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>O(V + E)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>O(V*E)</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>O(log V)</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> BFS/DFS visit each vertex once (V) and traverse each edge once (E), resulting in O(V+E). Same as both traversal methods.</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="qcard">
+      <div class="qno">Question 13</div>
+      <div class="qtext">Which of the following is a characteristic of pure functions in functional programming?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>They modify global state</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Same input always produces same output, no side effects</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>They use loops instead of recursion</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>They encapsulate data within objects</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Pure functions are deterministic (same input → same output) and have no side effects. They're the foundation of functional programming.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="qcard">
+      <div class="qno">Question 14</div>
+      <div class="qtext">What is the main advantage of encapsulation in OOP?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Makes code run faster</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Hides internal complexity, controls access to data</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Allows multiple inheritance</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Enables functional programming</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Encapsulation bundles data and methods, using access modifiers to control exposure. Improves maintainability and prevents misuse.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="qcard">
+      <div class="qno">Question 15</div>
+      <div class="qtext">Which algorithm guarantees O(n log n) in worst case without using extra space?</div>
+      <div class="opts">
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">A</span>Quick Sort</button>
+        <button class="opt" onclick="checkAns(this, true)"><span class="olabel">B</span>Heap Sort</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">C</span>Merge Sort</button>
+        <button class="opt" onclick="checkAns(this, false)"><span class="olabel">D</span>Bubble Sort</button>
+      </div>
+      <div class="expl"><strong>Explanation:</strong> Heap Sort guarantees O(n log n) (not O(n²) like Quick Sort worst case) and uses O(1) extra space (in-place). Merge Sort needs O(n) extra space.</div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+function show(tab) {
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(s => s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  window.scrollTo(0, 0);
+}
+
+let correctCount = 0;
+
+function checkAns(btn, isCorrect) {
+  const btns = btn.parentElement.querySelectorAll('.opt');
+  btns.forEach(b => b.disabled = true);
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    correctCount++;
+  } else {
+    btn.classList.add('wrong');
+    for (let b of btns) {
+      if (b.disabled && b.classList.contains('correct') === false && !isCorrect) {
+        if (b.childNodes[1].textContent.trim() === 
+            btns[Array.from(btns).findIndex(x => x.textContent.includes(b.childNodes[1].textContent))].childNodes[1].textContent.trim()) {
+          b.classList.add('correct');
+          break;
+        }
+      }
+    }
+  }
+  
+  const expl = btn.closest('.qcard').querySelector('.expl');
+  if (expl) expl.classList.add('show');
+  
+  updateScore();
+  
+  setTimeout(() => {
+    btn.closest('.qcard').style.opacity = '0.6';
+  }, 1000);
+}
+
+function updateScore() {
+  const total = document.querySelectorAll('.qcard').length;
+  const percent = Math.round((correctCount / total) * 100);
+  document.getElementById('score').textContent = `${correctCount}/${total} (${percent}%)`;
+  document.querySelector('.pfill').style.width = percent + '%';
+}
+</script>
+
+</body>
+</html>
