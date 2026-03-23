@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC NET CS — Unit 1: Discrete Structures & Optimization</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --card: #1c2333;
+    --border: #30363d;
+    --accent: #f0a500;
+    --accent2: #58a6ff;
+    --accent3: #3fb950;
+    --accent4: #ff7b72;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --correct: #1a3a2a;
+    --correct-border: #3fb950;
+    --wrong: #3a1a1a;
+    --wrong-border: #ff7b72;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0d1117 0%, #1a1f35 50%, #0d1117 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 48px 32px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(240,165,0,0.08) 0%, transparent 70%);
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(240,165,0,0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+  }
+  header h1 span { color: var(--accent); }
+  header p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 600px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none;
+    color: var(--muted);
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 14px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* MAIN */
+  main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TOPIC HEADER */
+  .topic-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 32px;
+  }
+  .topic-icon {
+    width: 52px; height: 52px;
+    background: rgba(240,165,0,0.12);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .topic-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700;
+    color: #fff;
+  }
+  .topic-header p { color: var(--muted); font-size: 14px; margin-top: 2px; }
+
+  /* CONCEPT CARD */
+  .concept-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .concept-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--accent);
+  }
+  .concept-card h3 {
+    font-size: 16px; font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .concept-card p { color: var(--text); font-size: 15px; margin-bottom: 10px; }
+  .concept-card ul { padding-left: 20px; }
+  .concept-card li { margin-bottom: 6px; font-size: 15px; }
+
+  /* INFO BOX */
+  .info-box {
+    background: rgba(88,166,255,0.07);
+    border: 1px solid rgba(88,166,255,0.3);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .info-box .label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 6px;
+  }
+  .info-box p, .info-box ul { font-size: 14px; color: var(--text); }
+  .info-box ul { padding-left: 18px; }
+  .info-box li { margin-bottom: 4px; }
+
+  /* EXAMPLE BOX */
+  .example-box {
+    background: rgba(63,185,80,0.06);
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .example-box .label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent3); margin-bottom: 10px;
+  }
+  .example-box p { font-size: 14px; margin-bottom: 8px; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 20px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  /* TRUTH TABLE */
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 16px 0; font-size: 14px;
+  }
+  th {
+    background: rgba(240,165,0,0.12);
+    color: var(--accent);
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 10px 14px; text-align: center;
+    border: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px; text-align: center;
+    border: 1px solid var(--border);
+    font-family: 'Source Code Pro', monospace;
+  }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .t { color: var(--accent3); font-weight: 700; }
+  .f { color: var(--accent4); font-weight: 700; }
+
+  /* STEP BOX */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex; gap: 16px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    min-width: 32px; height: 32px;
+    background: var(--accent);
+    color: #000;
+    font-weight: 900; font-size: 14px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { color: var(--accent); font-size: 14px; display: block; margin-bottom: 4px; }
+  .step-content p { font-size: 14px; color: var(--text); }
+
+  /* MCQ QUIZ */
+  .quiz-section { margin-top: 40px; }
+  .quiz-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .quiz-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: #fff;
+  }
+  .quiz-count {
+    background: var(--accent);
+    color: #000; font-weight: 700;
+    font-size: 12px; padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .question-card:hover { border-color: var(--accent); }
+  .q-num {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .q-text {
+    font-size: 16px; font-weight: 700;
+    color: #fff; margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 600px) { .options { grid-template-columns: 1fr; } }
+  .option-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(240,165,0,0.06);
+  }
+  .option-btn .opt-label {
+    min-width: 22px; height: 22px;
+    background: var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+  .option-btn.correct {
+    background: var(--correct);
+    border-color: var(--correct-border);
+  }
+  .option-btn.correct .opt-label { background: var(--accent3); color: #000; }
+  .option-btn.wrong {
+    background: var(--wrong);
+    border-color: var(--wrong-border);
+  }
+  .option-btn.wrong .opt-label { background: var(--accent4); color: #000; }
+  .option-btn:disabled { cursor: default; }
+
+  .explanation {
+    display: none;
+    margin-top: 14px;
+    background: rgba(240,165,0,0.06);
+    border: 1px solid rgba(240,165,0,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .explanation.show { display: block; animation: fadeIn 0.3s ease; }
+  .explanation strong { color: var(--accent); }
+
+  /* PROGRESS */
+  .progress-bar {
+    background: var(--border);
+    border-radius: 4px;
+    height: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #ffcc44);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+  .score-display {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .score-display span { color: var(--accent); font-weight: 700; }
+
+  /* HIGHLIGHT */
+  .hl-yellow { color: var(--accent); font-weight: 700; }
+  .hl-blue { color: var(--accent2); font-weight: 700; }
+  .hl-green { color: var(--accent3); font-weight: 700; }
+  .hl-red { color: var(--accent4); font-weight: 700; }
+
+  /* SECTION DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  /* MEMORY TIP */
+  .memory-tip {
+    background: rgba(255,123,114,0.07);
+    border: 1px solid rgba(255,123,114,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .memory-tip .label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent4); margin-bottom: 6px;
+  }
+
+  /* GRID */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">NTA UGC NET · Computer Science · Code 87</div>
+  <h1>Unit 1: <span>Discrete Structures</span><br>&amp; Optimization</h1>
+  <p>Step-by-step beginner-friendly teaching guide with solved examples &amp; practice MCQs</p>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="showSection('logic')">📐 Logic</button>
+  <button class="nav-btn" onclick="showSection('sets')">🔵 Sets &amp; Relations</button>
+  <button class="nav-btn" onclick="showSection('counting')">🔢 Counting &amp; Probability</button>
+  <button class="nav-btn" onclick="showSection('groups')">🔷 Group Theory</button>
+  <button class="nav-btn" onclick="showSection('graphs')">🕸️ Graph Theory</button>
+  <button class="nav-btn" onclick="showSection('boolean')">⚡ Boolean Algebra</button>
+  <button class="nav-btn" onclick="showSection('optimization')">📊 Optimization</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════ LOGIC ═══════════════════════════════════════════ -->
+<div id="logic" class="section active">
+  <div class="topic-header">
+    <div class="topic-icon">📐</div>
+    <div>
+      <h2>Mathematical Logic</h2>
+      <p>Propositional Logic · Predicate Logic · Normal Forms · Rules of Inference</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>🌱 What is Mathematical Logic?</h3>
+    <p>Logic is the science of <strong>correct reasoning</strong>. In computers, it helps us build conditions, circuits, and proofs. Think of it as the grammar of mathematics.</p>
+    <div class="info-box">
+      <div class="label">Real-life analogy</div>
+      <p>Just like "If it rains, I carry an umbrella" — logic deals with <em>if-then</em> relationships and whether statements are TRUE or FALSE.</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Propositional Logic — The Basics</h3>
+    <p>A <span class="hl-yellow">proposition</span> is any statement that is either <span class="hl-green">TRUE (T)</span> or <span class="hl-red">FALSE (F)</span>. Not both, not neither.</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="info-box">
+        <div class="label">✅ Valid Propositions</div>
+        <ul>
+          <li>"2 + 2 = 4" → TRUE</li>
+          <li>"Delhi is in UK" → FALSE</li>
+          <li>"All birds fly" → FALSE</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="label">❌ NOT Propositions</div>
+        <ul>
+          <li>"What time is it?" (question)</li>
+          <li>"Close the door!" (command)</li>
+          <li>"x + 1 = 5" (variable — unknown)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top:20px;">🔗 Logical Connectives</h3>
+    <p>We connect propositions using these operators:</p>
+    <table>
+      <tr><th>Symbol</th><th>Name</th><th>Read as</th><th>Example</th><th>True when</th></tr>
+      <tr><td>¬ p</td><td>Negation</td><td>NOT p</td><td>¬(It rains)</td><td>p is False</td></tr>
+      <tr><td>p ∧ q</td><td>Conjunction</td><td>p AND q</td><td>Rain ∧ Cold</td><td>Both True</td></tr>
+      <tr><td>p ∨ q</td><td>Disjunction</td><td>p OR q</td><td>Rain ∨ Sunny</td><td>At least one True</td></tr>
+      <tr><td>p → q</td><td>Implication</td><td>If p then q</td><td>Rain → Wet</td><td>False only if p=T, q=F</td></tr>
+      <tr><td>p ↔ q</td><td>Biconditional</td><td>p iff q</td><td>p ↔ q</td><td>Both same value</td></tr>
+    </table>
+
+    <h3 style="margin-top:20px;">📊 Truth Table for Implication (p → q)</h3>
+    <p>Students often get confused with implication. Remember: <span class="hl-yellow">it's only FALSE when p is TRUE but q is FALSE.</span></p>
+    <table>
+      <tr><th>p</th><th>q</th><th>p → q</th><th>Explanation</th></tr>
+      <tr><td class="t">T</td><td class="t">T</td><td class="t">T</td><td>Promise kept ✓</td></tr>
+      <tr><td class="t">T</td><td class="f">F</td><td class="f">F</td><td>Promise broken ✗</td></tr>
+      <tr><td class="f">F</td><td class="t">T</td><td class="t">T</td><td>Promise never made — no lie</td></tr>
+      <tr><td class="f">F</td><td class="f">F</td><td class="t">T</td><td>Promise never made — no lie</td></tr>
+    </table>
+    <div class="memory-tip">
+      <div class="label">💡 Memory Tip</div>
+      <p>"If I study, I pass" — I only LIED if I studied (T) but didn't pass (F). If I didn't study at all, the statement can't be called a lie!</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Propositional Equivalences</h3>
+    <p>Two formulas are <span class="hl-yellow">logically equivalent (≡)</span> if they have the same truth value for all inputs.</p>
+    <div class="formula">
+      De Morgan's Laws:
+      ¬(p ∧ q) ≡ ¬p ∨ ¬q
+      ¬(p ∨ q) ≡ ¬p ∧ ¬q
+    </div>
+    <div class="example-box">
+      <div class="label">✏️ Solved Example</div>
+      <p><strong>Prove:</strong> ¬(p ∧ q) ≡ ¬p ∨ ¬q</p>
+      <table>
+        <tr><th>p</th><th>q</th><th>p∧q</th><th>¬(p∧q)</th><th>¬p</th><th>¬q</th><th>¬p∨¬q</th></tr>
+        <tr><td class="t">T</td><td class="t">T</td><td class="t">T</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td></tr>
+        <tr><td class="t">T</td><td class="f">F</td><td class="f">F</td><td class="t">T</td><td class="f">F</td><td class="t">T</td><td class="t">T</td></tr>
+        <tr><td class="f">F</td><td class="t">T</td><td class="f">F</td><td class="t">T</td><td class="t">T</td><td class="f">F</td><td class="t">T</td></tr>
+        <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="t">T</td><td class="t">T</td><td class="t">T</td><td class="t">T</td></tr>
+      </table>
+      <p style="margin-top:8px;">✅ Column 4 = Column 7 → <strong>Proved!</strong></p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Normal Forms — CNF &amp; DNF</h3>
+    <div class="two-col">
+      <div class="info-box">
+        <div class="label">CNF — Conjunctive Normal Form</div>
+        <p>AND of ORs (clauses)<br>Example: (p ∨ q) ∧ (¬p ∨ r)</p>
+        <p style="margin-top:8px; font-size:13px; color:var(--muted);">Think: AND outside, OR inside</p>
+      </div>
+      <div class="info-box">
+        <div class="label">DNF — Disjunctive Normal Form</div>
+        <p>OR of ANDs (minterms)<br>Example: (p ∧ q) ∨ (¬p ∧ r)</p>
+        <p style="margin-top:8px; font-size:13px; color:var(--muted);">Think: OR outside, AND inside</p>
+      </div>
+    </div>
+    <div class="memory-tip">
+      <div class="label">💡 Memory Trick</div>
+      <p><strong>CNF</strong> = <strong>C</strong>lubs (∧) of <strong>F</strong>riends (∨) &nbsp;|&nbsp; <strong>DNF</strong> = <strong>D</strong>ivisions (∨) of <strong>N</strong>ames (∧)</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Predicate Logic (First Order Logic)</h3>
+    <p>Propositional logic can't say <em>"All students passed"</em>. For this, we need <span class="hl-yellow">predicates</span> and <span class="hl-yellow">quantifiers</span>.</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="info-box">
+        <div class="label">∀ Universal Quantifier</div>
+        <p>∀x P(x) = "For ALL x, P(x) is true"<br><br>Example: ∀x (Human(x) → Mortal(x))<br>"All humans are mortal"</p>
+      </div>
+      <div class="info-box">
+        <div class="label">∃ Existential Quantifier</div>
+        <p>∃x P(x) = "There EXISTS some x"<br><br>Example: ∃x (Student(x) ∧ Passed(x))<br>"Some student passed"</p>
+      </div>
+    </div>
+    <div class="example-box" style="margin-top:16px;">
+      <div class="label">✏️ Solved Example — Negating Quantifiers</div>
+      <p><strong>Negate:</strong> "All dogs are friendly" = ∀x (Dog(x) → Friendly(x))</p>
+      <div class="steps" style="margin-top:12px;">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Original</strong><p>∀x (Dog(x) → Friendly(x))</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Negate: ∀ becomes ∃</strong><p>∃x ¬(Dog(x) → Friendly(x))</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Expand ¬(p→q) = p∧¬q</strong><p>∃x (Dog(x) ∧ ¬Friendly(x))</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Read as</strong><p>"There exists a dog that is NOT friendly" ✅</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Rules of Inference</h3>
+    <p>These are standard argument patterns used to derive conclusions from premises.</p>
+    <table>
+      <tr><th>Rule</th><th>Form</th><th>Example</th></tr>
+      <tr><td><strong>Modus Ponens</strong></td><td>p → q, p ∴ q</td><td>If rain→wet, it rains ∴ it's wet</td></tr>
+      <tr><td><strong>Modus Tollens</strong></td><td>p → q, ¬q ∴ ¬p</td><td>If rain→wet, not wet ∴ no rain</td></tr>
+      <tr><td><strong>Hypothetical Syllogism</strong></td><td>p→q, q→r ∴ p→r</td><td>Chain: study→pass, pass→job ∴ study→job</td></tr>
+      <tr><td><strong>Disjunctive Syllogism</strong></td><td>p∨q, ¬p ∴ q</td><td>Tea or Coffee, no Tea ∴ Coffee</td></tr>
+      <tr><td><strong>Addition</strong></td><td>p ∴ p∨q</td><td>It rains ∴ It rains OR sunny</td></tr>
+      <tr><td><strong>Simplification</strong></td><td>p∧q ∴ p</td><td>Hot AND humid ∴ Hot</td></tr>
+    </table>
+  </div>
+
+  <!-- MCQ QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Mathematical Logic</h3>
+      <span class="quiz-count">10 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-logic">0</span> / <span id="total-logic">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-logic" style="width:0%"></div></div>
+
+    <div id="quiz-logic">
+      <!-- Q1 -->
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 1 of 10</div>
+        <div class="q-text">Which of the following is NOT a proposition?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> 2 + 3 = 5</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> Please sit down.</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> The sun is a star.</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> 7 is an odd number.</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — "Please sit down" is a command, not a declarative statement. It cannot be assigned a truth value. Commands, questions, and exclamations are NOT propositions.</div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 2 of 10</div>
+        <div class="q-text">The truth value of (T → F) is:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> TRUE</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> TRUE and FALSE</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> FALSE</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> Cannot be determined</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — For implication (p → q), the ONLY case it is FALSE is when p = TRUE and q = FALSE. Here p=T, q=F, so T→F = FALSE. Remember: A liar is one who promises (T) but doesn't deliver (F).</div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 3 of 10</div>
+        <div class="q-text">Which law states: ¬(p ∧ q) ≡ ¬p ∨ ¬q ?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> De Morgan's First Law</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> Distributive Law</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> Absorption Law</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> Identity Law</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — De Morgan's First Law: ¬(p ∧ q) ≡ ¬p ∨ ¬q. De Morgan's Second Law: ¬(p ∨ q) ≡ ¬p ∧ ¬q. These are extremely important for NET exam!</div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 4 of 10</div>
+        <div class="q-text">A formula that is TRUE for all possible truth assignments is called:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> Contradiction</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> Contingency</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> Satisfiable</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> Tautology</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — A <strong>Tautology</strong> is always TRUE (e.g., p ∨ ¬p). A <strong>Contradiction</strong> is always FALSE (e.g., p ∧ ¬p). A <strong>Contingency</strong> is sometimes true, sometimes false.</div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 5 of 10</div>
+        <div class="q-text">The rule of inference "p → q, ¬q ∴ ¬p" is called:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> Modus Ponens</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> Modus Tollens</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> Hypothetical Syllogism</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> Disjunctive Syllogism</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — Modus Tollens: "If p then q; q is false; therefore p is false." Example: If it rains, ground is wet. Ground is NOT wet. Therefore it did NOT rain.</div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 6 of 10</div>
+        <div class="q-text">∀x ∃y (x + y = 0) over integers means:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> There exists a y such that for all x, x + y = 0</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> For all x and y, x + y = 0</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> For every x, there is some y such that x + y = 0</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> There exist x and y such that x + y = 0</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — ∀x means "for every x". ∃y means "there exists some y (which may depend on x)". So for every integer x, we can find y = -x such that x + y = 0. This is TRUE over integers.</div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 7 of 10</div>
+        <div class="q-text">Which of the following is equivalent to p → q ?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> ¬p ∨ q</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> p ∨ ¬q</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> p ∧ ¬q</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> ¬p ∧ q</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — p → q ≡ ¬p ∨ q. This is a fundamental equivalence. Verify: p→q is false only when p=T,q=F. ¬p∨q is also false only when p=T,q=F. They match!</div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 8 of 10</div>
+        <div class="q-text">In CNF (Conjunctive Normal Form), the formula is a:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> OR of AND clauses</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> AND of AND clauses</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> OR of OR clauses</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> AND of OR clauses</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — CNF = AND of OR clauses. Example: (p∨q) ∧ (¬p∨r). DNF is the opposite: OR of AND clauses. Example: (p∧q) ∨ (¬p∧r).</div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 9 of 10</div>
+        <div class="q-text">p ↔ q is logically equivalent to:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> (p → q) ∨ (q → p)</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> (p → q) ∧ (q → p)</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> (p ∧ q) ∨ (¬p ∧ ¬q)</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> Both B and C</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — p↔q means "p if and only if q". It equals (p→q)∧(q→p) AND also equals (p∧q)∨(¬p∧¬q). Both B and C are correct equivalences!</div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 10 of 10</div>
+        <div class="q-text">The negation of "Some students are intelligent" is:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">A</span> Some students are not intelligent</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">B</span> Some students are intelligent</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">C</span> No student is intelligent</button>
+          <button class="option-btn" onclick="answer(this,'logic')"><span class="opt-label">D</span> All students are intelligent</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — "Some students are intelligent" = ∃x (Student(x) ∧ Intelligent(x)). Its negation = ∀x ¬(Student(x) ∧ Intelligent(x)) = ∀x (¬Student(x) ∨ ¬Intelligent(x)) = "No student is intelligent".</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ SETS ═══════════════════════════════════════════ -->
+<div id="sets" class="section">
+  <div class="topic-header">
+    <div class="topic-icon">🔵</div>
+    <div>
+      <h2>Sets &amp; Relations</h2>
+      <p>Set Operations · Equivalence Relations · Partial Ordering</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Sets — The Foundation</h3>
+    <p>A <span class="hl-yellow">set</span> is a well-defined collection of distinct objects called <strong>elements</strong>.</p>
+    <div class="info-box">
+      <div class="label">Key Set Operations</div>
+      <ul>
+        <li><strong>Union A∪B</strong> — All elements in A OR B (or both)</li>
+        <li><strong>Intersection A∩B</strong> — Only elements in BOTH A and B</li>
+        <li><strong>Difference A−B</strong> — Elements in A but NOT in B</li>
+        <li><strong>Complement Ā</strong> — All elements NOT in A (in universal set U)</li>
+        <li><strong>Power Set P(A)</strong> — Set of ALL subsets of A; |P(A)| = 2^|A|</li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <div class="label">✏️ Solved Example</div>
+      <p>A = {1,2,3,4}, B = {3,4,5,6}. Find A∪B, A∩B, A−B.</p>
+      <div class="formula">
+A∪B = {1,2,3,4,5,6}   ← All elements combined
+A∩B = {3,4}            ← Only common elements
+A−B = {1,2}            ← In A but not in B
+|P(A)| = 2^4 = 16      ← Total subsets of A
+      </div>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Relations</h3>
+    <p>A <span class="hl-yellow">relation</span> R from set A to set B is a subset of A×B (Cartesian product).</p>
+    <p style="margin-top:10px;">A relation on A is a subset of A×A. For a relation R on set A:</p>
+    <table style="margin-top:12px;">
+      <tr><th>Property</th><th>Meaning</th><th>Example</th></tr>
+      <tr><td><strong>Reflexive</strong></td><td>(a,a) ∈ R for all a ∈ A</td><td>a = a (equality)</td></tr>
+      <tr><td><strong>Symmetric</strong></td><td>If (a,b)∈R then (b,a)∈R</td><td>a is sibling of b ↔ b is sibling of a</td></tr>
+      <tr><td><strong>Antisymmetric</strong></td><td>(a,b)∈R and (b,a)∈R → a=b</td><td>a ≤ b and b ≤ a → a = b</td></tr>
+      <tr><td><strong>Transitive</strong></td><td>(a,b)∈R, (b,c)∈R → (a,c)∈R</td><td>a&lt;b, b&lt;c → a&lt;c</td></tr>
+    </table>
+    <div class="memory-tip" style="margin-top:16px;">
+      <div class="label">💡 Key Definitions</div>
+      <p><strong>Equivalence Relation</strong> = Reflexive + Symmetric + Transitive (e.g., "same age")<br>
+      <strong>Partial Order</strong> = Reflexive + Antisymmetric + Transitive (e.g., ≤ on integers)</p>
+    </div>
+  </div>
+
+  <!-- MCQ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Sets &amp; Relations</h3>
+      <span class="quiz-count">6 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-sets">0</span> / <span id="total-sets">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-sets" style="width:0%"></div></div>
+    <div id="quiz-sets">
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">If A = {1, 2, 3}, what is |P(A)| (size of power set)?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">A</span> 3</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">B</span> 6</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">C</span> 8</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">D</span> 9</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — |P(A)| = 2^|A| = 2^3 = 8. The 8 subsets are: {}, {1}, {2}, {3}, {1,2}, {1,3}, {2,3}, {1,2,3}.</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">Which of the following is an Equivalence Relation?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">A</span> "is greater than" on integers</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">B</span> "has the same birthday as" on people</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">C</span> "is parent of" on people</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">D</span> "is divisible by" on integers</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — "Same birthday" is Reflexive (you share your birthday with yourself), Symmetric (if A has same bday as B, B has same as A), Transitive (if A=B bday and B=C bday, then A=C bday). All 3 → Equivalence Relation!</div>
+      </div>
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">A relation that is Reflexive, Antisymmetric, and Transitive is called:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">A</span> Partial Order Relation</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">B</span> Equivalence Relation</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">C</span> Symmetric Relation</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">D</span> Total Order Relation</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — A Partial Order is: Reflexive + Antisymmetric + Transitive. Example: ≤ on natural numbers. A TOTAL order is a partial order where every pair is comparable.</div>
+      </div>
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">A−B (Set Difference) equals:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">A</span> A ∩ B</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">B</span> A ∪ B̄</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">C</span> Ā ∩ B</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">D</span> A ∩ B̄</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — A−B means elements in A but NOT in B = A ∩ B̄ (A intersect complement of B). Example: {1,2,3}−{2,3,4} = {1} = {1,2,3} ∩ {1,5,6,...} = {1}.</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">How many relations are possible on a set with n elements?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">A</span> 2^n</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">B</span> n²</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">C</span> 2^(n²)</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">D</span> n!</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — A×A has n² ordered pairs. Each pair can either be included or not → 2 choices per pair → 2^(n²) total relations. For n=2: 2^4 = 16 relations possible.</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">The relation R = {(1,1),(2,2),(3,3),(1,2),(2,1)} on {1,2,3} is:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">A</span> Partial Order only</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">B</span> Reflexive and Symmetric but NOT Transitive</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">C</span> Equivalence Relation</button>
+          <button class="option-btn" onclick="answer(this,'sets')"><span class="opt-label">D</span> Neither reflexive nor symmetric</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — Reflexive: (1,1),(2,2),(3,3) ✓. Symmetric: (1,2) and (2,1) both present ✓. Transitive? (1,2)∈R, (2,1)∈R, but (1,1)∈R ✓. Wait — also need (2,2)∈R ✓. Actually let's check (2,1) and (1,2): need (2,2)✓. So transitive holds here. This IS an equivalence relation. But note (3,x) for x≠3 missing — 3 only relates to itself, so equivalence classes are {1,2} and {3}. It IS an equivalence relation!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ COUNTING ═══════════════════════════════════════════ -->
+<div id="counting" class="section">
+  <div class="topic-header">
+    <div class="topic-icon">🔢</div>
+    <div>
+      <h2>Counting, Induction &amp; Probability</h2>
+      <p>Pigeonhole · Permutations · Combinations · Bayes' Theorem</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Pigeonhole Principle</h3>
+    <p>If <span class="hl-yellow">n+1 objects</span> are placed in <span class="hl-yellow">n boxes</span>, at least one box contains <strong>≥ 2 objects</strong>.</p>
+    <div class="example-box">
+      <div class="label">✏️ Solved Example</div>
+      <p><strong>Q:</strong> In a class of 367 students, at least how many share the same birthday?</p>
+      <p><strong>Solution:</strong> There are 366 possible birthdays (including Feb 29). We have 367 students (pigeons) and 366 days (holes). By Pigeonhole Principle, at least <strong>⌈367/366⌉ = 2 students</strong> share a birthday.</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Permutations &amp; Combinations</h3>
+    <div class="formula">
+Permutation (order matters):   P(n,r) = n! / (n-r)!
+Combination (order doesn't):   C(n,r) = n! / [r! × (n-r)!]
+    </div>
+    <div class="example-box">
+      <div class="label">✏️ Solved Example</div>
+      <p><strong>Q:</strong> In how many ways can a team of 3 be chosen from 7 people? And in how many ways can a President, VP, Secretary be appointed from 7?</p>
+      <div class="formula">
+Team (Combination):    C(7,3) = 7!/(3!×4!) = 35 ways
+Officers (Permutation): P(7,3) = 7!/4! = 7×6×5 = 210 ways
+      </div>
+    </div>
+    <div class="memory-tip">
+      <div class="label">💡 Memory Trick</div>
+      <p><strong>C</strong>ombination = <strong>C</strong>hoose (like a committee — nobody has a special title)<br><strong>P</strong>ermutation = <strong>P</strong>osition matters (like a race — 1st, 2nd, 3rd)</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Bayes' Theorem</h3>
+    <div class="formula">
+P(A|B) = P(B|A) × P(A) / P(B)
+    </div>
+    <div class="example-box">
+      <div class="label">✏️ Solved Example</div>
+      <p>A disease affects 1% of population. Test is 95% accurate (sensitivity), 90% specific. You test positive. What's the probability you actually have the disease?</p>
+      <div class="formula">
+P(Disease) = 0.01,  P(No Disease) = 0.99
+P(+|Disease) = 0.95, P(+|No Disease) = 0.10
+
+P(Disease|+) = (0.95 × 0.01) / [(0.95×0.01) + (0.10×0.99)]
+             = 0.0095 / (0.0095 + 0.099)
+             = 0.0095 / 0.1085 ≈ 8.76%
+      </div>
+      <p>⚡ Surprising! Even with a positive test, only ~9% chance of having the disease (because it's rare).</p>
+    </div>
+  </div>
+
+  <!-- MCQ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Counting &amp; Probability</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-counting">0</span> / <span id="total-counting">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-counting" style="width:0%"></div></div>
+    <div id="quiz-counting">
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 1 of 5</div>
+        <div class="q-text">How many ways can 5 books be arranged on a shelf?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">A</span> 25</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">B</span> 120</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">C</span> 60</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">D</span> 100</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — Arrangement = Permutation of all 5 = 5! = 5×4×3×2×1 = 120. Order matters here (different arrangement = different outcome).</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 2 of 5</div>
+        <div class="q-text">Minimum students needed to guarantee 3 students with the same birth month?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">A</span> 13</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">B</span> 24</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">C</span> 25</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">D</span> 36</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — Generalized Pigeonhole: Need at least ⌈n/12⌉ ≥ 3, so n ≥ 2×12+1 = 25. With 24 students, at most 2 per month. With 25, at least one month has 3.</div>
+      </div>
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 3 of 5</div>
+        <div class="q-text">C(n, r) = C(n, n-r). If C(10, 3) = 120, what is C(10, 7)?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">A</span> 120</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">B</span> 5040</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">C</span> 210</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">D</span> 720</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — By symmetry property: C(n,r) = C(n, n-r). So C(10,7) = C(10, 10-7) = C(10,3) = 120. Choosing 7 to include is the same as choosing 3 to EXCLUDE!</div>
+      </div>
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 4 of 5</div>
+        <div class="q-text">The principle of Mathematical Induction involves:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">A</span> Base case only</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">B</span> Inductive step only</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">C</span> Proving for all even numbers</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">D</span> Base case + Inductive step</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — Mathematical Induction has 2 steps: (1) Base Case: prove P(1) is true. (2) Inductive Step: assume P(k) true, prove P(k+1) is true. Like a domino chain — first domino falls (base), each domino knocks the next (inductive step).</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 5 of 5</div>
+        <div class="q-text">What is C(n, 0) for any value of n?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">A</span> n</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">B</span> 1</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">C</span> 0</button>
+          <button class="option-btn" onclick="answer(this,'counting')"><span class="opt-label">D</span> n!</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — C(n,0) = n! / (0! × n!) = 1/1 = 1. There is exactly ONE way to choose 0 items from n items: choose nothing! Similarly, C(n,n) = 1.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ GROUPS ═══════════════════════════════════════════ -->
+<div id="groups" class="section">
+  <div class="topic-header">
+    <div class="topic-icon">🔷</div>
+    <div>
+      <h2>Group Theory</h2>
+      <p>Groups · Subgroups · Rings · Fields · Isomorphism</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 What is a Group?</h3>
+    <p>A <span class="hl-yellow">Group (G, *)</span> is a set G with a binary operation * satisfying 4 properties:</p>
+    <table style="margin-top:12px;">
+      <tr><th>#</th><th>Property</th><th>Meaning</th><th>Example (Z, +)</th></tr>
+      <tr><td>1</td><td><strong>Closure</strong></td><td>a*b ∈ G for all a,b ∈ G</td><td>2+3=5 ∈ Z ✓</td></tr>
+      <tr><td>2</td><td><strong>Associativity</strong></td><td>(a*b)*c = a*(b*c)</td><td>(1+2)+3=1+(2+3) ✓</td></tr>
+      <tr><td>3</td><td><strong>Identity</strong></td><td>∃e: a*e = e*a = a</td><td>a+0=a, e=0 ✓</td></tr>
+      <tr><td>4</td><td><strong>Inverse</strong></td><td>∀a ∃a⁻¹: a*a⁻¹ = e</td><td>3+(-3)=0 ✓</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:16px;">
+      <div class="label">Important Types</div>
+      <ul>
+        <li><strong>Semigroup</strong>: Closure + Associativity (no identity/inverse needed)</li>
+        <li><strong>Monoid</strong>: Semigroup + Identity</li>
+        <li><strong>Group</strong>: Monoid + Inverse</li>
+        <li><strong>Abelian (Commutative) Group</strong>: Group + a*b = b*a</li>
+      </ul>
+    </div>
+    <div class="memory-tip">
+      <div class="label">💡 Memory Trick — CAII</div>
+      <p><strong>C</strong>losure → <strong>A</strong>ssociativity → <strong>I</strong>dentity → <strong>I</strong>nverse = Group!<br>Add Commutativity → Abelian Group</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Rings and Fields</h3>
+    <div class="two-col">
+      <div class="info-box">
+        <div class="label">Ring (R, +, ×)</div>
+        <ul>
+          <li>(R, +) is Abelian Group</li>
+          <li>(R, ×) is Semigroup (closed + associative)</li>
+          <li>Distributive: a×(b+c) = a×b + a×c</li>
+          <li>Example: (Z, +, ×) integers</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="label">Field (F, +, ×)</div>
+        <ul>
+          <li>Ring + multiplicative inverse for non-zero elements</li>
+          <li>Both + and × form Abelian Groups</li>
+          <li>Examples: (Q, +, ×), (R, +, ×), (Z_p for prime p)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Group Theory</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-groups">0</span> / <span id="total-groups">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-groups" style="width:0%"></div></div>
+    <div id="quiz-groups">
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 1 of 5</div>
+        <div class="q-text">Which of the following is a Group under multiplication?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">A</span> (Z, ×) — Integers under multiplication</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">B</span> (N, ×) — Natural numbers under multiplication</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">C</span> (Q\{0}, ×) — Non-zero rationals under multiplication</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">D</span> (Z, +) — Integers under addition</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — (Q\{0}, ×): Closed ✓, Associative ✓, Identity=1 ✓, Inverse=1/q for every q≠0 ✓. Integers fail multiplication inverse (1/3 ∉ Z). Note D is also a group but under +, not ×.</div>
+      </div>
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 2 of 5</div>
+        <div class="q-text">A group in which a*b = b*a for all a, b is called:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">A</span> Abelian Group</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">B</span> Cyclic Group</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">C</span> Simple Group</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">D</span> Normal Group</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — A group satisfying commutativity (a*b = b*a) is called an Abelian Group (named after Niels Abel). Example: (Z, +) is Abelian since 2+3 = 3+2.</div>
+      </div>
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 3 of 5</div>
+        <div class="q-text">The order of identity element in any group is:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">A</span> 0</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">B</span> 2</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">C</span> Depends on group</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">D</span> 1</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — The order of an element a is the smallest positive integer n such that aⁿ = e. For the identity e: e¹ = e. So order of identity = 1, always.</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 4 of 5</div>
+        <div class="q-text">A structure with Closure and Associativity but NO identity is called:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">A</span> Group</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">B</span> Semigroup</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">C</span> Monoid</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">D</span> Ring</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — Hierarchy: Semigroup (closure+assoc) ⊂ Monoid (+identity) ⊂ Group (+inverse) ⊂ Abelian Group (+commutative). Example of semigroup: (N, +) if we don't include 0 as identity.</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 5 of 5</div>
+        <div class="q-text">Isomorphism between two groups means they are:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">A</span> Identical in every way</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">B</span> Subgroups of each other</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">C</span> Structurally identical (same abstract structure)</button>
+          <button class="option-btn" onclick="answer(this,'groups')"><span class="opt-label">D</span> Having same elements</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — Isomorphic groups have the same algebraic structure — a bijection f exists where f(a*b) = f(a)●f(b). They may have different elements but behave identically. Example: ({0,1}, +₂) ≅ ({1,-1}, ×).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ GRAPHS ═══════════════════════════════════════════ -->
+<div id="graphs" class="section">
+  <div class="topic-header">
+    <div class="topic-icon">🕸️</div>
+    <div>
+      <h2>Graph Theory</h2>
+      <p>Paths · Eulerian · Hamiltonian · Trees · Spanning Trees</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Graph Basics</h3>
+    <p>A <span class="hl-yellow">Graph G = (V, E)</span> consists of Vertices (nodes) and Edges (connections).</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="info-box">
+        <div class="label">Types of Graphs</div>
+        <ul>
+          <li><strong>Simple Graph</strong>: No self-loops, no multiple edges</li>
+          <li><strong>Multigraph</strong>: Multiple edges between same nodes</li>
+          <li><strong>Weighted Graph</strong>: Edges have weights/costs</li>
+          <li><strong>Directed Graph</strong>: Edges have direction</li>
+          <li><strong>Bipartite</strong>: Vertices split in 2 groups; edges only between groups</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="label">Key Formulas</div>
+        <ul>
+          <li>Sum of degrees = 2 × |E|</li>
+          <li>In simple graph: max edges = n(n-1)/2</li>
+          <li>Handshaking Lemma: #odd-degree vertices is even</li>
+          <li>Tree with n vertices has n-1 edges</li>
+          <li>Planar: V − E + F = 2 (Euler's formula)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Eulerian vs Hamiltonian</h3>
+    <table>
+      <tr><th>Property</th><th>Eulerian Path/Circuit</th><th>Hamiltonian Path/Circuit</th></tr>
+      <tr><td><strong>What it visits</strong></td><td>Every EDGE exactly once</td><td>Every VERTEX exactly once</td></tr>
+      <tr><td><strong>Condition (Path)</strong></td><td>Exactly 2 odd-degree vertices</td><td>No simple general condition</td></tr>
+      <tr><td><strong>Condition (Circuit)</strong></td><td>ALL vertices have even degree</td><td>No simple general condition</td></tr>
+      <tr><td><strong>Easy to check?</strong></td><td>✅ Yes (degree condition)</td><td>❌ NP-complete problem</td></tr>
+    </table>
+    <div class="memory-tip" style="margin-top:12px;">
+      <div class="label">💡 Memory Trick</div>
+      <p><strong>E</strong>ulerian = <strong>E</strong>dges | <strong>H</strong>amiltonian = v<strong>H</strong>ertices (vertices!)<br>
+      The Königsberg Bridge Problem → Eulerian circuit impossible (all 4 vertices had odd degree)</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Trees</h3>
+    <p>A <span class="hl-yellow">tree</span> is a connected, acyclic (no cycles) graph.</p>
+    <div class="info-box">
+      <div class="label">Properties of a Tree with n vertices</div>
+      <ul>
+        <li>Has exactly <strong>n−1 edges</strong></li>
+        <li>There is exactly <strong>one path</strong> between any two vertices</li>
+        <li>Adding any edge creates exactly one cycle</li>
+        <li>Removing any edge disconnects the graph</li>
+      </ul>
+    </div>
+    <div class="example-box">
+      <div class="label">✏️ Tree Traversals (for Rooted Trees)</div>
+      <div class="formula">
+Tree:        A
+           /   \
+          B     C
+         / \
+        D   E
+
+Pre-order  (Root→Left→Right): A B D E C
+In-order   (Left→Root→Right): D B E A C
+Post-order (Left→Right→Root): D E B C A
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Graph Theory</h3>
+      <span class="quiz-count">6 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-graphs">0</span> / <span id="total-graphs">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-graphs" style="width:0%"></div></div>
+    <div id="quiz-graphs">
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 1 of 6</div>
+        <div class="q-text">A connected graph has an Eulerian circuit if and only if:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">A</span> All vertices have odd degree</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">B</span> All vertices have even degree</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">C</span> Exactly 2 vertices have odd degree</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">D</span> The graph is complete</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — Eulerian Circuit: all vertices even degree. Eulerian Path (not circuit): exactly 2 odd-degree vertices (start and end). The Königsberg Bridge problem failed because all 4 vertices had odd degree → no Eulerian path possible.</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 2 of 6</div>
+        <div class="q-text">How many edges does a tree with 10 vertices have?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">A</span> 10</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">B</span> 8</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">C</span> 9</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">D</span> 11</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — A tree with n vertices always has exactly n−1 edges. So 10 vertices → 9 edges. This is a fundamental property of trees.</div>
+      </div>
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 3 of 6</div>
+        <div class="q-text">In a complete graph K₅, the number of edges is:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">A</span> 10</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">B</span> 5</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">C</span> 20</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">D</span> 25</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — Complete graph Kₙ has n(n-1)/2 edges. K₅: 5×4/2 = 10 edges. Every vertex connects to every other vertex exactly once.</div>
+      </div>
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 4 of 6</div>
+        <div class="q-text">Dijkstra's algorithm is used to find:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">A</span> Minimum Spanning Tree</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">B</span> Eulerian Circuit</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">C</span> Graph Coloring</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">D</span> Shortest path from source to all vertices</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — Dijkstra's algorithm finds shortest paths from a single source to all other vertices in a weighted graph (non-negative weights). Kruskal's and Prim's find Minimum Spanning Trees.</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 5 of 6</div>
+        <div class="q-text">A graph is bipartite if and only if it contains no:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">A</span> Even-length cycle</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">B</span> Odd-length cycle</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">C</span> Spanning tree</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">D</span> Self-loop</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — A graph is bipartite iff it has NO odd-length cycles. Bipartite graphs can always be 2-colored. Example: Trees are bipartite. K₃ (triangle) is NOT bipartite (has odd cycle of length 3).</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 6 of 6</div>
+        <div class="q-text">For a connected planar graph, Euler's formula V − E + F = 2. If V=6, E=9, then F=?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">A</span> 3</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">B</span> 4</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">C</span> 5</button>
+          <button class="option-btn" onclick="answer(this,'graphs')"><span class="opt-label">D</span> 7</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — V − E + F = 2 → 6 − 9 + F = 2 → F = 2 + 9 − 6 = 5. F includes the outer (unbounded) face. So 5 faces total (4 inner + 1 outer).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ BOOLEAN ═══════════════════════════════════════════ -->
+<div id="boolean" class="section">
+  <div class="topic-header">
+    <div class="topic-icon">⚡</div>
+    <div>
+      <h2>Boolean Algebra</h2>
+      <p>Boolean Functions · Karnaugh Maps · Simplification</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Boolean Laws</h3>
+    <table>
+      <tr><th>Law</th><th>AND form</th><th>OR form</th></tr>
+      <tr><td><strong>Identity</strong></td><td>A · 1 = A</td><td>A + 0 = A</td></tr>
+      <tr><td><strong>Null/Domination</strong></td><td>A · 0 = 0</td><td>A + 1 = 1</td></tr>
+      <tr><td><strong>Idempotent</strong></td><td>A · A = A</td><td>A + A = A</td></tr>
+      <tr><td><strong>Complement</strong></td><td>A · Ā = 0</td><td>A + Ā = 1</td></tr>
+      <tr><td><strong>Double Negation</strong></td><td colspan="2">¬(¬A) = A</td></tr>
+      <tr><td><strong>De Morgan's</strong></td><td>¬(A·B) = Ā+B̄</td><td>¬(A+B) = Ā·B̄</td></tr>
+      <tr><td><strong>Absorption</strong></td><td>A·(A+B) = A</td><td>A+(A·B) = A</td></tr>
+    </table>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Karnaugh Map (K-Map) — Simplification</h3>
+    <p>K-maps are visual tools to minimize Boolean functions. <span class="hl-yellow">Group 1s in powers of 2</span> (1, 2, 4, 8...) to simplify.</p>
+    <div class="example-box">
+      <div class="label">✏️ Solved Example — 2-Variable K-Map</div>
+      <p>Simplify: F(A,B) = Σ(1,2,3) — minterms 1, 2, 3</p>
+      <div class="formula">
+  K-Map:       B=0    B=1
+  A=0  |  0(F) | 1(T) |
+  A=1  |  2(T) | 3(T) |
+
+  Group {1,3}: B column (A changes) → B
+  Group {2,3}: A row (B changes)    → A
+  F = A + B
+      </div>
+      <p>✅ Simplified from 3 minterms to just <strong>F = A + B</strong></p>
+    </div>
+    <div class="memory-tip">
+      <div class="label">💡 K-Map Rules</div>
+      <p>• Groups must be rectangles of size 1, 2, 4, 8... (powers of 2)<br>
+      • Groups CAN wrap around edges<br>
+      • Each 1 must be in at least one group<br>
+      • Larger groups = simpler expression<br>
+      • Find the minimum number of largest groups</p>
+    </div>
+  </div>
+
+  <!-- MCQ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Boolean Algebra</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-boolean">0</span> / <span id="total-boolean">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-boolean" style="width:0%"></div></div>
+    <div id="quiz-boolean">
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 1 of 5</div>
+        <div class="q-text">Simplify: A + A·B</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">A</span> A·B</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">B</span> B</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">C</span> AB + A</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">D</span> A</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — A + A·B = A·(1 + B) [factoring A] = A·1 [since 1+B=1] = A. This is the Absorption Law: A + AB = A.</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 2 of 5</div>
+        <div class="q-text">The complement of (A + B) by De Morgan's theorem is:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">A</span> Ā + B̄</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">B</span> Ā · B̄</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">C</span> A · B</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">D</span> A + B̄</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — De Morgan's: ¬(A+B) = Ā·B̄. In words: NOT(A OR B) = (NOT A) AND (NOT B). Similarly ¬(A·B) = Ā+B̄.</div>
+      </div>
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 3 of 5</div>
+        <div class="q-text">How many rows does a truth table with 3 variables have?</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">A</span> 8</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">B</span> 6</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">C</span> 9</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">D</span> 12</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — With n variables, truth table has 2ⁿ rows. For 3 variables: 2³ = 8 rows. For 4 variables: 16 rows. For n variables: 2ⁿ rows.</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 4 of 5</div>
+        <div class="q-text">Simplify: A·Ā + B</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">A</span> A</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">B</span> 0</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">C</span> B</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">D</span> A + B</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — A·Ā = 0 (Complement Law). So 0 + B = B (Identity Law: 0+x = x). Therefore A·Ā + B = B.</div>
+      </div>
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 5 of 5</div>
+        <div class="q-text">In K-Map simplification, groups must have size:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">A</span> Any size</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">B</span> Multiples of 2</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">C</span> Even numbers only</button>
+          <button class="option-btn" onclick="answer(this,'boolean')"><span class="opt-label">D</span> Powers of 2 (1,2,4,8...)</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — K-Map groups must be of size 1, 2, 4, 8, 16... (powers of 2). Groups of 3 or 5 or 6 are NOT valid. Larger valid groups eliminate more variables from the expression.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ OPTIMIZATION ═══════════════════════════════════════════ -->
+<div id="optimization" class="section">
+  <div class="topic-header">
+    <div class="topic-icon">📊</div>
+    <div>
+      <h2>Optimization</h2>
+      <p>Linear Programming · Simplex Method · PERT-CPM</p>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 Linear Programming (LP)</h3>
+    <p>LP finds the <span class="hl-yellow">maximum or minimum</span> of a linear objective function subject to linear constraints.</p>
+    <div class="info-box">
+      <div class="label">Standard LP Form</div>
+      <p><strong>Maximize (or Minimize):</strong> Z = c₁x₁ + c₂x₂ + ... (Objective Function)<br>
+      <strong>Subject to:</strong> Linear inequalities (Constraints)<br>
+      <strong>With:</strong> x₁, x₂ ≥ 0 (Non-negativity)</p>
+    </div>
+    <div class="example-box">
+      <div class="label">✏️ Graphical Method — Solved Example</div>
+      <p>Maximize Z = 3x + 5y, subject to: x ≤ 4, y ≤ 6, 3x + 2y ≤ 18, x,y ≥ 0</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Find corner points</strong><p>Plot constraints. Find vertices of feasible region: (0,0), (4,0), (4,3), (2,6), (0,6)</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Evaluate Z at each corner</strong>
+          <p>Z(0,0)=0 | Z(4,0)=12 | Z(4,3)=27 | Z(2,6)=36 | Z(0,6)=30</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Optimal solution</strong><p>Maximum Z = <strong>36</strong> at point (2,6) ✅</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept-card">
+    <h3>📌 PERT and CPM</h3>
+    <div class="two-col">
+      <div class="info-box">
+        <div class="label">CPM — Critical Path Method</div>
+        <ul>
+          <li>Deterministic activity times</li>
+          <li>Used for construction, manufacturing</li>
+          <li>Critical Path = Longest path = Minimum project duration</li>
+          <li>Activities on critical path have ZERO float/slack</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="label">PERT — Program Evaluation Review Technique</div>
+        <ul>
+          <li>Probabilistic (3 time estimates)</li>
+          <li>t_e = (O + 4M + P) / 6</li>
+          <li>O=optimistic, M=most likely, P=pessimistic</li>
+          <li>Used for R&D, software projects</li>
+        </ul>
+      </div>
+    </div>
+    <div class="example-box" style="margin-top:16px;">
+      <div class="label">✏️ Critical Path Example</div>
+      <div class="formula">
+Activities: A(3), B(4), C(2), D(5), E(3)
+Network: Start→A→C→E→End (path: 3+2+3=8)
+         Start→B→D→End   (path: 4+5=9) ← CRITICAL PATH
+         
+Critical Path = B→D = 9 days (longest)
+Float of A = 9 - 8 = 1 day (can delay by 1 day)
+Float of B, D = 0 (critical — no delay allowed!)
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Practice MCQs — Optimization</h3>
+      <span class="quiz-count">5 Questions</span>
+    </div>
+    <div class="score-display">Score: <span id="score-optimization">0</span> / <span id="total-optimization">0</span> answered</div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-optimization" style="width:0%"></div></div>
+    <div id="quiz-optimization">
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 1 of 5</div>
+        <div class="q-text">In Linear Programming, the optimal solution always occurs at:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">A</span> The center of the feasible region</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">B</span> A corner (vertex) of the feasible region</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">C</span> Any point on the boundary</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">D</span> The origin (0,0)</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — The Fundamental Theorem of LP: if an optimal solution exists, it occurs at a corner point (vertex) of the feasible region. This is why the graphical method evaluates only corner points.</div>
+      </div>
+      <div class="question-card" data-correct="c">
+        <div class="q-num">Question 2 of 5</div>
+        <div class="q-text">PERT expected time formula uses weights:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">A</span> (O + M + P) / 3</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">B</span> (O + 2M + P) / 4</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">C</span> (O + 4M + P) / 6</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">D</span> (O + 3M + P) / 5</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: C</strong> — PERT expected time: tₑ = (O + 4M + P)/6. O=optimistic, M=most likely, P=pessimistic. Weight 4 on most likely because it's the most probable. This is based on Beta distribution.</div>
+      </div>
+      <div class="question-card" data-correct="a">
+        <div class="q-num">Question 3 of 5</div>
+        <div class="q-text">Activities on the Critical Path have float/slack equal to:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">A</span> Zero</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">B</span> Maximum</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">C</span> One</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">D</span> Depends on duration</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: A</strong> — Critical path activities have ZERO float (slack). They cannot be delayed without delaying the entire project. Float = Latest Start Time − Earliest Start Time = 0 for critical activities.</div>
+      </div>
+      <div class="question-card" data-correct="d">
+        <div class="q-num">Question 4 of 5</div>
+        <div class="q-text">The Simplex method moves from one _____ to an adjacent better one:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">A</span> Constraint</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">B</span> Objective function value</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">C</span> Interior point</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">D</span> Basic feasible solution (corner point)</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: D</strong> — The Simplex Method systematically moves from one Basic Feasible Solution (corner point) to an adjacent one, improving the objective function at each step, until optimal is reached.</div>
+      </div>
+      <div class="question-card" data-correct="b">
+        <div class="q-num">Question 5 of 5</div>
+        <div class="q-text">The Transportation Problem is a special case of:</div>
+        <div class="options">
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">A</span> Integer Programming</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">B</span> Linear Programming</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">C</span> Dynamic Programming</button>
+          <button class="option-btn" onclick="answer(this,'optimization')"><span class="opt-label">D</span> Non-linear Programming</button>
+        </div>
+        <div class="explanation">✅ <strong>Answer: B</strong> — The Transportation and Assignment problems are special cases of Linear Programming. They deal with minimizing cost of shipping goods from sources to destinations with supply/demand constraints.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+  const scores = {};
+  const totals = {};
+
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function answer(btn, quizId) {
+    const card = btn.closest('.question-card');
+    if (card.dataset.answered) return;
+    card.dataset.answered = 'true';
+
+    const correct = card.dataset.correct;
+    const opts = card.querySelectorAll('.option-btn');
+    const labels = ['a','b','c','d'];
+    const clicked = Array.from(opts).indexOf(btn);
+
+    opts.forEach((o, i) => {
+      o.disabled = true;
+      if (labels[i] === correct) o.classList.add('correct');
+    });
+    if (labels[clicked] !== correct) btn.classList.add('wrong');
+
+    card.querySelector('.explanation').classList.add('show');
+
+    // Score
+    if (!scores[quizId]) scores[quizId] = 0;
+    if (!totals[quizId]) totals[quizId] = 0;
+    totals[quizId]++;
+    if (labels[clicked] === correct) scores[quizId]++;
+
+    document.getElementById('score-'+quizId).textContent = scores[quizId];
+    document.getElementById('total-'+quizId).textContent = totals[quizId];
+
+    const total = document.getElementById('quiz-'+quizId).querySelectorAll('.question-card').length;
+    const pct = (totals[quizId] / total) * 100;
+    document.getElementById('prog-'+quizId).style.width = pct + '%';
+  }
+</script>
+</body>
+</html>

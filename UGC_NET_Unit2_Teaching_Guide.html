@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC NET CS — Unit 2: Computer System Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #1a2235;
+    --card2: #1e2840;
+    --border: #2a3550;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --accent3: #7fff7f;
+    --accent4: #ffcc00;
+    --accent5: #c084fc;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --correct-bg: #0d2a1a;
+    --correct-bd: #22c55e;
+    --wrong-bg: #2a0d0d;
+    --wrong-bd: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 52px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 50%, rgba(0,212,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 80% 30%, rgba(255,107,53,0.06) 0%, transparent 60%);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.3);
+    color: var(--accent);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 40px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(30px, 5.5vw, 56px);
+    color: #fff;
+    line-height: 1.1;
+    position: relative;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  header p {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 620px;
+    margin-left: auto; margin-right: auto;
+    position: relative;
+  }
+  .topic-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+    position: relative;
+  }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 15px 18px;
+    cursor: pointer; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  main { max-width: 980px; margin: 0 auto; padding: 44px 24px 100px; }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp 0.35s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TOPIC HEADER */
+  .topic-header {
+    display: flex; align-items: flex-start; gap: 20px;
+    margin-bottom: 36px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-icon {
+    width: 56px; height: 56px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .topic-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; color: #fff;
+    line-height: 1.1;
+  }
+  .topic-header .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .card-accent-left { border-left: 3px solid var(--accent); }
+  .card-accent-orange { border-left: 3px solid var(--accent2); }
+  .card-accent-green { border-left: 3px solid var(--accent3); }
+  .card-accent-yellow { border-left: 3px solid var(--accent4); }
+  .card-accent-purple { border-left: 3px solid var(--accent5); }
+
+  .card h3 {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .card-orange h3 { color: var(--accent2); }
+  .card-green h3 { color: var(--accent3); }
+  .card-yellow h3 { color: var(--accent4); }
+  .card-purple h3 { color: var(--accent5); }
+
+  .card p { font-size: 15px; margin-bottom: 10px; }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 7px; font-size: 15px; }
+
+  /* HIGHLIGHT TEXT */
+  .hl { color: var(--accent); font-weight: 600; }
+  .hl2 { color: var(--accent2); font-weight: 600; }
+  .hl3 { color: var(--accent3); font-weight: 600; }
+  .hl4 { color: var(--accent4); font-weight: 600; }
+  .hl5 { color: var(--accent5); font-weight: 600; }
+
+  /* INFO BOXES */
+  .box {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .box-blue { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); }
+  .box-orange { background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.2); }
+  .box-green { background: rgba(127,255,127,0.05); border: 1px solid rgba(127,255,127,0.2); }
+  .box-yellow { background: rgba(255,204,0,0.06); border: 1px solid rgba(255,204,0,0.2); }
+  .box-purple { background: rgba(192,132,252,0.06); border: 1px solid rgba(192,132,252,0.2); }
+
+  .box-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .box-blue .box-label { color: var(--accent); }
+  .box-orange .box-label { color: var(--accent2); }
+  .box-green .box-label { color: var(--accent3); }
+  .box-yellow .box-label { color: var(--accent4); }
+  .box-purple .box-label { color: var(--accent5); }
+
+  .box ul { padding-left: 18px; }
+  .box li { margin-bottom: 5px; }
+
+  /* CODE / FORMULA */
+  .code {
+    background: #060a12;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+    margin: 14px 0;
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+  .code .comment { color: var(--muted); }
+  .code .keyword { color: var(--accent); }
+  .code .value { color: var(--accent4); }
+  .code .label2 { color: var(--accent2); }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th {
+    background: rgba(0,212,255,0.08);
+    color: var(--accent);
+    font-weight: 700; font-size: 11px;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 11px 14px; text-align: left;
+    border: 1px solid var(--border);
+  }
+  td { padding: 10px 14px; border: 1px solid var(--border); font-size: 14px; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  td strong { color: var(--accent4); }
+
+  /* STEPS */
+  .steps { margin: 14px 0; counter-reset: s; }
+  .step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+  .snum {
+    counter-increment: s;
+    min-width: 30px; height: 30px;
+    background: var(--accent);
+    color: #000; font-weight: 900; font-size: 13px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .scontent strong { color: var(--accent); font-size: 13px; display: block; margin-bottom: 3px; }
+  .scontent p { font-size: 14px; }
+
+  /* GRID */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 680px) { .g2, .g3 { grid-template-columns: 1fr; } }
+
+  /* MEMORY TIP */
+  .tip {
+    background: rgba(255,204,0,0.05);
+    border: 1px solid rgba(255,204,0,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .tip-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent4); margin-bottom: 6px; }
+
+  /* DIAGRAM */
+  .diagram {
+    background: #060a12;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 14px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    overflow-x: auto;
+    color: var(--text);
+  }
+  .diagram .dbox { color: var(--accent); }
+  .diagram .darrow { color: var(--muted); }
+  .diagram .dlabel { color: var(--accent4); }
+  .diagram .ddata { color: var(--accent3); }
+
+  /* SECTION SEPARATOR */
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* MCQ */
+  .quiz-wrap { margin-top: 44px; }
+  .quiz-hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 16px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .quiz-hdr h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; color: #fff;
+  }
+  .qcount {
+    background: var(--accent);
+    color: #000; font-weight: 700; font-size: 12px;
+    padding: 4px 12px; border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .score-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px; font-size: 13px; color: var(--muted);
+  }
+  .score-row span { color: var(--accent4); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .pbar { background: var(--border); border-radius: 4px; height: 5px; margin-bottom: 24px; overflow: hidden; }
+  .pfill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent5)); border-radius: 4px; transition: width 0.5s ease; }
+
+  .qcard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .qcard:hover { border-color: rgba(0,212,255,0.3); }
+  .qno { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+  .qtext { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 20px; line-height: 1.5; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 580px) { .opts { grid-template-columns: 1fr; } }
+
+  .opt {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 13px 16px;
+    text-align: left; cursor: pointer;
+    transition: all 0.18s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); background: rgba(0,212,255,0.05); }
+  .olabel {
+    min-width: 24px; height: 24px;
+    background: var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct-bd); }
+  .opt.correct .olabel { background: var(--correct-bd); color: #000; }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong-bd); }
+  .opt.wrong .olabel { background: var(--wrong-bd); color: #fff; }
+  .opt:disabled { cursor: default; }
+
+  .expl {
+    display: none;
+    margin-top: 16px;
+    background: rgba(0,212,255,0.04);
+    border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .expl.show { display: block; animation: fadeUp 0.3s ease; }
+  .expl strong { color: var(--accent3); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="chip">🖥️ NTA UGC NET · CS Code 87 · Unit 2</div>
+  <h1>Computer System<br><em>Architecture</em></h1>
+  <p>From logic gates to multiprocessors — step-by-step beginner breakdowns with solved examples &amp; practice MCQs</p>
+  <div class="topic-pills">
+    <span class="pill">Digital Logic</span>
+    <span class="pill">Data Representation</span>
+    <span class="pill">CPU Organisation</span>
+    <span class="pill">Pipelining</span>
+    <span class="pill">Memory Hierarchy</span>
+    <span class="pill">I/O Organisation</span>
+    <span class="pill">Multiprocessors</span>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="show('digital')">⚡ Digital Logic</button>
+  <button class="nav-btn" onclick="show('data')">🔢 Data Representation</button>
+  <button class="nav-btn" onclick="show('cpu')">🧠 CPU &amp; Design</button>
+  <button class="nav-btn" onclick="show('pipeline')">🚀 Pipeline &amp; Vector</button>
+  <button class="nav-btn" onclick="show('memory')">💾 Memory Hierarchy</button>
+  <button class="nav-btn" onclick="show('io')">🔌 I/O Organisation</button>
+  <button class="nav-btn" onclick="show('multi')">🔗 Multiprocessors</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════ DIGITAL LOGIC ══════════════════════════════ -->
+<div id="digital" class="section active">
+  <div class="topic-header">
+    <div class="t-icon">⚡</div>
+    <div>
+      <h2>Digital Logic Circuits</h2>
+      <div class="sub">Logic Gates · Combinational Circuits · Flip-Flops · Sequential Circuits · Registers &amp; Counters</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 Logic Gates — The Building Blocks</h3>
+    <p>Every computer operation ultimately comes down to these basic gates. They take binary inputs (0 or 1) and produce binary output.</p>
+    <table>
+      <tr><th>Gate</th><th>Symbol</th><th>Operation</th><th>Output = 1 when</th><th>Key Use</th></tr>
+      <tr><td><strong>AND</strong></td><td>A · B</td><td>Both inputs must be 1</td><td>ALL inputs = 1</td><td>Enable signal</td></tr>
+      <tr><td><strong>OR</strong></td><td>A + B</td><td>At least one input = 1</td><td>ANY input = 1</td><td>Alarm circuits</td></tr>
+      <tr><td><strong>NOT</strong></td><td>Ā</td><td>Inverts input</td><td>Input = 0</td><td>Complement</td></tr>
+      <tr><td><strong>NAND</strong></td><td>¬(A·B)</td><td>NOT AND</td><td>NOT both = 1</td><td>Universal gate</td></tr>
+      <tr><td><strong>NOR</strong></td><td>¬(A+B)</td><td>NOT OR</td><td>Both inputs = 0</td><td>Universal gate</td></tr>
+      <tr><td><strong>XOR</strong></td><td>A ⊕ B</td><td>Exclusive OR</td><td>Inputs DIFFER</td><td>Adders, comparators</td></tr>
+      <tr><td><strong>XNOR</strong></td><td>¬(A⊕B)</td><td>Exclusive NOR</td><td>Inputs SAME</td><td>Equality checker</td></tr>
+    </table>
+    <div class="tip">
+      <div class="tip-label">💡 Universal Gates</div>
+      <p><strong>NAND and NOR are Universal Gates</strong> — any Boolean function can be implemented using only NAND gates or only NOR gates. NAND is most commonly used in practice (cheaper to fabricate).</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Combinational Circuits</h3>
+    <p>Output depends <strong>only on current inputs</strong> (no memory). Same inputs always give same outputs.</p>
+    <div class="g2">
+      <div class="box box-orange">
+        <div class="box-label">Half Adder</div>
+        <p>Adds 2 single bits. No carry-in.</p>
+        <div class="code">Sum   = A XOR B
+Carry = A AND B</div>
+        <p style="font-size:13px; color:var(--muted)">Can't add multi-bit numbers alone.</p>
+      </div>
+      <div class="box box-blue">
+        <div class="box-label">Full Adder</div>
+        <p>Adds 2 bits + carry-in (Cin).</p>
+        <div class="code">Sum   = A XOR B XOR Cin
+Cout  = (A·B)+(Cin·(A XOR B))</div>
+        <p style="font-size:13px; color:var(--muted)">Chain these for n-bit addition!</p>
+      </div>
+    </div>
+    <div class="g2" style="margin-top:8px;">
+      <div class="box box-green">
+        <div class="box-label">Multiplexer (MUX)</div>
+        <p>Many inputs → 1 output. Uses select lines to pick which input passes through.</p>
+        <p style="font-size:13px;">2ⁿ inputs need n select lines. Like a data switch!</p>
+      </div>
+      <div class="box box-purple">
+        <div class="box-label">Decoder</div>
+        <p>n inputs → 2ⁿ outputs. Exactly ONE output is HIGH at a time.</p>
+        <p style="font-size:13px;">Used in memory address decoding, 7-segment displays.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3 style="color:var(--accent3)">📌 Flip-Flops — Memory Elements</h3>
+    <p>Flip-flops are <strong>bistable</strong> devices that store 1 bit. Output depends on current input AND previous state (memory!).</p>
+    <table>
+      <tr><th>Flip-Flop</th><th>Inputs</th><th>Behaviour</th><th>Special Feature</th></tr>
+      <tr><td><strong>SR Flip-Flop</strong></td><td>S (Set), R (Reset)</td><td>S=1→Q=1, R=1→Q=0</td><td>S=R=1 is forbidden (undefined)</td></tr>
+      <tr><td><strong>D Flip-Flop</strong></td><td>D (Data)</td><td>Q follows D on clock edge</td><td>No invalid state. Used in registers</td></tr>
+      <tr><td><strong>JK Flip-Flop</strong></td><td>J, K</td><td>J=K=1 → Toggle (Q flips)</td><td>Fixes SR's forbidden state. Most versatile</td></tr>
+      <tr><td><strong>T Flip-Flop</strong></td><td>T (Toggle)</td><td>T=1 → Q toggles each clock</td><td>Built from JK with J=K=T. Used in counters</td></tr>
+    </table>
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick</div>
+      <p><strong>SR</strong> = Set/Reset | <strong>D</strong> = Data/Delay | <strong>JK</strong> = Jack &amp; Kill (solves SR problem) | <strong>T</strong> = Toggle<br>
+      Hierarchy of usefulness: T &lt; SR &lt; D &lt; JK</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3 style="color:var(--accent4)">📌 Sequential Circuits — Registers &amp; Counters</h3>
+    <p>Sequential circuits have <strong>memory</strong> — output depends on current input AND past history (stored state).</p>
+    <div class="g2">
+      <div class="box box-yellow">
+        <div class="box-label">Register</div>
+        <ul>
+          <li>Group of flip-flops storing multi-bit data</li>
+          <li>n flip-flops = n-bit register</li>
+          <li>Shift Register: bits shift left/right on each clock</li>
+          <li>Used: CPU registers (AX, BX in x86)</li>
+        </ul>
+      </div>
+      <div class="box box-blue">
+        <div class="box-label">Counter</div>
+        <ul>
+          <li>Counts clock pulses in sequence</li>
+          <li><strong>Ripple (Asynchronous)</strong>: Each FF clocked by previous. Fast but has propagation delay</li>
+          <li><strong>Synchronous</strong>: All FF clocked simultaneously. No ripple delay</li>
+          <li>Modulo-n counter counts 0 to n-1</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ Digital Logic -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — Digital Logic</h3>
+      <span class="qcount">10 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-digital">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-digital" style="width:0%"></div></div>
+
+    <div id="qz-digital">
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q1 / 10</div>
+        <div class="qtext">Which gate is called the "Universal Gate"?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>AND gate</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>NAND gate</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>XOR gate</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>OR gate</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — NAND Gate</strong><br>NAND (and NOR) are Universal Gates because any Boolean function can be built using only NAND gates. NOT(A) = NAND(A,A). AND(A,B) = NAND(NAND(A,B), NAND(A,B)). OR(A,B) = NAND(NAND(A,A), NAND(B,B)).</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q2 / 10</div>
+        <div class="qtext">In a Full Adder, the Sum output is given by:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>A AND B AND Cin</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>A OR B OR Cin</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>A XOR B XOR Cin</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>A XNOR B XNOR Cin</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — A XOR B XOR Cin</strong><br>Full Adder: Sum = A ⊕ B ⊕ Cin, Carry-out = AB + Cin(A⊕B). XOR naturally gives the sum bit in binary addition (1+1=10, sum=0, carry=1).</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 10</div>
+        <div class="qtext">Which flip-flop has the forbidden state when both inputs are 1?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>D Flip-Flop</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>T Flip-Flop</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>JK Flip-Flop</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>SR Flip-Flop</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D — SR Flip-Flop</strong><br>SR Flip-Flop: S=0,R=0→no change; S=1,R=0→Set(Q=1); S=0,R=1→Reset(Q=0); S=1,R=1→FORBIDDEN (Q is indeterminate). JK flip-flop fixes this: J=K=1 causes toggle instead of forbidden state.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 10</div>
+        <div class="qtext">A 4-to-1 Multiplexer requires how many select lines?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>2</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>4</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>1</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>3</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — 2 select lines</strong><br>An n-to-1 MUX requires log₂(n) select lines. For 4-to-1: log₂(4) = 2 select lines. These 2 lines can represent 00, 01, 10, 11 — selecting among 4 inputs.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q5 / 10</div>
+        <div class="qtext">A T flip-flop with T=1 on every clock edge acts as:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>A data latch</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>A divide-by-2 counter</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>A full adder</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>A shift register</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — Divide-by-2 Counter</strong><br>T=1 causes the flip-flop to toggle every clock cycle. So output frequency = input clock / 2. This is a 1-bit binary counter (ripple counter). Chain n T flip-flops → divide by 2ⁿ.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q6 / 10</div>
+        <div class="qtext">Combinational circuits differ from sequential circuits in that:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>Combinational uses more gates</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>Combinational circuits use flip-flops</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>Combinational output depends only on current inputs, not past state</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>Sequential circuits are faster</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>Combinational = no memory, output = f(current inputs only). Sequential = has memory (flip-flops), output = f(current inputs + stored state). Examples — Combinational: adders, decoders. Sequential: counters, registers, FSMs.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q7 / 10</div>
+        <div class="qtext">Which is true about a 3-to-8 decoder?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>It has 8 inputs and 3 outputs</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>All outputs are HIGH simultaneously</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>It selects one of 3 inputs</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>It activates exactly one of 8 outputs based on 3-bit input</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D</strong><br>A 3-to-8 decoder has 3 inputs and 8 outputs. For each of the 8 combinations of 3-bit input (000 to 111), exactly ONE output line goes HIGH. Used for memory chip selection and address decoding.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q8 / 10</div>
+        <div class="qtext">XOR gate output is 1 when:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>Inputs are different (one 0, one 1)</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>Both inputs are 1</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>Both inputs are 0</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>Either input is 1</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — Inputs are DIFFERENT</strong><br>XOR (Exclusive OR) truth table: 0⊕0=0, 0⊕1=1, 1⊕0=1, 1⊕1=0. Output is 1 only when inputs DIFFER. This makes XOR useful for parity checkers and adders.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q9 / 10</div>
+        <div class="qtext">How many flip-flops are needed to build a 4-bit register?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>2</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>4</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>8</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>16</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — 4 flip-flops</strong><br>Each flip-flop stores exactly 1 bit. An n-bit register requires n flip-flops. A 4-bit register (storing values 0-15) needs 4 D flip-flops, each holding one bit of the 4-bit value.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q10 / 10</div>
+        <div class="qtext">In synchronous counters (vs. ripple counters), the advantage is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">A</span>Fewer flip-flops needed</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">B</span>No clock signal needed</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">C</span>No propagation delay (all FFs clocked simultaneously)</button>
+          <button class="opt" onclick="ans(this,'digital')"><span class="olabel">D</span>Can count in both directions</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>In a Ripple Counter, each FF is triggered by the previous one → delays accumulate → glitches in high-speed circuits. Synchronous counters clock ALL flip-flops at the same time, eliminating cumulative propagation delay. Faster and more reliable.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DATA REPRESENTATION ══════════════════════════════ -->
+<div id="data" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🔢</div>
+    <div>
+      <h2>Data Representation</h2>
+      <div class="sub">Number Systems · Complements · Fixed/Floating Point · Error Detection · Computer Arithmetic</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 Number Systems &amp; Conversion</h3>
+    <table>
+      <tr><th>System</th><th>Base</th><th>Digits Used</th><th>Example</th></tr>
+      <tr><td><strong>Binary</strong></td><td>2</td><td>0, 1</td><td>1011₂ = 11₁₀</td></tr>
+      <tr><td><strong>Octal</strong></td><td>8</td><td>0–7</td><td>13₈ = 11₁₀</td></tr>
+      <tr><td><strong>Decimal</strong></td><td>10</td><td>0–9</td><td>11₁₀</td></tr>
+      <tr><td><strong>Hexadecimal</strong></td><td>16</td><td>0–9, A–F</td><td>B₁₆ = 11₁₀</td></tr>
+    </table>
+    <div class="box box-blue" style="margin-top:16px;">
+      <div class="box-label">✏️ Solved: Decimal 45 → Binary</div>
+      <div class="code"><span class="comment">// Repeated division by 2:</span>
+45 ÷ 2 = 22 remainder <span class="value">1</span>  ← LSB
+22 ÷ 2 = 11 remainder <span class="value">0</span>
+11 ÷ 2 =  5 remainder <span class="value">1</span>
+ 5 ÷ 2 =  2 remainder <span class="value">1</span>
+ 2 ÷ 2 =  1 remainder <span class="value">0</span>
+ 1 ÷ 2 =  0 remainder <span class="value">1</span>  ← MSB
+
+<span class="keyword">Read remainders bottom-up: 101101₂</span>
+Verify: 32+8+4+1 = 45 ✅</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Complements — For Subtraction</h3>
+    <p>Computers use complements to perform subtraction using addition hardware (cheaper!)</p>
+    <div class="g2">
+      <div class="box box-orange">
+        <div class="box-label">1's Complement</div>
+        <p>Flip ALL bits.</p>
+        <div class="code">01011 → 10100</div>
+        <p style="font-size:13px;">Problem: Two representations of zero (00000 and 11111)</p>
+      </div>
+      <div class="box box-green">
+        <div class="box-label">2's Complement (Most Used!)</div>
+        <p>Flip all bits, then add 1.</p>
+        <div class="code">01011 → 10100 + 1 = 10101</div>
+        <p style="font-size:13px;">Only ONE zero. Used in virtually all modern computers!</p>
+      </div>
+    </div>
+    <div class="box box-blue" style="margin-top:8px;">
+      <div class="box-label">✏️ Solved: Subtract 5 from 9 using 2's complement (4-bit)</div>
+      <div class="code">9  = 1001
+5  = 0101 → 2's complement = 1010 + 1 = 1011
+
+  1001   (9)
++ 1011   (−5 in 2's complement)
+------
+ 10100   → ignore carry → 0100 = <span class="value">4</span> ✅</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3 style="color:var(--accent3)">📌 Floating Point Representation (IEEE 754)</h3>
+    <p>Real numbers are stored in scientific notation in binary.</p>
+    <div class="diagram">
+<span class="dbox">┌───────────────────────────────────────────────────────┐</span>
+<span class="dbox">│</span>  <span class="dlabel">Sign (1 bit)</span>  <span class="dbox">│</span>  <span class="dlabel">Exponent (8 bits)</span>  <span class="dbox">│</span>  <span class="dlabel">Mantissa (23 bits)</span>  <span class="dbox">│</span>
+<span class="dbox">└───────────────────────────────────────────────────────┘</span>
+<span class="darrow">   0 = positive           Biased by 127        Fractional part</span>
+<span class="darrow">   1 = negative                                (implicit leading 1)</span>
+
+<span class="ddata">Value = (-1)^Sign × 1.Mantissa × 2^(Exponent-127)</span>
+    </div>
+    <div class="box box-yellow">
+      <div class="box-label">✏️ Example: Represent -6.5 in IEEE 754 Single Precision</div>
+      <div class="code"><span class="comment">Step 1:</span> 6.5₁₀ = 110.1₂
+<span class="comment">Step 2:</span> Normalise: 1.101 × 2²
+<span class="comment">Step 3:</span> Sign bit = <span class="value">1</span> (negative)
+<span class="comment">Step 4:</span> Exponent = 2 + 127 = 129 = <span class="value">10000001</span>
+<span class="comment">Step 5:</span> Mantissa = <span class="value">10100000000000000000000</span> (after the "1.")
+
+<span class="keyword">Result: 1 | 10000001 | 10100000000000000000000</span></div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Special Values in IEEE 754</div>
+      <p>Exponent all 0s + Mantissa 0 = ±Zero &nbsp;|&nbsp; Exponent all 1s + Mantissa 0 = ±Infinity &nbsp;|&nbsp; Exponent all 1s + Mantissa ≠ 0 = NaN (Not a Number)</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3 style="color:var(--accent4)">📌 Error Detection Codes</h3>
+    <div class="g2">
+      <div class="box box-yellow">
+        <div class="box-label">Parity Bit</div>
+        <ul>
+          <li><strong>Even parity</strong>: Add bit so total 1s = even</li>
+          <li><strong>Odd parity</strong>: Add bit so total 1s = odd</li>
+          <li>Detects 1-bit errors, cannot correct</li>
+          <li>Example: 1011 → even parity bit = 1 → 10111</li>
+        </ul>
+      </div>
+      <div class="box box-blue">
+        <div class="box-label">Hamming Code</div>
+        <ul>
+          <li>Can both <strong>detect AND correct</strong> single-bit errors</li>
+          <li>Parity bits at positions 2⁰, 2¹, 2², ...</li>
+          <li>For m data bits: need r parity bits where 2ʳ ≥ m + r + 1</li>
+          <li>Used in ECC RAM modules</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ Data Representation -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — Data Representation</h3>
+      <span class="qcount">8 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-data">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-data" style="width:0%"></div></div>
+    <div id="qz-data">
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q1 / 8</div>
+        <div class="qtext">The decimal equivalent of binary 11010 is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>24</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>20</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>26</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>30</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — 26</strong><br>11010₂ = 1×2⁴ + 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 16 + 8 + 0 + 2 + 0 = 26. Method: write powers of 2 under each bit position and sum where bit=1.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q2 / 8</div>
+        <div class="qtext">2's complement of 10110 is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>01001</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>01010</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>11010</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>10001</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — 01010</strong><br>Step 1 (1's complement): 10110 → 01001. Step 2 (add 1): 01001 + 1 = 01010. Verify: 10110 + 01010 = 100000 → 5 bits = 00000 = 0 ✅ (they sum to zero with overflow).</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 8</div>
+        <div class="qtext">In IEEE 754 single precision, the exponent bias is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>128</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>256</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>63</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>127</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D — 127</strong><br>IEEE 754 single precision uses 8-bit exponent with bias 127. Actual exponent = stored exponent − 127. For double precision (64-bit): 11-bit exponent, bias = 1023.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 8</div>
+        <div class="qtext">Hexadecimal FF equals which decimal value?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>255</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>256</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>128</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>127</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — 255</strong><br>FF₁₆ = F×16¹ + F×16⁰ = 15×16 + 15×1 = 240 + 15 = 255. In binary: FF = 11111111 (8 ones). This is why 255 is the max value for a byte (0–255 = 256 values = 2⁸).</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q5 / 8</div>
+        <div class="qtext">Which number representation is used in virtually all modern computers for negative integers?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>Sign-Magnitude</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>1's Complement</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>2's Complement</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>Excess-3 code</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — 2's Complement</strong><br>2's complement is universally used because: (1) unique representation of zero, (2) subtraction = addition of complement, (3) simple overflow detection. Range for n bits: -2^(n-1) to 2^(n-1)-1.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q6 / 8</div>
+        <div class="qtext">Parity bit error detection can detect:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>All types of errors</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>Single-bit errors only (odd number of bit errors)</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>Burst errors</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>Two-bit errors</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B</strong><br>Parity can detect an ODD number of bit errors (1, 3, 5...). If 2 bits flip, parity remains unchanged → undetected. For correction, use Hamming codes. For burst error detection, use CRC (Cyclic Redundancy Check).</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q7 / 8</div>
+        <div class="qtext">For 4 data bits, the minimum parity bits needed for Hamming code (single error correction) is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>2</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>4</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>2</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>3</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D — 3 parity bits</strong><br>Condition: 2ʳ ≥ m + r + 1. For m=4: 2ʳ ≥ 5+r. Try r=2: 4 ≥ 7? No. Try r=3: 8 ≥ 8? Yes! So 3 parity bits needed for 4 data bits → total codeword = 7 bits (7,4 Hamming code).</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q8 / 8</div>
+        <div class="qtext">BCD (Binary Coded Decimal) represents each decimal digit using:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">A</span>4 bits</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">B</span>8 bits</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">C</span>3 bits</button>
+          <button class="opt" onclick="ans(this,'data')"><span class="olabel">D</span>16 bits</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — 4 bits</strong><br>BCD represents each decimal digit (0-9) with 4 binary bits. Example: 39₁₀ in BCD = 0011 1001. Note: only 0000-1001 are valid; 1010-1111 are invalid BCD codes. Used in calculators and financial systems.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ CPU & DESIGN ══════════════════════════════ -->
+<div id="cpu" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🧠</div>
+    <div>
+      <h2>CPU Organisation &amp; Design</h2>
+      <div class="sub">Register Transfer · Basic Computer · Instruction Formats · Addressing Modes · RISC vs CISC</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 Basic Computer Organisation</h3>
+    <div class="diagram">
+<span class="darrow">                    ┌─────────────────────────┐</span>
+<span class="darrow">                    │      CONTROL UNIT       │</span>
+<span class="darrow">                    │  (Instruction Decoder,  │</span>
+<span class="darrow">                    │   Sequencer, Timing)    │</span>
+<span class="darrow">                    └────────────┬────────────┘</span>
+<span class="darrow">                                 │ Control Signals</span>
+<span class="dbox">┌──────────────┐   Data Bus    ┌─┴──────────┐    Address Bus    ┌────────────┐</span>
+<span class="dbox">│ Input/Output │◄─────────────►│    ALU     │◄─────────────────►│   Memory   │</span>
+<span class="dbox">│  Devices     │               │ (Arithmetic│                   │  (RAM/ROM) │</span>
+<span class="dbox">└──────────────┘               │  +Logic)   │                   └────────────┘</span>
+<span class="darrow">                               └─────┬──────┘</span>
+<span class="darrow">                                     │</span>
+<span class="ddata">                               ┌─────┴──────┐</span>
+<span class="ddata">                               │ REGISTERS  │ PC, IR, MAR, MDR, ACC</span>
+<span class="ddata">                               └────────────┘</span>
+    </div>
+    <div class="g2" style="margin-top:12px;">
+      <div class="box box-blue">
+        <div class="box-label">Key Registers</div>
+        <ul>
+          <li><strong>PC</strong> – Program Counter: Next instruction address</li>
+          <li><strong>IR</strong> – Instruction Register: Current instruction</li>
+          <li><strong>MAR</strong> – Memory Address Register: Address to access</li>
+          <li><strong>MDR/MBR</strong> – Data from/to memory</li>
+          <li><strong>ACC</strong> – Accumulator: ALU results</li>
+          <li><strong>SP</strong> – Stack Pointer: Top of stack</li>
+        </ul>
+      </div>
+      <div class="box box-orange">
+        <div class="box-label">Instruction Cycle (Fetch-Decode-Execute)</div>
+        <div class="steps">
+          <div class="step"><div class="snum">1</div><div class="scontent"><strong>FETCH</strong><p>PC → MAR; Memory[MAR] → MDR → IR; PC++</p></div></div>
+          <div class="step"><div class="snum">2</div><div class="snum" style="background:var(--accent2)">2</div><div class="scontent"><strong>DECODE</strong><p>Control unit decodes opcode in IR</p></div></div>
+          <div class="step"><div class="snum">3</div><div class="scontent"><strong>EXECUTE</strong><p>ALU performs operation; result stored</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Instruction Formats &amp; Addressing Modes</h3>
+    <p>An instruction has: <span class="hl">Opcode</span> (what to do) + <span class="hl4">Operand(s)</span> (what to do it on)</p>
+    <table>
+      <tr><th>Addressing Mode</th><th>How Operand is Found</th><th>Example</th><th>Advantage</th></tr>
+      <tr><td><strong>Immediate</strong></td><td>Value IS the operand</td><td>ADD R1, #5 (add 5)</td><td>Fastest, no memory access</td></tr>
+      <tr><td><strong>Direct</strong></td><td>Operand is at given address</td><td>ADD R1, 2000</td><td>Simple, single memory access</td></tr>
+      <tr><td><strong>Indirect</strong></td><td>Address contains address of operand</td><td>ADD R1, (2000)</td><td>Flexible, pointer-like</td></tr>
+      <tr><td><strong>Register</strong></td><td>Operand is in a register</td><td>ADD R1, R2</td><td>Very fast, no memory</td></tr>
+      <tr><td><strong>Register Indirect</strong></td><td>Register holds address of operand</td><td>ADD R1, (R2)</td><td>Efficient pointer access</td></tr>
+      <tr><td><strong>Indexed</strong></td><td>Base address + index register</td><td>ADD R1, 100(R2)</td><td>Array access</td></tr>
+      <tr><td><strong>Relative</strong></td><td>PC + displacement</td><td>JMP +5</td><td>Position-independent code</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3 style="color:var(--accent4)">📌 RISC vs CISC</h3>
+    <table>
+      <tr><th>Feature</th><th>RISC</th><th>CISC</th></tr>
+      <tr><td><strong>Full Form</strong></td><td>Reduced Instruction Set</td><td>Complex Instruction Set</td></tr>
+      <tr><td><strong>Instructions</strong></td><td>Simple, fixed-length, few</td><td>Complex, variable-length, many</td></tr>
+      <tr><td><strong>Execution</strong></td><td>1 cycle per instruction (mostly)</td><td>Multiple cycles per instruction</td></tr>
+      <tr><td><strong>Memory Access</strong></td><td>Only LOAD/STORE instructions</td><td>Instructions can access memory directly</td></tr>
+      <tr><td><strong>Registers</strong></td><td>Many general-purpose registers</td><td>Fewer, specialized registers</td></tr>
+      <tr><td><strong>Pipeline-friendly</strong></td><td>✅ Yes (uniform instruction size)</td><td>❌ Harder (variable length)</td></tr>
+      <tr><td><strong>Examples</strong></td><td>ARM, MIPS, SPARC, RISC-V</td><td>Intel x86, x86-64 (AMD/Intel PCs)</td></tr>
+    </table>
+    <div class="tip">
+      <div class="tip-label">💡 Memory Trick</div>
+      <p><strong>RISC</strong> = <strong>R</strong>apid, <strong>I</strong>deal for pipelines, <strong>S</strong>imple, <strong>C</strong>ompiler does the work<br>
+      <strong>CISC</strong> = <strong>C</strong>omplex, <strong>I</strong>nstructions do more per line, <strong>S</strong>mall programs, <strong>C</strong>ompact code</p>
+    </div>
+  </div>
+
+  <!-- MCQ CPU -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — CPU Organisation</h3>
+      <span class="qcount">8 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-cpu">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-cpu" style="width:0%"></div></div>
+    <div id="qz-cpu">
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q1 / 8</div>
+        <div class="qtext">Which register holds the address of the NEXT instruction to be fetched?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>Instruction Register (IR)</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>Program Counter (PC)</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>Accumulator</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Memory Address Register</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — Program Counter (PC)</strong><br>PC always points to the NEXT instruction. After fetch, PC is incremented automatically. For branch instructions, PC is loaded with the branch target address instead of incrementing.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q2 / 8</div>
+        <div class="qtext">In Immediate Addressing Mode, the operand is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>Stored in memory at given address</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>Stored in a register</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>The actual value given in the instruction itself</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Accessed via a pointer</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>Immediate addressing: the operand VALUE is embedded directly in the instruction. Example: "ADD R1, #10" — the number 10 is the operand. No memory access needed. Fastest mode but limited to small constants.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 8</div>
+        <div class="qtext">RISC architecture is characterized by:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>Complex instructions that do multiple operations</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>Variable-length instructions</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>Few registers</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Fixed-length simple instructions and many registers</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D</strong><br>RISC features: fixed-length instructions, large general-purpose register file, only LOAD/STORE accesses memory, each instruction executes in 1 cycle, pipeline-friendly. Examples: ARM (used in smartphones), MIPS.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 8</div>
+        <div class="qtext">The Fetch-Decode-Execute cycle is also called:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>Instruction Cycle</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>Memory Cycle</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>Bus Cycle</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Clock Cycle</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — Instruction Cycle</strong><br>The instruction cycle (Fetch → Decode → Execute) is the fundamental operation unit of a CPU. Multiple clock cycles may be needed per instruction. One clock cycle ≠ one instruction cycle.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q5 / 8</div>
+        <div class="qtext">Indexed addressing is most useful for:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>Subroutine calls</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>Accessing array elements</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>Storing constants</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Stack operations</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — Array Access</strong><br>Indexed addressing: EA = Base Address + Index Register. Perfect for arrays: set base = array start address, increment index for each element. Example: A[i] = BASE_A + i×element_size.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q6 / 8</div>
+        <div class="qtext">Which instruction format has zero address fields?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>RISC instruction</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>3-address instruction</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>Stack-based (0-address) instruction</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Memory-reference instruction</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>Zero-address instructions are used in stack architectures. Operands are implicitly on top of stack. Example: PUSH 5; PUSH 3; ADD (pops 5 and 3, pushes 8). Used in Java Virtual Machine (JVM) and HP calculators.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q7 / 8</div>
+        <div class="qtext">The MAR (Memory Address Register) holds:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>The current instruction being executed</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>The result of the last ALU operation</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>The next instruction to be fetched</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>The memory address to be read from or written to</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D</strong><br>MAR (Memory Address Register) is connected to the address bus. Before any memory read/write, the target address is loaded into MAR. The MDR (Memory Data Register) holds the actual data being transferred.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q8 / 8</div>
+        <div class="qtext">Relative addressing mode calculates effective address as:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">A</span>PC + displacement</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">B</span>Base register + offset</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">C</span>Address stored in memory location</button>
+          <button class="opt" onclick="ans(this,'cpu')"><span class="olabel">D</span>Register value directly</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — PC + displacement</strong><br>Relative addressing: EA = PC + offset. This makes code position-independent (relocatable) — programs can run at any memory location. Used for branch instructions in most architectures.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ PIPELINE ══════════════════════════════ -->
+<div id="pipeline" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🚀</div>
+    <div>
+      <h2>Pipeline &amp; Vector Processing</h2>
+      <div class="sub">Parallel Processing · Instruction Pipeline · Hazards · Vector Processors</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 What is Pipelining?</h3>
+    <p>Pipelining overlaps execution of multiple instructions — like an assembly line in a factory. While one instruction executes, the next is being decoded, and the one after is being fetched.</p>
+    <div class="diagram">
+<span class="dlabel">Without Pipeline (Sequential):</span>
+<span class="ddata">I1: [F][D][E]
+I2:          [F][D][E]       → 3 instructions × 3 stages = 9 cycles</span>
+
+<span class="dlabel">With Pipeline (Overlapped):</span>
+<span class="ddata">I1: [F][D][E]
+I2:    [F][D][E]
+I3:       [F][D][E]          → 3+2 = 5 cycles (much faster!)</span>
+
+<span class="darrow">For k stages, n instructions: Time = (k + n - 1) cycles</span>
+<span class="darrow">Speedup ≈ k (number of stages) for large n</span>
+    </div>
+    <div class="box box-blue" style="margin-top:12px;">
+      <div class="box-label">Classic 5-Stage MIPS Pipeline</div>
+      <div class="code"><span class="keyword">IF</span>  → Instruction Fetch    (PC → Memory → IR)
+<span class="keyword">ID</span>  → Instruction Decode   (Read registers, decode opcode)
+<span class="keyword">EX</span>  → Execute             (ALU performs operation)
+<span class="keyword">MEM</span> → Memory Access       (Load/Store if needed)
+<span class="keyword">WB</span>  → Write Back          (Result → register)</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Pipeline Hazards — What Goes Wrong</h3>
+    <div class="g3">
+      <div class="box box-orange">
+        <div class="box-label">Structural Hazard</div>
+        <p>Two instructions need the SAME hardware resource simultaneously.</p>
+        <p style="font-size:13px; margin-top:8px;"><strong>Solution:</strong> Separate instruction &amp; data memories, or stall pipeline.</p>
+      </div>
+      <div class="box box-yellow">
+        <div class="box-label">Data Hazard</div>
+        <p>Instruction needs result of previous instruction not yet computed.</p>
+        <p style="font-size:13px; margin-top:8px;"><strong>Solutions:</strong> Forwarding/Bypassing, Stalls (NOPs), Out-of-order execution.</p>
+      </div>
+      <div class="box box-purple">
+        <div class="box-label">Control Hazard</div>
+        <p>Branch instruction — don't know which instruction to fetch next.</p>
+        <p style="font-size:13px; margin-top:8px;"><strong>Solutions:</strong> Branch prediction, Delayed branching, Speculative execution.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Exam Shortcut</div>
+      <p>Speedup of k-stage pipeline = k (theoretical maximum, no hazards). With stalls, speedup reduces. Throughput = number of instructions completed per unit time.</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3 style="color:var(--accent3)">📌 Vector Processing &amp; Array Processors</h3>
+    <div class="g2">
+      <div class="box box-green">
+        <div class="box-label">Vector Processor</div>
+        <ul>
+          <li>Applies single operation to an entire VECTOR (array) of data</li>
+          <li>One instruction: ADD V1, V2, V3 (adds all elements)</li>
+          <li>No loop overhead, exploits data parallelism</li>
+          <li>Used in scientific computing, weather forecasting</li>
+          <li>Example: Cray supercomputers</li>
+        </ul>
+      </div>
+      <div class="box box-blue">
+        <div class="box-label">Array Processor (SIMD)</div>
+        <ul>
+          <li>Multiple ALUs working in parallel on different data</li>
+          <li>All ALUs execute the SAME instruction simultaneously</li>
+          <li>Flynn's Classification: SIMD (Single Instruction Multiple Data)</li>
+          <li>Modern: GPU cores, Intel SSE/AVX instructions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ Pipeline -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — Pipelining</h3>
+      <span class="qcount">6 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-pipeline">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-pipeline" style="width:0%"></div></div>
+    <div id="qz-pipeline">
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q1 / 6</div>
+        <div class="qtext">A 4-stage pipeline processes 100 instructions. How many cycles does it take?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">A</span>100</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">B</span>400</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">C</span>103</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">D</span>25</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — 103 cycles</strong><br>Formula: cycles = (k + n − 1) = 4 + 100 − 1 = 103. The first instruction takes k=4 cycles to complete. Each subsequent instruction completes 1 cycle later. Total = k + (n-1) = 103.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q2 / 6</div>
+        <div class="qtext">Which type of hazard occurs when an instruction needs a result that hasn't been computed yet?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">A</span>Structural Hazard</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">B</span>Data Hazard (RAW)</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">C</span>Control Hazard</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">D</span>Resource Hazard</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — Data Hazard (RAW)</strong><br>RAW = Read After Write. I2 needs to READ a value that I1 is still WRITing. Example: ADD R1, R2, R3 followed by SUB R4, R1, R5 (R1 not ready). Solution: forwarding/bypassing passes result directly without waiting for write-back.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 6</div>
+        <div class="qtext">Theoretical maximum speedup of a k-stage pipeline is:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">A</span>k²</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">B</span>k/2</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">C</span>2k</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">D</span>k</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D — k</strong><br>For a k-stage pipeline, maximum speedup = k (k times faster than non-pipelined for large n). In practice, hazards and stalls reduce this. Speedup = Non-pipelined time / Pipelined time.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 6</div>
+        <div class="qtext">Branch prediction is used to handle which type of hazard?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">A</span>Control Hazard</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">B</span>Data Hazard</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">C</span>Structural Hazard</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">D</span>Memory Hazard</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A — Control Hazard</strong><br>When a branch is encountered, we don't know which instruction is next. Branch prediction guesses the outcome and fetches speculatively. If wrong → pipeline flush (penalty cycles). Modern CPUs achieve >95% branch prediction accuracy.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q5 / 6</div>
+        <div class="qtext">Flynn's SIMD classification means:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">A</span>Single Instruction, Single Data</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">B</span>Several Instructions, Many Datasets</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">C</span>Single Instruction, Multiple Data streams</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">D</span>System Integrated Multiple Devices</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — Single Instruction, Multiple Data</strong><br>Flynn's Taxonomy: SISD (regular CPU), SIMD (vector/array processors, GPUs), MISD (rare, fault tolerance), MIMD (multicore processors, clusters). GPUs use SIMD — thousands of cores run same instruction on different data simultaneously.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q6 / 6</div>
+        <div class="qtext">Data forwarding (bypassing) in pipelines is used to solve:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">A</span>Cache misses</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">B</span>RAW data hazards without stalling</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">C</span>Control flow issues</button>
+          <button class="opt" onclick="ans(this,'pipeline')"><span class="olabel">D</span>Memory access conflicts</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B</strong><br>Data forwarding adds direct paths between pipeline stages. The ALU result is forwarded directly to the next instruction's input without waiting for write-back. Eliminates most RAW stalls without inserting NOP instructions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ MEMORY ══════════════════════════════ -->
+<div id="memory" class="section">
+  <div class="topic-header">
+    <div class="t-icon">💾</div>
+    <div>
+      <h2>Memory Hierarchy</h2>
+      <div class="sub">Cache · Virtual Memory · RAM · Associative Memory · Memory Management</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 The Memory Hierarchy</h3>
+    <p>Memory is organised in a hierarchy: <span class="hl">faster but expensive</span> at the top, <span class="hl2">slower but cheap</span> at the bottom.</p>
+    <div class="diagram">
+<span class="ddata">        ┌──────────────────┐  ← Fastest, Smallest, Most Expensive</span>
+<span class="ddata">        │   REGISTERS      │  ~1 ns,  few hundred bytes, inside CPU</span>
+<span class="ddata">        ├──────────────────┤</span>
+<span class="ddata">        │   CACHE (L1/L2)  │  ~1-10 ns, KB to MB, SRAM</span>
+<span class="ddata">        ├──────────────────┤</span>
+<span class="dbox">        │   MAIN MEMORY    │  ~100 ns,  GBs, DRAM (RAM)</span>
+<span class="dbox">        ├──────────────────┤</span>
+<span class="darrow">        │   SECONDARY      │  ~ms,  TBs, HDD/SSD</span>
+<span class="darrow">        ├──────────────────┤</span>
+<span class="darrow">        │   TERTIARY       │  ~sec, PBs, Tape, Optical</span>
+<span class="darrow">        └──────────────────┘  ← Slowest, Largest, Cheapest</span>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Principle of Locality (Why Hierarchy Works)</div>
+      <p><strong>Temporal Locality</strong>: Recently used data will likely be used again soon (loops!)<br>
+      <strong>Spatial Locality</strong>: Data near recently used data will likely be used (arrays!)<br>
+      Cache exploits both — keeps recently/nearby accessed data close to CPU.</p>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Cache Memory</h3>
+    <p>Cache sits between CPU and RAM. When CPU needs data, it first checks cache (<span class="hl3">hit</span>) before going to RAM (<span class="hl2">miss</span>).</p>
+    <div class="g2">
+      <div class="box box-blue">
+        <div class="box-label">Cache Mapping</div>
+        <ul>
+          <li><strong>Direct Mapped</strong>: Each RAM block maps to exactly one cache line. Simple but conflicts possible</li>
+          <li><strong>Fully Associative</strong>: Block can go anywhere in cache. Most flexible, expensive hardware</li>
+          <li><strong>Set Associative</strong>: Compromise — cache divided into sets, block maps to a set but can go in any line within set</li>
+        </ul>
+      </div>
+      <div class="box box-orange">
+        <div class="box-label">Cache Replacement Policies</div>
+        <ul>
+          <li><strong>LRU</strong> — Least Recently Used (best performance, complex)</li>
+          <li><strong>FIFO</strong> — First In First Out (simple)</li>
+          <li><strong>LFU</strong> — Least Frequently Used</li>
+          <li><strong>Random</strong> — Replace any random block</li>
+          <li><strong>OPT</strong> — Replace block used furthest in future (theoretical best)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box box-green" style="margin-top:8px;">
+      <div class="box-label">✏️ Hit Ratio Example</div>
+      <div class="code"><span class="comment">// Hit Ratio = h, Cache time = Tc, Memory time = Tm</span>
+Average Access Time = h × Tc + (1-h) × Tm
+
+<span class="comment">// Example: h=0.9, Tc=10ns, Tm=100ns</span>
+AAT = 0.9 × 10 + 0.1 × 100 = 9 + 10 = <span class="value">19 ns</span>
+<span class="comment">// vs. without cache: 100 ns — 5× faster!</span></div>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3 style="color:var(--accent3)">📌 Virtual Memory</h3>
+    <p>Virtual memory lets programs use more memory than physically available by storing inactive pages on disk.</p>
+    <div class="g2">
+      <div class="box box-green">
+        <div class="box-label">Paging</div>
+        <ul>
+          <li>Divide memory into fixed-size <strong>pages</strong> (virtual) and <strong>frames</strong> (physical)</li>
+          <li>Page Table maps virtual page → physical frame</li>
+          <li>Page fault: page not in RAM → load from disk</li>
+          <li>No external fragmentation</li>
+          <li>Internal fragmentation possible (last page)</li>
+        </ul>
+      </div>
+      <div class="box box-blue">
+        <div class="box-label">Segmentation</div>
+        <ul>
+          <li>Variable-size segments (code, stack, data)</li>
+          <li>Segment table: segment no. → base + limit</li>
+          <li>Natural division matching program structure</li>
+          <li>External fragmentation possible</li>
+          <li>Can combine: Paged Segmentation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:8px;">
+      <div class="tip-label">💡 Thrashing</div>
+      <p>If too many processes compete for frames → constant page faults → CPU spends more time swapping than executing. This is called <strong>Thrashing</strong>. Solution: Working Set Model, reduce degree of multiprogramming.</p>
+    </div>
+  </div>
+
+  <!-- MCQ Memory -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — Memory Hierarchy</h3>
+      <span class="qcount">8 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-memory">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-memory" style="width:0%"></div></div>
+    <div id="qz-memory">
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q1 / 8</div>
+        <div class="qtext">Which type of memory is used for cache?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>DRAM (Dynamic RAM)</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>SRAM (Static RAM)</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>ROM</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>Flash Memory</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — SRAM</strong><br>SRAM (Static RAM) uses flip-flops, doesn't need refresh, is much faster than DRAM. Used for cache (L1/L2/L3). DRAM (uses capacitors, needs refresh) is used for main memory. SRAM is ~5-10× faster but costs ~10× more per bit.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q2 / 8</div>
+        <div class="qtext">In direct mapped cache, the main memory block number 13 maps to which cache line if there are 8 cache lines?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>Line 8</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>Line 6</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>Line 5</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>Line 3</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — Line 5</strong><br>Direct Mapped: Cache Line = Block Number MOD Number of Cache Lines = 13 MOD 8 = 5. So block 13 maps to cache line 5 (0-indexed). Also block 5, 21, 29 etc. all map to line 5 — causing conflicts.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 8</div>
+        <div class="qtext">Which page replacement policy gives theoretically optimal results?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>LRU</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>FIFO</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>LFU</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>OPT (Optimal)</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D — OPT (Belady's Optimal Algorithm)</strong><br>OPT replaces the page that won't be used for the longest time. Theoretically optimal (fewest page faults) but impossible to implement in practice (requires future knowledge). Used as benchmark to evaluate other algorithms.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 8</div>
+        <div class="qtext">A page fault occurs when:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>The required page is not in main memory (RAM)</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>A page has an error in its data</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>The cache is full</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>The program accesses an invalid address</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A</strong><br>Page fault = required page is in virtual address space but NOT currently in physical RAM. OS must load it from disk (swap). This is normal and managed by OS. Accessing address OUTSIDE virtual space = segmentation fault (different thing!).</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q5 / 8</div>
+        <div class="qtext">Temporal locality means:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>Data near recently accessed data will soon be needed</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>Recently accessed data will likely be accessed again soon</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>Time taken to access memory is constant</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>Cache is faster than RAM</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B</strong><br>Temporal locality: same data accessed repeatedly over time (e.g., loop variable). Spatial locality: nearby addresses accessed together (e.g., array traversal). Cache is effective because programs exhibit BOTH types of locality.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q6 / 8</div>
+        <div class="qtext">Thrashing in virtual memory occurs when:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>Cache is too small</span></button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>Programs are too large</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>CPU spends more time paging than executing, due to insufficient frames</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>Too many processes are blocked</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>Thrashing: processes don't have enough frames for their working set → constant page faults → pages swapped in/out continuously → CPU utilisation drops near 0. Solution: Working Set Model (give each process enough frames for its working set).</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q7 / 8</div>
+        <div class="qtext">Associative memory (Content Addressable Memory) searches by:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>Sequential scanning all locations</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>Binary search</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>Hash table lookup</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>Content (data value), not address</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D</strong><br>Content Addressable Memory (CAM) / Associative Memory: you provide data content and it returns the address(es) where that content is stored. All locations searched simultaneously in hardware. Used in TLB (Translation Lookaside Buffer) for virtual memory.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q8 / 8</div>
+        <div class="qtext">In paging, internal fragmentation occurs because:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">A</span>The last page of a process may not be completely filled</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">B</span>Pages are too large</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">C</span>Holes exist between processes in memory</button>
+          <button class="opt" onclick="ans(this,'memory')"><span class="olabel">D</span>Page table is too large</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A</strong><br>Internal fragmentation = wasted space INSIDE an allocated unit. In paging: if process needs 5.5 pages, it gets 6 pages — 0.5 page wasted. Paging has NO external fragmentation (holes between allocations) — that's a problem with variable-sized partitions/segmentation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ I/O ══════════════════════════════ -->
+<div id="io" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🔌</div>
+    <div>
+      <h2>Input-Output Organisation</h2>
+      <div class="sub">I/O Interface · DMA · Interrupts · Modes of Transfer</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 I/O Transfer Modes</h3>
+    <table>
+      <tr><th>Mode</th><th>How it Works</th><th>CPU Involvement</th><th>Use Case</th></tr>
+      <tr><td><strong>Programmed I/O</strong></td><td>CPU polls device status in a loop (busy waiting)</td><td>Very High (CPU stuck)</td><td>Simple, slow devices</td></tr>
+      <tr><td><strong>Interrupt-Driven</strong></td><td>Device interrupts CPU when ready</td><td>Medium (free between interrupts)</td><td>Keyboards, mice</td></tr>
+      <tr><td><strong>DMA</strong></td><td>DMA controller handles transfer directly</td><td>Very Low (only setup &amp; end)</td><td>Disks, high-speed transfers</td></tr>
+    </table>
+    <div class="box box-blue" style="margin-top:14px;">
+      <div class="box-label">DMA — Direct Memory Access (Most Important!)</div>
+      <ul>
+        <li>CPU tells DMA: source, destination, byte count, and go!</li>
+        <li>DMA takes over the system bus and transfers data directly between device and memory</li>
+        <li>CPU is FREE to do other work during transfer</li>
+        <li>DMA interrupts CPU only when the ENTIRE transfer is complete</li>
+        <li><strong>Cycle Stealing</strong>: DMA "steals" bus cycles from CPU when needed</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Interrupt Handling</h3>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="scontent"><strong>Device sends interrupt signal</strong><p>Device raises interrupt request (IRQ) line when it needs attention</p></div></div>
+      <div class="step"><div class="snum">2</div><div class="snum" style="background:var(--accent2)">2</div><div class="scontent"><strong>CPU finishes current instruction</strong><p>CPU completes current instruction (never abandons mid-instruction)</p></div></div>
+      <div class="step"><div class="snum">3</div><div class="scontent"><strong>Save context (registers, PC)</strong><p>Push current state onto stack to resume later</p></div></div>
+      <div class="step"><div class="snum">4</div><div class="scontent"><strong>Jump to Interrupt Service Routine (ISR)</strong><p>ISR handles the device request</p></div></div>
+      <div class="step"><div class="snum">5</div><div class="scontent"><strong>Restore context and resume</strong><p>Pop saved state, return to interrupted program</p></div></div>
+    </div>
+    <div class="box box-yellow" style="margin-top:8px;">
+      <div class="box-label">Interrupt Priority</div>
+      <p>When multiple interrupts occur simultaneously, priority schemes decide order. <strong>Daisy Chaining</strong> (hardware), <strong>Vectored Interrupts</strong> (each device has unique ISR address), <strong>Software Polling</strong>.</p>
+    </div>
+  </div>
+
+  <!-- MCQ I/O -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — I/O Organisation</h3>
+      <span class="qcount">6 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-io">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-io" style="width:0%"></div></div>
+    <div id="qz-io">
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q1 / 6</div>
+        <div class="qtext">In DMA transfer, the CPU is involved:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">A</span>Throughout the entire transfer</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">B</span>Only for checking each byte</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">C</span>Only at the start (setup) and end (interrupt)</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">D</span>DMA doesn't need CPU at all</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>DMA: CPU initialises the DMA controller (source, dest, count), then DMA takes over. CPU is free to do other work. When complete, DMA interrupts CPU. CPU involvement = setup + one interrupt at the end. Most efficient I/O method.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q2 / 6</div>
+        <div class="qtext">In programmed I/O, the CPU continuously checks device status. This is called:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">A</span>Interrupt polling</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">B</span>Busy waiting (polling)</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">C</span>Cycle stealing</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">D</span>Spooling</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — Busy Waiting / Polling</strong><br>Programmed I/O = CPU continuously polls (checks) the device status register until device is ready. Extremely wasteful — CPU does nothing useful while waiting. Also called "busy-wait loop". Interrupt-driven I/O solves this.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 6</div>
+        <div class="qtext">In interrupt-driven I/O, when does the device interrupt the CPU?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">A</span>Every clock cycle</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">B</span>When CPU requests data</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">C</span>At regular time intervals</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">D</span>When the device is ready to transfer data</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D</strong><br>Interrupt-driven: CPU sends I/O command and continues doing other work. When device is ready (data received or transfer done), it raises an interrupt. CPU stops, saves state, handles interrupt, resumes. Much more efficient than busy waiting.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 6</div>
+        <div class="qtext">Cycle stealing in DMA refers to:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">A</span>DMA temporarily taking control of the system bus from the CPU</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">B</span>CPU stealing clock cycles from DMA</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">C</span>Memory accessing cache without CPU knowledge</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">D</span>Interleaving CPU and I/O operations</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A</strong><br>Cycle stealing: DMA controller "steals" one or more memory bus cycles from the CPU to transfer data. CPU is slightly slowed but not stopped. Unlike burst mode DMA (CPU blocked for entire transfer), cycle stealing is less disruptive.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q5 / 6</div>
+        <div class="qtext">What is stored in the Interrupt Vector Table?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">A</span>I/O device data</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">B</span>Memory addresses of data buffers</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">C</span>Starting addresses of Interrupt Service Routines (ISRs)</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">D</span>List of all connected I/O devices</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>Interrupt Vector Table (IVT): a table at a fixed memory location containing the starting addresses (vectors) of each Interrupt Service Routine. When interrupt n occurs, CPU looks up IVT[n] to find where to jump. x86 has 256 interrupt vectors.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q6 / 6</div>
+        <div class="qtext">Asynchronous data transfer uses _______ to coordinate sender and receiver:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">A</span>A shared clock signal</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">B</span>Handshaking signals (strobe/acknowledge)</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">C</span>DMA controller</button>
+          <button class="opt" onclick="ans(this,'io')"><span class="olabel">D</span>Interrupt controller</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — Handshaking</strong><br>Asynchronous transfer: no shared clock. Uses control signals: sender asserts DATA READY, receiver responds with ACKNOWLEDGE. This handshake ensures both sides are ready. Synchronous transfer uses a shared clock — simpler but devices must run at same speed.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ MULTIPROCESSORS ══════════════════════════════ -->
+<div id="multi" class="section">
+  <div class="topic-header">
+    <div class="t-icon">🔗</div>
+    <div>
+      <h2>Multiprocessors</h2>
+      <div class="sub">Interconnection · Arbitration · Cache Coherence · Multicore</div>
+    </div>
+  </div>
+
+  <div class="card card-accent-left">
+    <h3>📌 Multiprocessor Types</h3>
+    <div class="g2">
+      <div class="box box-blue">
+        <div class="box-label">UMA — Uniform Memory Access</div>
+        <ul>
+          <li>All processors share one memory</li>
+          <li>Equal access time for all processors</li>
+          <li>Simpler programming model</li>
+          <li>Bottleneck: shared memory bus</li>
+          <li>Also called: SMP (Symmetric Multiprocessing)</li>
+        </ul>
+      </div>
+      <div class="box box-orange">
+        <div class="box-label">NUMA — Non-Uniform Memory Access</div>
+        <ul>
+          <li>Each processor has local memory</li>
+          <li>Can access remote memory, but slower</li>
+          <li>Better scalability than UMA</li>
+          <li>Used in large servers with many CPUs</li>
+          <li>Programmer must consider data placement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-orange">
+    <h3 style="color:var(--accent2)">📌 Cache Coherence Problem</h3>
+    <p>When multiple processors each have their own cache, they may have <span class="hl2">stale copies</span> of the same memory location.</p>
+    <div class="box box-orange">
+      <div class="box-label">Example of the Problem</div>
+      <div class="code"><span class="comment">// Both CPU1 and CPU2 cache memory location X = 5</span>
+CPU1 writes X = 10  → CPU1 cache: X=10, Memory: X=5
+CPU2 reads X        → gets X=5 from its cache! <span class="keyword">WRONG!</span></div>
+    </div>
+    <div class="g2" style="margin-top:12px;">
+      <div class="box box-blue">
+        <div class="box-label">MESI Protocol (Most Common)</div>
+        <p>Each cache line has a state:</p>
+        <ul>
+          <li><strong>M</strong>odified: dirty, only in this cache</li>
+          <li><strong>E</strong>xclusive: clean, only in this cache</li>
+          <li><strong>S</strong>hared: clean, in multiple caches</li>
+          <li><strong>I</strong>nvalid: stale, don't use</li>
+        </ul>
+      </div>
+      <div class="box box-green">
+        <div class="box-label">Snooping vs. Directory</div>
+        <ul>
+          <li><strong>Bus Snooping</strong>: All caches monitor bus. When one writes, others invalidate. Simple but doesn't scale</li>
+          <li><strong>Directory Protocol</strong>: Central directory tracks which caches have each block. Scalable for many processors</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-accent-green">
+    <h3 style="color:var(--accent3)">📌 Interconnection Structures</h3>
+    <table>
+      <tr><th>Topology</th><th>Description</th><th>Advantage</th><th>Disadvantage</th></tr>
+      <tr><td><strong>Bus</strong></td><td>All share single bus</td><td>Simple, cheap</td><td>Bottleneck, not scalable</td></tr>
+      <tr><td><strong>Crossbar Switch</strong></td><td>Every CPU-memory pair has dedicated path</td><td>No contention, fast</td><td>Cost = O(n²), expensive</td></tr>
+      <tr><td><strong>Multistage Network</strong></td><td>Multiple switch stages (Omega, Butterfly)</td><td>Balanced cost/performance</td><td>Blocking possible</td></tr>
+      <tr><td><strong>Hypercube</strong></td><td>n-dimensional cube topology</td><td>Short paths, fault tolerant</td><td>Complex routing</td></tr>
+      <tr><td><strong>Mesh/Torus</strong></td><td>2D/3D grid of processors</td><td>Scalable, used in HPC</td><td>Variable path lengths</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-accent-yellow">
+    <h3 style="color:var(--accent4)">📌 Multicore Processors</h3>
+    <p>Multiple CPU cores on a <span class="hl4">single chip</span>. Cores share L3 cache and memory controller.</p>
+    <div class="g2">
+      <div class="box box-yellow">
+        <div class="box-label">Advantages</div>
+        <ul>
+          <li>Parallel execution of multiple threads</li>
+          <li>Better performance per watt vs. single high-frequency core</li>
+          <li>Shared LLC (Last Level Cache) reduces off-chip traffic</li>
+          <li>Lower latency communication between cores</li>
+        </ul>
+      </div>
+      <div class="box box-blue">
+        <div class="box-label">Challenges</div>
+        <ul>
+          <li>Cache coherence between cores</li>
+          <li>Software must be parallel (not all code parallelises)</li>
+          <li>Amdahl's Law limits speedup: S = 1/(1-p + p/n)</li>
+          <li>Synchronisation overhead (locks, mutexes)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-label">💡 Amdahl's Law</div>
+      <p>If fraction p of a program is parallelisable and (1-p) is sequential, speedup with n processors = 1 / ((1-p) + p/n). If 20% is sequential, max speedup is 1/0.2 = 5×, no matter how many processors you add!</p>
+    </div>
+  </div>
+
+  <!-- MCQ Multiprocessors -->
+  <div class="quiz-wrap">
+    <div class="quiz-hdr">
+      <h3>Practice MCQs — Multiprocessors</h3>
+      <span class="qcount">6 Qs</span>
+    </div>
+    <div class="score-row">Answered: <span id="sc-multi">0 / 0</span></div>
+    <div class="pbar"><div class="pfill" id="pb-multi" style="width:0%"></div></div>
+    <div id="qz-multi">
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q1 / 6</div>
+        <div class="qtext">In a UMA multiprocessor system, all processors share:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">A</span>Only cache memory</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">B</span>A common memory with equal access time</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">C</span>Local memories only</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">D</span>Only secondary storage</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B</strong><br>UMA (Uniform Memory Access): all processors have equal access time to shared memory. Also called SMP (Symmetric Multiprocessing). Examples: most desktop/server multiprocessor systems. Contrast with NUMA where local memory is faster than remote memory.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q2 / 6</div>
+        <div class="qtext">Cache coherence problem arises in multiprocessors when:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">A</span>Caches are too small</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">B</span>Processors run at different speeds</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">C</span>Multiple caches hold copies of the same memory location and one is updated</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">D</span>Memory is too slow</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C</strong><br>Cache coherence: when CPU1 updates its cached copy of X, CPU2's cached copy becomes stale/invalid. Solved by protocols like MESI (Modified, Exclusive, Shared, Invalid) which track cache line states across all caches.</div>
+      </div>
+
+      <div class="qcard" data-ans="d">
+        <div class="qno">Q3 / 6</div>
+        <div class="qtext">MESI protocol is used for:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">A</span>Memory scheduling</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">B</span>Process synchronisation</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">C</span>I/O transfer</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">D</span>Cache coherence in multiprocessors</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: D</strong><br>MESI Protocol maintains cache coherence. Each cache line is in one of 4 states: Modified (dirty, exclusive), Exclusive (clean, only copy), Shared (multiple valid copies), Invalid (stale). State transitions happen on reads/writes to maintain consistency.</div>
+      </div>
+
+      <div class="qcard" data-ans="a">
+        <div class="qno">Q4 / 6</div>
+        <div class="qtext">Amdahl's Law states that speedup is limited by:</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">A</span>The sequential (non-parallelisable) fraction of the program</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">B</span>The number of processors available</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">C</span>Memory bandwidth</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">D</span>Cache size</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: A</strong><br>Amdahl's Law: Speedup = 1/((1-p) + p/n). Even with infinite processors, if 10% of code is sequential, max speedup = 1/0.1 = 10×. The sequential bottleneck limits parallel performance, no matter how many processors you add.</div>
+      </div>
+
+      <div class="qcard" data-ans="b">
+        <div class="qno">Q5 / 6</div>
+        <div class="qtext">A crossbar switch interconnect for n processors has what cost?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">A</span>O(n)</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">B</span>O(n²)</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">C</span>O(n log n)</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">D</span>O(log n)</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: B — O(n²)</strong><br>Crossbar switch provides a dedicated path for every processor-memory pair. For n processors and n memory modules: n² switch points needed. Provides maximum bandwidth with no contention but prohibitively expensive for large n. Used in small multiprocessors.</div>
+      </div>
+
+      <div class="qcard" data-ans="c">
+        <div class="qno">Q6 / 6</div>
+        <div class="qtext">In multicore processors, which level of cache is typically shared between all cores?</div>
+        <div class="opts">
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">A</span>L1 Cache</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">B</span>L2 Cache</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">C</span>L3 Cache (LLC)</button>
+          <button class="opt" onclick="ans(this,'multi')"><span class="olabel">D</span>Register file</button>
+        </div>
+        <div class="expl">✅ <strong>Answer: C — L3 Cache (Last Level Cache)</strong><br>Typical multicore architecture: each core has private L1 (fastest, ~32KB) and L2 (~256KB). L3 (Last Level Cache, several MB) is shared by all cores. L3 acts as a staging area — inter-core communication can happen via L3 without going to RAM.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+const sc = {}, tot = {}, totalQs = {};
+
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function ans(btn, qid) {
+  const card = btn.closest('.qcard');
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+
+  const correct = card.dataset.ans;
+  const opts = card.querySelectorAll('.opt');
+  const labels = ['a','b','c','d'];
+  const clicked = Array.from(opts).indexOf(btn);
+
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (labels[i] === correct) o.classList.add('correct');
+  });
+  if (labels[clicked] !== correct) btn.classList.add('wrong');
+  card.querySelector('.expl').classList.add('show');
+
+  if (!sc[qid]) sc[qid] = 0;
+  if (!tot[qid]) tot[qid] = 0;
+  tot[qid]++;
+  if (labels[clicked] === correct) sc[qid]++;
+
+  document.getElementById('sc-' + qid).textContent = sc[qid] + ' / ' + tot[qid];
+  const total = document.getElementById('qz-' + qid).querySelectorAll('.qcard').length;
+  document.getElementById('pb-' + qid).style.width = (tot[qid] / total * 100) + '%';
+}
+</script>
+</body>
+</html>

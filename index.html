@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGC NET CS — Teaching Guides & Syllabus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --card: #1c2333;
+            --border: #30363d;
+            --accent: #f0a500;
+            --accent2: #58a6ff;
+            --accent3: #3fb950;
+            --text: #e6edf3;
+            --muted: #8b949e;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0d1117 0%, #1a1f35 50%, #0d1117 100%);
+            border-bottom: 2px solid var(--accent);
+            padding: 60px 32px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(240,165,0,0.08) 0%, transparent 70%);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 32px;
+        }
+        
+        .intro-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        .intro-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+        
+        .intro-section p {
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .unit-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+        
+        .unit-card:hover {
+            background: var(--surface);
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(240,165,0,0.1);
+        }
+        
+        .unit-number {
+            display: inline-block;
+            background: rgba(240,165,0,0.15);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+        
+        .unit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        
+        .unit-description {
+            color: var(--muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .unit-topics {
+            background: rgba(240,165,0,0.05);
+            border-left: 2px solid var(--accent);
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+        }
+        
+        .unit-topics label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .unit-topics p {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        
+        .unit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            width: fit-content;
+        }
+        
+        .unit-link:hover {
+            border-bottom-color: var(--accent);
+            gap: 12px;
+        }
+        
+        .unit-link::after {
+            content: '→';
+            font-weight: bold;
+        }
+        
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 32px;
+            text-align: center;
+            color: var(--muted);
+            margin-top: 64px;
+        }
+        
+        footer p {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .units-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .container {
+                padding: 24px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>UGC NET CS</h1>
+            <p class="subtitle">Teaching Guides & Syllabus</p>
+            <p class="tagline">Comprehensive preparation for UGC-NET Computer Science Examination</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="intro-section">
+            <h2>Explore Course Units</h2>
+            <p>Navigate through the comprehensive teaching guides covering all units of the UGC-NET Computer Science syllabus. Each unit includes detailed explanations, key concepts, and important topics designed to help you master the fundamentals.</p>
+        </div>
+        
+        <div class="units-grid">
+            <!-- Unit 1 -->
+            <a href="UGC_NET_Unit1_Teaching_Guide.html" class="unit-card">
+                <span class="unit-number">UNIT 1</span>
+                <h3>Discrete Structures & Optimization</h3>
+                <p class="unit-description">Master the foundational mathematical concepts essential for computer science, including graph theory, optimization techniques, and discrete mathematical structures.</p>
+                <div class="unit-topics">
+                    <label>Key Topics Covered</label>
+                    <p>Graph theory, algorithms, optimization, mathematical proofs, and computational complexity</p>
+                </div>
+                <span class="unit-link">View Guide</span>
+            </a>
+            
+            <!-- Unit 2 -->
+            <a href="UGC_NET_Unit2_Teaching_Guide.html" class="unit-card">
+                <span class="unit-number">UNIT 2</span>
+                <h3>Computer System Architecture</h3>
+                <p class="unit-description">Develop a deep understanding of computer architecture, processor design, memory hierarchies, and system organization principles that form the backbone of modern computing.</p>
+                <div class="unit-topics">
+                    <label>Key Topics Covered</label>
+                    <p>CPU design, memory management, I/O systems, performance metrics, and cache architecture</p>
+                </div>
+                <span class="unit-link">View Guide</span>
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2026 UGC NET Computer Science Preparation</p>
+        <p style="font-size: 0.85rem;">All teaching guides are designed to help aspirants prepare effectively for the UGC-NET examination</p>
+    </footer>
+</body>
+</html>
