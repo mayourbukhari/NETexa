@@ -105,6 +105,30 @@
             margin: 0 auto;
         }
         
+        .course-section {
+            margin-bottom: 64px;
+        }
+        
+        .course-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+        
+        .ugc-net-title {
+            color: var(--accent);
+        }
+        
+        .ai-ml-title {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         .units-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -137,6 +161,10 @@
             background: linear-gradient(90deg, var(--accent), var(--accent2));
         }
         
+        .unit-card.ai-card::before {
+            background: linear-gradient(90deg, #ff6b6b, #ee5a6f);
+        }
+        
         .unit-card:hover {
             background: var(--surface);
             border-color: var(--accent);
@@ -154,6 +182,11 @@
             font-weight: 700;
             margin-bottom: 12px;
             width: fit-content;
+        }
+        
+        .unit-card.ai-card .unit-number {
+            background: rgba(255,107,107,0.15);
+            color: #ff6b6b;
         }
         
         .unit-card h3 {
@@ -256,71 +289,98 @@
     </header>
     
     <div class="container">
-        <div class="intro-section">
-            <h2>Explore Course Units</h2>
-            <p>Navigate through the comprehensive teaching guides covering all units of the UGC-NET Computer Science syllabus. Each unit includes detailed explanations, key concepts, and important topics designed to help you master the fundamentals.</p>
+        <div class="course-section">
+            <h2 class="course-title ugc-net-title">UGC-NET Computer Science</h2>
+            
+            <div class="intro-section">
+                <h2>Explore Course Units</h2>
+                <p>Navigate through the comprehensive teaching guides covering all units of the UGC-NET Computer Science syllabus. Each unit includes detailed explanations, key concepts, and important topics designed to help you master the fundamentals.</p>
+            </div>
+            
+            <div class="units-grid">
+                <!-- Unit 1 -->
+                <a href="UGC_NET_Unit1_Teaching_Guide.html" class="unit-card">
+                    <span class="unit-number">UNIT 1</span>
+                    <h3>Discrete Structures & Optimization</h3>
+                    <p class="unit-description">Master the foundational mathematical concepts essential for computer science, including graph theory, optimization techniques, and discrete mathematical structures.</p>
+                    <div class="unit-topics">
+                        <label>Key Topics Covered</label>
+                        <p>Graph theory, algorithms, optimization, mathematical proofs, and computational complexity</p>
+                    </div>
+                    <span class="unit-link">View Guide</span>
+                </a>
+                
+                <!-- Unit 2 -->
+                <a href="UGC_NET_Unit2_Teaching_Guide.html" class="unit-card">
+                    <span class="unit-number">UNIT 2</span>
+                    <h3>Computer System Architecture</h3>
+                    <p class="unit-description">Develop a deep understanding of computer architecture, processor design, memory hierarchies, and system organization principles that form the backbone of modern computing.</p>
+                    <div class="unit-topics">
+                        <label>Key Topics Covered</label>
+                        <p>CPU design, memory management, I/O systems, performance metrics, and cache architecture</p>
+                    </div>
+                    <span class="unit-link">View Guide</span>
+                </a>
+                
+                <!-- Unit 3 -->
+                <a href="UGC_NET_Unit3_Teaching_Guide.html" class="unit-card">
+                    <span class="unit-number">UNIT 3</span>
+                    <h3>Programming Languages, Data Structures & Algorithms</h3>
+                    <p class="unit-description">Explore programming paradigms, master fundamental data structures, analyze algorithm complexity, study sorting techniques, and understand design patterns for scalable software.</p>
+                    <div class="unit-topics">
+                        <label>Key Topics Covered</label>
+                        <p>Paradigms (OOP, Functional), Data Structures, Algorithm Analysis, Sorting, Searching, Trees, Graphs, Dynamic Programming, Design Patterns</p>
+                    </div>
+                    <span class="unit-link">View Guide</span>
+                </a>
+                
+                <!-- Unit 4 -->
+                <a href="UGC_NET_Unit4_Teaching_Guide.html" class="unit-card">
+                    <span class="unit-number">UNIT 4</span>
+                    <h3>Operating Systems</h3>
+                    <p class="unit-description">Master core OS concepts including process management, memory hierarchies, synchronization mechanisms, deadlock handling, file systems, I/O management, and CPU scheduling algorithms.</p>
+                    <div class="unit-topics">
+                        <label>Key Topics Covered</label>
+                        <p>Processes & Threads, Paging & Virtual Memory, Synchronization & Deadlocks, File Systems, I/O Scheduling, CPU Scheduling Algorithms</p>
+                    </div>
+                    <span class="unit-link">View Guide</span>
+                </a>
+                
+                <!-- Unit 5 -->
+                <a href="UGC_NET_Unit5_Teaching_Guide.html" class="unit-card">
+                    <span class="unit-number">UNIT 5</span>
+                    <h3>Database Systems</h3>
+                    <p class="unit-description">Comprehensive database systems guide covering relational design, SQL queries, data normalization, indexing strategies, transaction management, concurrency control, recovery protocols, and modern NoSQL technologies.</p>
+                    <div class="unit-topics">
+                        <label>Key Topics Covered</label>
+                        <p>Data Models, Normalization, SQL & JOINs, Indexing, Transactions & ACID, Concurrency Control, Locking, Recovery, NoSQL, Distributed Databases</p>
+                    </div>
+                    <span class="unit-link">View Guide</span>
+                </a>
+            </div>
         </div>
         
-        <div class="units-grid">
-            <!-- Unit 1 -->
-            <a href="UGC_NET_Unit1_Teaching_Guide.html" class="unit-card">
-                <span class="unit-number">UNIT 1</span>
-                <h3>Discrete Structures & Optimization</h3>
-                <p class="unit-description">Master the foundational mathematical concepts essential for computer science, including graph theory, optimization techniques, and discrete mathematical structures.</p>
-                <div class="unit-topics">
-                    <label>Key Topics Covered</label>
-                    <p>Graph theory, algorithms, optimization, mathematical proofs, and computational complexity</p>
-                </div>
-                <span class="unit-link">View Guide</span>
-            </a>
+        <div class="course-section">
+            <h2 class="course-title ai-ml-title">AI & Machine Learning Encyclopedia</h2>
             
-            <!-- Unit 2 -->
-            <a href="UGC_NET_Unit2_Teaching_Guide.html" class="unit-card">
-                <span class="unit-number">UNIT 2</span>
-                <h3>Computer System Architecture</h3>
-                <p class="unit-description">Develop a deep understanding of computer architecture, processor design, memory hierarchies, and system organization principles that form the backbone of modern computing.</p>
-                <div class="unit-topics">
-                    <label>Key Topics Covered</label>
-                    <p>CPU design, memory management, I/O systems, performance metrics, and cache architecture</p>
-                </div>
-                <span class="unit-link">View Guide</span>
-            </a>
+            <div class="intro-section">
+                <h2>The Complete AI & ML Guide</h2>
+                <p>A comprehensive encyclopedia covering artificial intelligence and machine learning fundamentals, architectures, techniques, and modern applications. From classical algorithms to transformer models and diffusion systems, this guide spans the entire AI landscape with practical insights and theoretical foundations.</p>
+            </div>
             
-            <!-- Unit 3 -->
-            <a href="UGC_NET_Unit3_Teaching_Guide.html" class="unit-card">
-                <span class="unit-number">UNIT 3</span>
-                <h3>Programming Languages, Data Structures & Algorithms</h3>
-                <p class="unit-description">Explore programming paradigms, master fundamental data structures, analyze algorithm complexity, study sorting techniques, and understand design patterns for scalable software.</p>
-                <div class="unit-topics">
-                    <label>Key Topics Covered</label>
-                    <p>Paradigms (OOP, Functional), Data Structures, Algorithm Analysis, Sorting, Searching, Trees, Graphs, Dynamic Programming, Design Patterns</p>
-                </div>
-                <span class="unit-link">View Guide</span>
-            </a>
-            
-            <!-- Unit 4 -->
-            <a href="UGC_NET_Unit4_Teaching_Guide.html" class="unit-card">
-                <span class="unit-number">UNIT 4</span>
-                <h3>Operating Systems</h3>
-                <p class="unit-description">Master core OS concepts including process management, memory hierarchies, synchronization mechanisms, deadlock handling, file systems, I/O management, and CPU scheduling algorithms.</p>
-                <div class="unit-topics">
-                    <label>Key Topics Covered</label>
-                    <p>Processes & Threads, Paging & Virtual Memory, Synchronization & Deadlocks, File Systems, I/O Scheduling, CPU Scheduling Algorithms</p>
-                </div>
-                <span class="unit-link">View Guide</span>
-            </a>
-            
-            <!-- Unit 5 -->
-            <a href="UGC_NET_Unit5_Teaching_Guide.html" class="unit-card">
-                <span class="unit-number">UNIT 5</span>
-                <h3>Database Systems</h3>
-                <p class="unit-description">Comprehensive database systems guide covering relational design, SQL queries, data normalization, indexing strategies, transaction management, concurrency control, recovery protocols, and modern NoSQL technologies.</p>
-                <div class="unit-topics">
-                    <label>Key Topics Covered</label>
-                    <p>Data Models, Normalization, SQL & JOINs, Indexing, Transactions & ACID, Concurrency Control, Locking, Recovery, NoSQL, Distributed Databases</p>
-                </div>
-                <span class="unit-link">View Guide</span>
-            </a>
+            <div class="units-grid">
+                <!-- AI & ML Course -->
+                <a href="ai.html" class="unit-card ai-card">
+                    <span class="unit-number">COURSE</span>
+                    <h3>The Complete AI & Machine Learning Encyclopedia</h3>
+                    <p class="unit-description">An in-depth exploration of artificial intelligence and machine learning covering 29 comprehensive chapters from foundational concepts to advanced applications in modern AI systems.</p>
+                    <div class="unit-topics">
+                        <label>Key Topics Covered</label>
+                        <p>Fundamentals, Linear/Logistic Regression, Neural Networks, Deep Learning, CNNs, RNNs, LSTMs, Attention Mechanisms, Transformers, Transfer Learning, Reinforcement Learning, Generative Models, Diffusion Models, LLMs, Fine-tuning, RAG, Vision Models, Multimodal Systems, Production & MLOps</p>
+                    </div>
+                    <span class="unit-link">Open Encyclopedia</span>
+                </a>
+            </div>
         </div>
     </div>
     
