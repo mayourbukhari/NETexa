@@ -798,6 +798,59 @@ html
     color: var(--ink-muted);
     margin: 2px;
   }
+
+  /* ── BOOK PAGE TRANSITION ── */
+  #page-turn-overlay {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    pointer-events: none;
+    transform-origin: left center;
+    transform: perspective(2000px) rotateY(90deg);
+    opacity: 0;
+    background: var(--paper-warm);
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 27px,
+        rgba(200,191,176,0.14) 27px,
+        rgba(200,191,176,0.14) 28px
+      ),
+      linear-gradient(to right, rgba(26,20,16,0.1) 0%, transparent 6%);
+    box-shadow: -24px 0 70px rgba(26,20,16,0.3), inset 5px 0 14px rgba(26,20,16,0.08);
+  }
+
+  @keyframes bookFlipIn {
+    0%   { transform: perspective(2000px) rotateY(90deg);  opacity: 1; }
+    100% { transform: perspective(2000px) rotateY(0deg);   opacity: 1; }
+  }
+
+  @keyframes bookFlipOut {
+    0%   { transform: perspective(2000px) rotateY(0deg);   opacity: 1; }
+    100% { transform: perspective(2000px) rotateY(-90deg); opacity: 0; }
+  }
+
+  #page-turn-overlay.flip-in  { animation: bookFlipIn  0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  #page-turn-overlay.flip-out { animation: bookFlipOut 0.38s cubic-bezier(0.4, 0, 0.8, 0.6) forwards; }
+
+  /* Chapter entrance slide-in (JS adds .chapter-animate then .chapter-visible) */
+  .chapter-animate {
+    opacity: 0;
+    transform: translateX(22px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .chapter-animate.chapter-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 900px) {
+    #page-turn-overlay { left: 0; }
+  }
 </style>
 </head>
 <body>
@@ -3561,6 +3614,7 @@ client.<span class="fn">transition_model_version_stage</span>(
     </div><!-- END #main -->
   </body>
   <script>
+    /* ── Search filter ─────────────────────────────────────────── */
     function filterNav(query) {
       const links = document.querySelectorAll('nav a');
       links.forEach(link => {
@@ -3568,5 +3622,101 @@ client.<span class="fn">transition_model_version_stage</span>(
         link.style.display = text.includes(query.toLowerCase()) ? 'block' : 'none';
       });
     }
+
+    /* ── Book page transition ──────────────────────────────────── */
+    (function () {
+      /* Create the page-turn overlay element */
+      const overlay = document.createElement('div');
+      overlay.id = 'page-turn-overlay';
+      document.body.appendChild(overlay);
+
+      /* Keep overlay left-edge in sync with sidebar width */
+      function syncOverlay() {
+        overlay.style.left = (window.innerWidth <= 900 ? 0 : 300) + 'px';
+      }
+      syncOverlay();
+      window.addEventListener('resize', syncOverlay);
+
+      /* Animate a page flip then jump-scroll to targetId */
+      function flipToSection(targetId, linkEl) {
+        overlay.classList.remove('flip-in', 'flip-out');
+        void overlay.offsetWidth; /* force reflow to restart animation */
+        overlay.classList.add('flip-in');
+
+        setTimeout(function () {
+          /* Instantly scroll while overlay covers the content */
+          var target = document.getElementById(targetId);
+          if (target) target.scrollIntoView({ behavior: 'instant' });
+
+          /* Update active sidebar link */
+          document.querySelectorAll('nav a').forEach(function (a) {
+            a.classList.remove('active');
+          });
+          if (linkEl) linkEl.classList.add('active');
+
+          /* Flip the overlay back out, revealing the new position */
+          overlay.classList.remove('flip-in');
+          void overlay.offsetWidth;
+          overlay.classList.add('flip-out');
+          setTimeout(function () { overlay.classList.remove('flip-out'); }, 400);
+        }, 420);
+      }
+
+      /* Intercept sidebar nav clicks */
+      document.querySelectorAll('nav a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          flipToSection(link.getAttribute('href').slice(1), link);
+        });
+      });
+
+      /* Intercept Table-of-Contents links inside the content area */
+      document.querySelectorAll('.toc-entry a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          flipToSection(link.getAttribute('href').slice(1), null);
+        });
+      });
+
+      /* ── Chapter entrance animations (slide in from right) ───── */
+      var chapters = document.querySelectorAll('.chapter');
+      var chObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('chapter-visible');
+            chObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+      chapters.forEach(function (ch) {
+        ch.classList.add('chapter-animate');
+        chObserver.observe(ch);
+      });
+
+      /* ── Back-to-top button visibility ───────────────────────── */
+      var backToTop = document.getElementById('back-to-top');
+      if (backToTop) {
+        window.addEventListener('scroll', function () {
+          backToTop.classList.toggle('visible', window.scrollY > 400);
+        });
+      }
+
+      /* ── Highlight active nav link while scrolling ───────────── */
+      var navLinks = document.querySelectorAll('nav a[href^="#"]');
+      var navObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            navLinks.forEach(function (a) { a.classList.remove('active'); });
+            var active = document.querySelector('nav a[href="#' + entry.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { threshold: 0.25 });
+
+      document.querySelectorAll('[id]').forEach(function (el) {
+        navObserver.observe(el);
+      });
+    }());
   </script>
 </html>
