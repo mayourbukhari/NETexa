@@ -3625,6 +3625,10 @@ client.<span class="fn">transition_model_version_stage</span>(
 
     /* ── Book page transition ──────────────────────────────────── */
     (function () {
+      /* Animation duration constants (must match CSS keyframe durations) */
+      var FLIP_IN_MS  = 420; /* matches bookFlipIn  0.42s */
+      var FLIP_OUT_MS = 380; /* matches bookFlipOut 0.38s */
+
       /* Create the page-turn overlay element */
       const overlay = document.createElement('div');
       overlay.id = 'page-turn-overlay';
@@ -3646,7 +3650,7 @@ client.<span class="fn">transition_model_version_stage</span>(
         setTimeout(function () {
           /* Instantly scroll while overlay covers the content */
           var target = document.getElementById(targetId);
-          if (target) target.scrollIntoView({ behavior: 'instant' });
+          if (target) target.scrollIntoView({ behavior: 'auto' });
 
           /* Update active sidebar link */
           document.querySelectorAll('nav a').forEach(function (a) {
@@ -3658,8 +3662,8 @@ client.<span class="fn">transition_model_version_stage</span>(
           overlay.classList.remove('flip-in');
           void overlay.offsetWidth;
           overlay.classList.add('flip-out');
-          setTimeout(function () { overlay.classList.remove('flip-out'); }, 400);
-        }, 420);
+          setTimeout(function () { overlay.classList.remove('flip-out'); }, FLIP_OUT_MS);
+        }, FLIP_IN_MS);
       }
 
       /* Intercept sidebar nav clicks */
@@ -3703,7 +3707,13 @@ client.<span class="fn">transition_model_version_stage</span>(
       }
 
       /* ── Highlight active nav link while scrolling ───────────── */
+      /* Build a Set of IDs that have a matching sidebar nav entry */
       var navLinks = document.querySelectorAll('nav a[href^="#"]');
+      var navIdSet = new Set();
+      navLinks.forEach(function (a) {
+        navIdSet.add(a.getAttribute('href').slice(1));
+      });
+
       var navObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -3714,8 +3724,10 @@ client.<span class="fn">transition_model_version_stage</span>(
         });
       }, { threshold: 0.25 });
 
-      document.querySelectorAll('[id]').forEach(function (el) {
-        navObserver.observe(el);
+      /* Only observe sections that have a matching sidebar link */
+      navIdSet.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) navObserver.observe(el);
       });
     }());
   </script>
