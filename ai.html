@@ -683,9 +683,33 @@ html
     #main { margin-left: 0; }
     .hero { padding: 48px 32px; }
     .hero h1 { font-size: 36px; }
+    .hero-meta { flex-wrap: wrap; gap: 14px 24px; }
     .content { padding: 0 28px 60px; }
     .compare-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
     .part-header { margin: 0 -28px; padding: 40px 36px; }
+    .part-header::after { font-size: 84px; right: 24px; }
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .hero { padding: 36px 20px 32px; }
+    .hero h1 { font-size: 30px; line-height: 1.15; }
+    .hero-sub { font-size: 16px; margin-bottom: 24px; }
+    .hero-meta { font-size: 10px; gap: 10px 16px; }
+    .content { padding: 0 16px 44px; }
+    .part-header { margin: 0 -16px; padding: 28px 20px; }
+    .part-header::after { display: none; }
+    .part-header h2 { font-size: 30px; }
+    .chapter { padding: 40px 0 30px; }
+    .chapter h2 { font-size: 28px; }
+    .chapter-intro { font-size: 17px; }
+    .code-header { padding: 8px 12px; }
+    pre { padding: 14px; font-size: 12px; }
+    thead th, td { padding: 10px 12px; }
+    .timeline { padding-left: 16px; }
+    .timeline-item { padding-left: 20px; }
+    #back-to-top { right: 16px; bottom: 16px; }
   }
 
   /* ── TOC ── */
