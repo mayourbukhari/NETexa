@@ -91,7 +91,7 @@ html
     position: fixed;
     top: 0;
     left: 300px;
-    width: 100%;
+    width: calc(100% - 300px);
     height: 100%;
     background: linear-gradient(90deg, transparent 0%, var(--paper) 50%, transparent 100%);
     pointer-events: none;
@@ -109,6 +109,13 @@ html
     animation: bookFlipOut 0.38s ease-in-out forwards;
   }
 
+  @media (max-width: 900px) {
+    #page-turn-overlay {
+      left: 0;
+      width: 100%;
+    }
+  }
+
   /* Chapter visibility animations */
   .chapter-animate {
     opacity: 0;
@@ -124,10 +131,19 @@ html
     background: var(--paper);
     color: var(--ink);
     display: flex;
+    flex-direction: row;
     min-height: 100vh;
     font-size: 17px;
     line-height: 1.8;
     animation: pageEnter 0.6s ease-out;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 900px) {
+    body {
+      flex-direction: column;
+    }
   }
 
   /* ── SIDEBAR ── */
@@ -162,6 +178,8 @@ html
     border-radius: 4px;
     z-index: 101;
     transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
   }
 
   #sidebar-toggle:hover {
@@ -171,6 +189,12 @@ html
 
   #sidebar-toggle:active {
     transform: scale(0.95);
+  }
+
+  @media (max-width: 900px) {
+    #sidebar-toggle {
+      display: flex;
+    }
   }
 
   #sidebar::-webkit-scrollbar { width: 4px; }
@@ -270,6 +294,14 @@ html
     margin-left: 300px;
     flex: 1;
     min-height: 100vh;
+    width: calc(100% - 300px);
+  }
+
+  @media (max-width: 900px) {
+    #main {
+      margin-left: 0;
+      width: 100%;
+    }
   }
 
   /* ── HERO ── */
@@ -284,6 +316,18 @@ html
     position: relative;
     overflow: hidden;
     animation: fadeInUp 0.8s ease-out;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding: 80px 32px 40px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding: 70px 16px 32px;
+    }
   }
 
   .hero::before {
@@ -341,13 +385,61 @@ html
     font-size: 11px;
     letter-spacing: 0.08em;
     color: rgba(255,255,255,0.5);
+    flex-wrap: wrap;
   }
 
   .hero-meta span { display: flex; align-items: center; gap: 8px; }
   .hero-meta strong { color: rgba(255,255,255,0.85); }
 
+  @media (max-width: 900px) {
+    .hero {
+      padding: 50px 32px 40px;
+    }
+    .hero h1 {
+      font-size: 42px;
+    }
+    .hero-meta {
+      gap: 12px 20px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding: 36px 20px 32px;
+    }
+    .hero h1 {
+      font-size: 28px;
+      line-height: 1.2;
+    }
+    .hero-sub {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .hero-meta {
+      font-size: 10px;
+      gap: 8px 12px;
+    }
+  }
+
   /* ── CONTENT LAYOUT ── */
-  .content { max-width: 900px; margin: 0 auto; padding: 0 60px 80px; }
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 60px 80px;
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .content {
+      padding: 0 20px 60px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .content {
+      padding: 0 16px 44px;
+    }
+  }
 
   /* ── PART HEADERS ── */
   .part-header {
@@ -926,20 +1018,50 @@ html
 
   @media (max-width: 900px) {
     #sidebar {
-      width: 260px;
+      width: 100%;
+      height: auto;
+      max-height: calc(100vh - 60px);
+      position: fixed;
+      top: 0;
+      left: 0;
       transform: translateX(-100%);
       box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+      border-right: 1px solid #3a2e26;
     }
+    
+    #sidebar::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 100%;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      pointer-events: all;
+      z-index: -1;
+      transition: all 0.3s ease;
+    }
+    
     #sidebar.open {
       transform: translateX(0);
+      max-height: 100vh;
+      overflow-y: auto;
     }
+    
+    #sidebar.open::before {
+      left: 0;
+      z-index: 98;
+    }
+    
     #sidebar-toggle {
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    
     #main {
       margin-left: 0;
+      width: 100%;
     }
     .sidebar-header {
       padding: 20px 18px 14px;
@@ -1339,27 +1461,39 @@ html
     body {
       font-size: 14px;
     }
-    .hero h1 {
-      font-size: 24px;
+    
+    #sidebar {
+      width: 100%;
     }
+    
+    .hero h1 {
+      font-size: 22px;
+    }
+    
     .hero-sub {
       font-size: 13px;
     }
+    
     .content {
       padding: 0 12px 24px;
     }
+    
     .chapter h2 {
-      font-size: 22px;
+      font-size: 20px;
     }
+    
     .part-header h2 {
-      font-size: 22px;
+      font-size: 20px;
     }
+    
     h3 {
       font-size: 16px;
     }
+    
     h4 {
       font-size: 14px;
     }
+    
     pre {
       font-size: 10px;
       padding: 8px;
@@ -1527,6 +1661,9 @@ html
 </style>
 </head>
 <body>
+
+<!-- Mobile Menu Toggle Button -->
+<button id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
 
 <!-- ══════════════════════════ SIDEBAR ══════════════════════════ -->
 <aside id="sidebar">
@@ -4287,6 +4424,38 @@ client.<span class="fn">transition_model_version_stage</span>(
     </div><!-- END #main -->
   </body>
   <script>
+    /* ── Mobile sidebar toggle ─────────────────────────────────── */
+    var toggleBtn = document.getElementById('sidebar-toggle');
+    var sidebar = document.getElementById('sidebar');
+    
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function () {
+        sidebar.classList.toggle('open');
+        /* Prevent body scroll when sidebar is open */
+        if (sidebar.classList.contains('open')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      /* Close sidebar when clicking on a nav link */
+      document.querySelectorAll('nav a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          sidebar.classList.remove('open');
+          document.body.style.overflow = 'auto';
+        });
+      });
+      
+      /* Close sidebar when clicking outside */
+      document.addEventListener('click', function (e) {
+        if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+          sidebar.classList.remove('open');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    }
+
     /* ── Search filter ─────────────────────────────────────────── */
     function filterNav(query) {
       const links = document.querySelectorAll('nav a');
