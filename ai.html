@@ -86,6 +86,67 @@
     }
   }
 
+  /* ── PAGE SLIDER TRANSITIONS ── */
+  @keyframes slideInFromRight {
+    0% {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOutToLeft {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOutToRight {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+  }
+
+  .content.slide-out-left {
+    animation: slideOutToLeft 0.45s cubic-bezier(0.4, 0, 0.8, 0.6) forwards;
+  }
+
+  .content.slide-in-right {
+    animation: slideInFromRight 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .content.slide-out-right {
+    animation: slideOutToRight 0.45s cubic-bezier(0.4, 0, 0.8, 0.6) forwards;
+  }
+
+  .content.slide-in-left {
+    animation: slideInFromLeft 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
   /* ── PAGE TURN OVERLAY ── */
   #page-turn-overlay {
     position: fixed;
@@ -427,6 +488,8 @@
     margin: 0 auto;
     padding: 0 60px 80px;
     width: 100%;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 
   @media (max-width: 900px) {
@@ -4485,6 +4548,13 @@ client.<span class="fn">transition_model_version_stage</span>(
 
       /* Animate a page flip then jump-scroll to targetId */
       function flipToSection(targetId, linkEl) {
+        var content = document.querySelector('.content');
+        
+        /* Start the slide-out animation */
+        content.classList.remove('slide-in-right', 'slide-out-left');
+        void content.offsetWidth; /* force reflow */
+        content.classList.add('slide-out-left');
+
         overlay.classList.remove('flip-in', 'flip-out');
         void overlay.offsetWidth; /* force reflow to restart animation */
         overlay.classList.add('flip-in');
@@ -4500,11 +4570,19 @@ client.<span class="fn">transition_model_version_stage</span>(
           });
           if (linkEl) linkEl.classList.add('active');
 
+          /* Start the slide-in animation */
+          content.classList.remove('slide-out-left');
+          void content.offsetWidth; /* force reflow */
+          content.classList.add('slide-in-right');
+
           /* Flip the overlay back out, revealing the new position */
           overlay.classList.remove('flip-in');
           void overlay.offsetWidth;
           overlay.classList.add('flip-out');
-          setTimeout(function () { overlay.classList.remove('flip-out'); }, FLIP_OUT_MS);
+          setTimeout(function () { 
+            overlay.classList.remove('flip-out');
+            content.classList.remove('slide-in-right');
+          }, FLIP_OUT_MS);
         }, FLIP_IN_MS);
       }
 
@@ -4570,6 +4648,30 @@ client.<span class="fn">transition_model_version_stage</span>(
       navIdSet.forEach(function (id) {
         var el = document.getElementById(id);
         if (el) navObserver.observe(el);
+      });
+
+      /* ── Back-to-top button with slide transition ───────────── */
+      backToTop.addEventListener('click', function (e) {
+        e.preventDefault();
+        var content = document.querySelector('.content');
+        
+        /* Add slide-out animation */
+        content.classList.remove('slide-in-right');
+        void content.offsetWidth;
+        content.classList.add('slide-out-right');
+        
+        setTimeout(function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          /* Remove slide-out and prepare for slide-in */
+          content.classList.remove('slide-out-right');
+          void content.offsetWidth;
+          content.classList.add('slide-in-left');
+          
+          setTimeout(function () {
+            content.classList.remove('slide-in-left');
+          }, 450);
+        }, 225);
       });
     }());
   </script>
