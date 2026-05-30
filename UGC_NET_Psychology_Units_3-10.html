@@ -91,6 +91,13 @@
             border-left-color: #667eea;
         }
 
+        .nav-section ul li a.active {
+            color: #667eea;
+            border-left-color: #667eea;
+            font-weight: bold;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
         .main-content {
             margin-left: 300px;
             padding: 40px;
@@ -2981,11 +2988,98 @@
     <div class="scroll-to-top" id="scrollToTop">↑</div>
 
     <script>
-        // Navigation Toggle
+        // Toggle Question Answers on Click
+        document.querySelectorAll('.question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.querySelector('.answer');
+                if (answer) {
+                    answer.classList.toggle('show');
+                    // Add visual feedback
+                    this.style.boxShadow = answer.classList.contains('show') 
+                        ? '0 4px 12px rgba(102, 126, 234, 0.4)' 
+                        : '0 2px 8px rgba(102, 126, 234, 0.3)';
+                }
+            });
+        });
+
+        // Navigation Toggle and Active State
+        const navLinks = document.querySelectorAll('.nav-section ul li a');
+        const navSections = document.querySelectorAll('.nav-section');
+
+        // Toggle navigation sections
         document.querySelectorAll('.nav-section h3').forEach(header => {
             header.addEventListener('click', function() {
                 this.parentElement.classList.toggle('active');
             });
+        });
+
+        // Enhanced Smooth Scroll and Active State for Navigation Links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Get target element
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
+                if (target) {
+                    // Remove active styling from all links
+                    navLinks.forEach(l => {
+                        l.style.borderLeftColor = 'transparent';
+                        l.style.color = '#bdc3c7';
+                        l.style.fontWeight = 'normal';
+                    });
+                    
+                    // Add active styling to clicked link
+                    this.style.borderLeftColor = '#667eea';
+                    this.style.color = '#667eea';
+                    this.style.fontWeight = 'bold';
+                    
+                    // Ensure parent section is expanded
+                    this.closest('.nav-section').classList.add('active');
+                    
+                    // Smooth scroll to target with offset
+                    setTimeout(() => {
+                        target.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start'
+                        });
+                        // Adjust scroll position to account for header
+                        window.scrollBy(0, -80);
+                    }, 100);
+                }
+            });
+        });
+
+        // Highlight active navigation link on scroll
+        window.addEventListener('scroll', () => {
+            const units = document.querySelectorAll('.unit');
+            let currentUnit = null;
+            
+            units.forEach(unit => {
+                const unitTop = unit.getBoundingClientRect().top;
+                if (unitTop < 200) {
+                    currentUnit = unit.id;
+                }
+            });
+            
+            if (currentUnit) {
+                navLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref === '#' + currentUnit) {
+                        link.style.borderLeftColor = '#667eea';
+                        link.style.color = '#667eea';
+                        link.style.fontWeight = 'bold';
+                        
+                        // Auto-expand the relevant nav section
+                        link.closest('.nav-section').classList.add('active');
+                    } else {
+                        link.style.borderLeftColor = 'transparent';
+                        link.style.color = '#bdc3c7';
+                        link.style.fontWeight = 'normal';
+                    }
+                });
+            }
         });
 
         // Search Functionality
@@ -3039,7 +3133,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Smooth Scroll for Links
+        // Smooth Scroll for All Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
