@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC NET Psychology 2026 — Complete Study Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #13161e;
+  --surface2: #1a1e2a;
+  --surface3: #222736;
+  --border: #2a2f42;
+  --accent: #7c9eff;
+  --accent2: #ff8fa3;
+  --accent3: #7fffd4;
+  --accent4: #ffd166;
+  --accent5: #c8b6ff;
+  --text: #e8eaf0;
+  --text2: #a8adc0;
+  --text3: #6b7094;
+  --def-bg: #0e1a2e;
+  --def-border: #2a4a8a;
+  --def-text: #7aadff;
+  --ex-bg: #0e2a1a;
+  --ex-border: #1a6640;
+  --ex-text: #5fffaa;
+  --tip-bg: #2a1e00;
+  --tip-border: #a07000;
+  --tip-text: #ffcc44;
+  --alert-bg: #2a0e0e;
+  --alert-border: #8a2020;
+  --alert-text: #ff8888;
+  --formula-bg: #1a0e2a;
+  --formula-border: #6a2a9a;
+  --formula-text: #cc88ff;
+  --nav-width: 300px;
+  --header-height: 60px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: var(--bg); color: var(--text); font-family: 'Source Serif 4', Georgia, serif; line-height: 1.75; min-height: 100vh; overflow-x: hidden; }
+
+/* ── TOP BAR ── */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--header-height);
+  background: rgba(13,15,20,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px; padding: 0 20px; z-index: 1000;
+}
+#topbar h1 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+#topbar h1 span { color: var(--text2); font-weight: 400; font-size: 0.85rem; }
+#search-box {
+  flex: 1; max-width: 480px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 14px;
+  color: var(--text); font-family: inherit; font-size: 0.9rem;
+  outline: none; transition: border-color 0.2s;
+}
+#search-box:focus { border-color: var(--accent); }
+#search-box::placeholder { color: var(--text3); }
+#nav-toggle { display: none; background: none; border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text2); cursor: pointer; font-size: 1rem; }
+#progress-bar { position: fixed; top: var(--header-height); left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent5)); transition: width 0.1s; z-index: 999; pointer-events: none; }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  position: fixed; top: var(--header-height); left: 0; bottom: 0;
+  width: var(--nav-width); background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 900;
+  padding: 16px 0;
+  transition: transform 0.3s;
+}
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-track { background: transparent; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.nav-unit { margin-bottom: 4px; }
+.nav-unit-btn {
+  width: 100%; text-align: left; padding: 10px 16px;
+  background: none; border: none; color: var(--text2);
+  font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  transition: color 0.2s, background 0.2s;
+  letter-spacing: 0.02em;
+}
+.nav-unit-btn:hover { color: var(--accent); background: rgba(124,158,255,0.05); }
+.nav-unit-btn .arrow { font-size: 0.7rem; transition: transform 0.2s; }
+.nav-unit-btn.open .arrow { transform: rotate(90deg); }
+.nav-topics { display: none; padding: 4px 0; }
+.nav-topics.open { display: block; }
+.nav-topic {
+  display: block; padding: 6px 16px 6px 28px;
+  color: var(--text3); font-size: 0.8rem; text-decoration: none;
+  transition: color 0.2s, background 0.2s; border-left: 2px solid transparent;
+  margin-left: 8px;
+}
+.nav-topic:hover, .nav-topic.active { color: var(--accent); background: rgba(124,158,255,0.06); border-left-color: var(--accent); }
+
+/* ── MAIN CONTENT ── */
+#main {
+  margin-left: var(--nav-width);
+  padding: calc(var(--header-height) + 32px) 48px 80px;
+  max-width: calc(var(--nav-width) + 960px);
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center; padding: 60px 20px 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(124,158,255,0.08) 0%, transparent 60%);
+}
+.hero h2 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent5)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; }
+.hero p { color: var(--text2); max-width: 600px; margin: 16px auto 0; font-size: 1.05rem; }
+.hero-meta { display: flex; justify-content: center; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+.hero-badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; font-size: 0.8rem; color: var(--text2); font-family: 'JetBrains Mono', monospace; }
+
+/* ── UNIT HEADERS ── */
+.unit-header {
+  margin: 64px 0 32px;
+  padding: 28px 32px;
+  background: var(--surface2);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  position: relative;
+  overflow: hidden;
+}
+.unit-header::before {
+  content: attr(data-num);
+  position: absolute; right: 24px; top: 50%; transform: translateY(-50%);
+  font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900;
+  color: rgba(124,158,255,0.06); line-height: 1;
+}
+.unit-header h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+.unit-header p { color: var(--text2); margin-top: 8px; font-size: 0.95rem; }
+
+/* ── TOPIC SECTIONS ── */
+.topic-section { margin: 40px 0; }
+.topic-section h3 {
+  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+  color: var(--text); border-bottom: 1px solid var(--border);
+  padding-bottom: 10px; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.topic-section h3 .topic-icon { font-size: 1rem; opacity: 0.7; }
+.subtopic h4 {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+  color: var(--accent5); margin: 28px 0 12px;
+}
+.subtopic h5 { font-size: 1rem; font-weight: 600; color: var(--accent3); margin: 18px 0 8px; }
+p { margin-bottom: 14px; color: var(--text); }
+ul, ol { margin: 10px 0 14px 20px; }
+li { margin-bottom: 6px; color: var(--text); }
+li::marker { color: var(--accent); }
+strong { color: var(--accent4); font-weight: 600; }
+em { color: var(--accent3); font-style: italic; }
+
+/* ── SPECIAL BOXES ── */
+.box { border-radius: 10px; padding: 18px 22px; margin: 20px 0; border-left: 4px solid; }
+.box-def { background: var(--def-bg); border-color: var(--def-border); }
+.box-def .box-title { color: var(--def-text); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.box-def p, .box-def li { color: #b8d4ff; }
+.box-example { background: var(--ex-bg); border-color: var(--ex-border); }
+.box-example .box-title { color: var(--ex-text); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.box-example p, .box-example li { color: #b0f0d4; }
+.box-tip { background: var(--tip-bg); border-color: var(--tip-border); }
+.box-tip .box-title { color: var(--tip-text); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.box-tip p, .box-tip li { color: #ffe4a0; }
+.box-alert { background: var(--alert-bg); border-color: var(--alert-border); }
+.box-alert .box-title { color: var(--alert-text); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.box-alert p, .box-alert li { color: #ffbbbb; }
+.box-formula { background: var(--formula-bg); border-color: var(--formula-border); }
+.box-formula .box-title { color: var(--formula-text); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.box-formula p, .box-formula code { color: #e0b8ff; font-family: 'JetBrains Mono', monospace; }
+.box-mnemonic { background: rgba(255,209,102,0.08); border-color: var(--accent4); }
+.box-mnemonic .box-title { color: var(--accent4); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.box-mnemonic p, .box-mnemonic li { color: #ffe4a0; }
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+thead tr { background: var(--surface3); }
+thead th { padding: 12px 16px; text-align: left; color: var(--accent); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.03em; border-bottom: 1px solid var(--border); }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+tbody tr:hover { background: var(--surface2); }
+tbody tr:last-child { border-bottom: none; }
+tbody td { padding: 11px 16px; color: var(--text2); vertical-align: top; }
+tbody td:first-child { color: var(--text); font-weight: 600; }
+
+/* ── COLLAPSIBLE ── */
+.collapse-btn {
+  width: 100%; text-align: left; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 20px; color: var(--text); font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  margin: 12px 0; transition: border-color 0.2s, background 0.2s;
+}
+.collapse-btn:hover { border-color: var(--accent); background: rgba(124,158,255,0.05); }
+.collapse-btn .caret { transition: transform 0.25s; font-size: 0.8rem; color: var(--accent); }
+.collapse-btn.open .caret { transform: rotate(180deg); }
+.collapse-content { display: none; padding: 4px 0 16px; }
+.collapse-content.open { display: block; }
+
+/* ── MCQ SECTION ── */
+.mcq-section { margin: 32px 0; }
+.mcq-section h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.mcq { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
+.mcq .question { color: var(--text); font-weight: 600; margin-bottom: 12px; }
+.mcq .options { list-style: none; margin: 0; padding: 0; }
+.mcq .options li { padding: 8px 14px; border-radius: 6px; margin-bottom: 6px; cursor: pointer; border: 1px solid var(--border); transition: all 0.2s; font-size: 0.92rem; color: var(--text2); }
+.mcq .options li:hover { background: rgba(124,158,255,0.1); border-color: var(--accent); color: var(--text); }
+.mcq .options li.correct { background: rgba(127,255,212,0.1); border-color: var(--accent3); color: var(--accent3); }
+.mcq .options li.wrong { background: rgba(255,143,163,0.1); border-color: var(--accent2); color: var(--accent2); }
+.mcq .explanation { display: none; margin-top: 12px; padding: 12px 16px; background: rgba(124,158,255,0.08); border-radius: 6px; font-size: 0.88rem; color: var(--text2); border-left: 3px solid var(--accent); }
+.mcq .explanation.show { display: block; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; padding: 0; margin: 16px 0; }
+.checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; color: var(--text2); font-size: 0.92rem; }
+.checklist li input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); margin-top: 3px; cursor: pointer; flex-shrink: 0; }
+.checklist li label { cursor: pointer; }
+.checklist li input:checked + label { text-decoration: line-through; color: var(--text3); }
+
+/* ── COMPARISON GRID ── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+.compare-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.compare-card h5 { color: var(--accent); font-family: 'Playfair Display', serif; margin-bottom: 10px; }
+.compare-card ul li { font-size: 0.88rem; color: var(--text2); }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding: 8px 0; }
+.timeline::before { content: ''; position: absolute; left: 16px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { display: flex; gap: 20px; margin-bottom: 20px; position: relative; }
+.timeline-dot { width: 14px; height: 14px; background: var(--accent); border-radius: 50%; flex-shrink: 0; margin-top: 4px; z-index: 1; box-shadow: 0 0 0 3px var(--bg); }
+.timeline-content h5 { color: var(--accent4); font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+.timeline-content p { font-size: 0.88rem; color: var(--text2); margin: 0; }
+
+/* ── DIAGRAM: SVG based ── */
+.diagram-wrap { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 24px 0; overflow-x: auto; text-align: center; }
+.diagram-wrap figcaption { margin-top: 12px; color: var(--text3); font-size: 0.82rem; font-style: italic; }
+
+/* ── HIGHLIGHT TAGS ── */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; margin: 2px; }
+.tag-year { background: rgba(255,209,102,0.15); color: var(--accent4); border: 1px solid rgba(255,209,102,0.3); }
+.tag-psych { background: rgba(200,182,255,0.15); color: var(--accent5); border: 1px solid rgba(200,182,255,0.3); }
+.tag-important { background: rgba(255,143,163,0.15); color: var(--accent2); border: 1px solid rgba(255,143,163,0.3); }
+
+/* ── SHORT / LONG Q SECTIONS ── */
+.qa-section { margin: 24px 0; }
+.qa-section h4 { color: var(--accent3); font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 14px; }
+.qa-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
+.qa-item .q { color: var(--text); font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+.qa-item .a { color: var(--text2); font-size: 0.88rem; display: none; padding-top: 8px; border-top: 1px solid var(--border); }
+.qa-item .a.show { display: block; }
+.qa-item .toggle-ans { background: none; border: none; color: var(--accent); font-size: 0.78rem; cursor: pointer; font-family: 'JetBrains Mono', monospace; padding: 0; }
+
+/* ── SEARCH HIGHLIGHT ── */
+.search-highlight { background: rgba(255,209,102,0.3); border-radius: 2px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; padding: 80px 20px 60px; }
+  #nav-toggle { display: block; }
+  .hero h2 { font-size: 2rem; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .unit-header::before { display: none; }
+}
+
+/* ── PRINT ── */
+@media print {
+  #topbar, #sidebar, #progress-bar, #nav-toggle { display: none !important; }
+  #main { margin: 0; padding: 20px; max-width: 100%; }
+  .collapse-content { display: block !important; }
+  .box { break-inside: avoid; }
+  .mcq { break-inside: avoid; }
+  body { background: white; color: black; }
+  .unit-header { border-left: 4px solid #4466cc; background: #f0f4ff; }
+  .unit-header h2 { color: #2244aa; }
+  .box-def { background: #f0f4ff; border-color: #4466cc; }
+  .box-tip { background: #fffbf0; border-color: #cc9900; }
+  .box-alert { background: #fff0f0; border-color: #cc2222; }
+  .box-formula { background: #f8f0ff; border-color: #8844cc; }
+  .box-example { background: #f0fff8; border-color: #228844; }
+  p, li, td { color: #222 !important; }
+  strong { color: #664400 !important; }
+  thead th { color: #2244aa !important; }
+}
+
+/* ── SCROLLBAR GLOBAL ── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* ── UTILITY ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+.text-center { text-align: center; }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+code { font-family: 'JetBrains Mono', monospace; background: var(--surface3); padding: 2px 6px; border-radius: 4px; font-size: 0.87em; color: var(--accent5); }
+.section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 40px 0; }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- TOP BAR -->
+<header id="topbar">
+  <button id="nav-toggle" onclick="toggleNav()">☰</button>
+  <h1>UGC NET Psychology <span>| 2026 Complete Notes</span></h1>
+  <input type="text" id="search-box" placeholder="🔍  Search topics, terms, theories…" oninput="searchContent(this.value)">
+</header>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 1 — Emergence of Psychology <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u1-eastern">Eastern Systems</a>
+      <a class="nav-topic" href="#u1-india">Psychology in India</a>
+      <a class="nav-topic" href="#u1-western">Western Psychology</a>
+      <a class="nav-topic" href="#u1-paradigms">Knowledge Paradigms</a>
+      <a class="nav-topic" href="#u1-mcq">MCQs — Unit 1</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 2 — Research Methodology <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u2-basics">Research Basics</a>
+      <a class="nav-topic" href="#u2-paradigms">Research Paradigms</a>
+      <a class="nav-topic" href="#u2-methods">Research Methods</a>
+      <a class="nav-topic" href="#u2-stats">Statistics</a>
+      <a class="nav-topic" href="#u2-correlation">Correlation &amp; Regression</a>
+      <a class="nav-topic" href="#u2-factor">Factor Analysis</a>
+      <a class="nav-topic" href="#u2-designs">Experimental Designs</a>
+      <a class="nav-topic" href="#u2-mcq">MCQs — Unit 2</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 3 — Psychological Testing <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u3-types">Types of Tests</a>
+      <a class="nav-topic" href="#u3-construction">Test Construction</a>
+      <a class="nav-topic" href="#u3-standardization">Standardization</a>
+      <a class="nav-topic" href="#u3-areas">Areas of Testing</a>
+      <a class="nav-topic" href="#u3-applications">Applications</a>
+      <a class="nav-topic" href="#u3-mcq">MCQs — Unit 3</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 4 — Biological Basis <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u4-sensory">Sensory Systems</a>
+      <a class="nav-topic" href="#u4-neurons">Neurons &amp; Neurotransmitters</a>
+      <a class="nav-topic" href="#u4-cns">CNS &amp; PNS</a>
+      <a class="nav-topic" href="#u4-methods">Physiological Methods</a>
+      <a class="nav-topic" href="#u4-motivation">Biological Motivation</a>
+      <a class="nav-topic" href="#u4-emotion">Emotion &amp; Genetics</a>
+      <a class="nav-topic" href="#u4-mcq">MCQs — Unit 4</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 5 — Attention, Perception, Learning <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u5-attention">Attention</a>
+      <a class="nav-topic" href="#u5-perception">Perception</a>
+      <a class="nav-topic" href="#u5-learning">Learning</a>
+      <a class="nav-topic" href="#u5-memory">Memory &amp; Forgetting</a>
+      <a class="nav-topic" href="#u5-mcq">MCQs — Unit 5</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 6 — Thinking, Intelligence, Creativity <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u6-thinking">Thinking</a>
+      <a class="nav-topic" href="#u6-intelligence">Intelligence</a>
+      <a class="nav-topic" href="#u6-creativity">Creativity</a>
+      <a class="nav-topic" href="#u6-mcq">MCQs — Unit 6</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 7 — Personality, Motivation, Emotion <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u7-personality">Personality</a>
+      <a class="nav-topic" href="#u7-motivation">Motivation</a>
+      <a class="nav-topic" href="#u7-emotion">Emotion</a>
+      <a class="nav-topic" href="#u7-stress">Stress &amp; Coping</a>
+      <a class="nav-topic" href="#u7-mcq">MCQs — Unit 7</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 8 — Social Psychology <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u8-nature">Nature &amp; History</a>
+      <a class="nav-topic" href="#u8-social-perception">Social Perception</a>
+      <a class="nav-topic" href="#u8-influence">Social Influence</a>
+      <a class="nav-topic" href="#u8-groups">Groups &amp; Intergroup</a>
+      <a class="nav-topic" href="#u8-mcq">MCQs — Unit 8</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 9 — Human Development <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u9-development">Development Theories</a>
+      <a class="nav-topic" href="#u9-psychopathology">Psychopathology</a>
+      <a class="nav-topic" href="#u9-therapies">Psychotherapies</a>
+      <a class="nav-topic" href="#u9-education">Education Psychology</a>
+      <a class="nav-topic" href="#u9-mcq">MCQs — Unit 9</a>
+    </div>
+  </div>
+  <div class="nav-unit">
+    <button class="nav-unit-btn" onclick="toggleUnit(this)">Unit 10 — Emerging Areas <span class="arrow">›</span></button>
+    <div class="nav-topics">
+      <a class="nav-topic" href="#u10-issues">Gender, Poverty, Disability</a>
+      <a class="nav-topic" href="#u10-peace">Peace Psychology</a>
+      <a class="nav-topic" href="#u10-wellbeing">Wellbeing &amp; Self-Growth</a>
+      <a class="nav-topic" href="#u10-health">Health Psychology</a>
+      <a class="nav-topic" href="#u10-tech">Psychology &amp; Technology</a>
+      <a class="nav-topic" href="#u10-mcq">MCQs — Unit 10</a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- HERO -->
+<div class="hero">
+  <h2>UGC NET Psychology</h2>
+  <p>Complete Study Notes for UGC NET 2026 — Subject Code 04. Covers all 10 units from beginner to advanced level with theories, MCQs, mnemonics &amp; exam-oriented content.</p>
+  <div class="hero-meta">
+    <span class="hero-badge">📚 10 Units</span>
+    <span class="hero-badge">🧠 500+ Concepts</span>
+    <span class="hero-badge">✅ MCQs per Unit</span>
+    <span class="hero-badge">🎯 Exam-Oriented</span>
+    <span class="hero-badge">📖 NTA Pattern 2026</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     UNIT 1 — EMERGENCE OF PSYCHOLOGY
+════════════════════════════════════════════════════ -->
+<section id="unit1">
+<div class="unit-header" data-num="01">
+  <h2>Unit 1 — Emergence of Psychology</h2>
+  <p>Eastern Systems • History of Psychology in India • Western Schools • Knowledge Paradigms</p>
+</div>
+
+<!-- Eastern Systems -->
+<div class="topic-section" id="u1-eastern">
+<h3><span class="topic-icon">🕉️</span> Eastern Systems of Psychological Thought</h3>
+
+<div class="subtopic">
+<h4>1.1 Bhagavad Gita</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p>The <strong>Bhagavad Gita</strong> (Song of the Lord) is a 700-verse Sanskrit text, part of the Indian epic Mahabharata, presenting a dialogue between Prince Arjuna and Lord Krishna. Psychologically, it offers a profound framework for understanding human consciousness, motivation, emotion, and self-regulation.</p>
+</div>
+<p>The Gita addresses fundamental psychological concepts including the nature of <strong>self (Atman)</strong>, the functioning of the <strong>mind (Manas)</strong>, and the path to psychological well-being. It distinguishes between the phenomenal self and the transcendental self, offering insights that parallel modern concepts in transpersonal and humanistic psychology.</p>
+<h5>Key Psychological Concepts in the Gita</h5>
+<ul>
+  <li><strong>Gunas (Three Qualities):</strong> Tamas (inertia/ignorance), Rajas (passion/activity), Sattva (purity/harmony) — analogous to personality dimensions</li>
+  <li><strong>Chitta:</strong> The mind-stuff or mental substance that records experiences</li>
+  <li><strong>Ahamkara:</strong> Ego or I-maker — the source of individual identity</li>
+  <li><strong>Buddhi:</strong> Intellect, discriminative wisdom — higher cognitive function</li>
+  <li><strong>Manas:</strong> Lower mind dealing with sensory perception and emotional processing</li>
+  <li><strong>Nishkama Karma:</strong> Action without attachment to results — relates to intrinsic motivation</li>
+  <li><strong>Yoga of Knowledge (Jnana), Action (Karma), Devotion (Bhakti):</strong> Three paths to self-realization</li>
+</ul>
+<div class="box box-tip">
+  <div class="box-title">💡 Exam Tip</div>
+  <p>The Gita's concept of <strong>Sthitaprajna</strong> (person of steady wisdom) represents an ideal psychological state — stable under pleasure/pain, fear/desire — relevant to modern resilience and emotional regulation concepts. Frequently asked in NET exams.</p>
+</div>
+<div class="box box-example">
+  <div class="box-title">🌿 Example</div>
+  <p>The concept of <em>equanimity</em> in the Gita ("samatvam yoga uchyate" — evenness of mind is yoga) parallels modern DBT's emotion regulation and Stoic philosophy's cognitive reappraisal strategies.</p>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.2 Buddhism</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p><strong>Buddhist Psychology (Abhidhamma)</strong> is a comprehensive analysis of mind and mental factors (cetasikas), developed within Theravada Buddhism. It provides a detailed taxonomy of consciousness and mental states, anticipating many discoveries of modern cognitive science and psychotherapy.</p>
+</div>
+<h5>Core Psychological Doctrines</h5>
+<ul>
+  <li><strong>Four Noble Truths:</strong> Suffering (Dukkha), Origin of suffering (Samudaya), Cessation (Nirodha), Path (Magga) — a clinical problem-solving model</li>
+  <li><strong>Noble Eightfold Path:</strong> Right View, Intention, Speech, Action, Livelihood, Effort, Mindfulness, Concentration — a complete behavioral/cognitive intervention</li>
+  <li><strong>Anatman (No-self):</strong> The illusion of a permanent self — challenges Western ego psychology</li>
+  <li><strong>Anicca (Impermanence):</strong> All phenomena are transient — basis of acceptance-based therapies</li>
+  <li><strong>Dependent Origination (Pratītyasamutpāda):</strong> Everything arises in dependence on conditions — systemic/ecological view of behavior</li>
+  <li><strong>Mindfulness (Sati):</strong> Non-judgmental present-moment awareness — foundation of MBSR, MBCT, DBT</li>
+  <li><strong>Five Aggregates (Skandhas):</strong> Form, Sensation, Perception, Mental formations, Consciousness — Buddhist model of personality</li>
+</ul>
+<div class="box box-alert">
+  <div class="box-title">⚠️ Frequently Tested</div>
+  <p>The <strong>Abhidhamma Pitaka</strong> catalogues 52 mental factors (cetasikas) and 89/121 types of consciousness. Mindfulness-Based Cognitive Therapy (MBCT) by Segal, Williams &amp; Teasdale draws directly from Buddhist mindfulness practices.</p>
+</div>
+<h5>Buddhist Contributions to Modern Psychology</h5>
+<ul>
+  <li>Mindfulness-Based Stress Reduction (MBSR) — Jon Kabat-Zinn</li>
+  <li>Acceptance and Commitment Therapy (ACT) — Steven Hayes</li>
+  <li>Dialectical Behavior Therapy (DBT) — Marsha Linehan</li>
+  <li>Positive psychology's concept of "flow" shares parallels with meditative absorption (dhyana)</li>
+</ul>
+</div>
+
+<div class="subtopic">
+<h4>1.3 Sufism</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p><strong>Sufism (Tasawwuf)</strong> is the mystical dimension of Islam, emphasizing the inner, spiritual aspects of religious life. Psychologically, it focuses on the transformation and purification of the self (nafs) through stages of spiritual development, ultimately seeking union with the Divine.</p>
+</div>
+<h5>Key Psychological Concepts in Sufism</h5>
+<ul>
+  <li><strong>Nafs (Self/Ego):</strong> Seven stages of the self — Ammarah (commanding self, dominated by desires), Lawwamah (self-reproaching), Mulhimah (inspired), Mutmainnah (tranquil), Radiyah (contented), Mardiyyah (pleasing to God), Kamilah (perfect/complete)</li>
+  <li><strong>Qalb (Heart):</strong> The spiritual center of consciousness, capable of perceiving divine reality</li>
+  <li><strong>Ruh (Spirit):</strong> Divine breath, the transcendent dimension of consciousness</li>
+  <li><strong>Hal (States) &amp; Maqam (Stations):</strong> Temporary spiritual experiences vs. permanent attainments — parallels state vs. trait distinction</li>
+  <li><strong>Dhikr (Remembrance):</strong> Meditative practice of divine remembrance — therapeutic function similar to mantra meditation</li>
+  <li><strong>Fana (Annihilation) &amp; Baqa (Subsistence):</strong> Dissolution of ego and rebirth in higher consciousness — Maslow's peak experiences</li>
+</ul>
+<div class="box box-tip">
+  <div class="box-title">💡 Exam Tip</div>
+  <p>Sufi psychologists like <strong>Al-Ghazali</strong> (Ihya Ulum al-Din) and <strong>Ibn Arabi</strong> developed sophisticated theories of consciousness that anticipate modern transpersonal psychology. Al-Ghazali's stages parallel Kohlberg's moral development.</p>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.4 Integral Yoga (Sri Aurobindo)</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p><strong>Integral Yoga</strong> is a philosophical and spiritual system developed by Sri Aurobindo Ghose (1872–1950) and Mirra Alfassa (The Mother). It posits a multi-layered consciousness and aims at the complete transformation of human nature through the integration of all dimensions of being.</p>
+</div>
+<h5>Psychological Framework</h5>
+<ul>
+  <li><strong>Levels of Mind:</strong> Physical mind, Vital mind, Pure mind, Higher Mind, Illumined Mind, Intuitive Mind, Overmind, Supermind</li>
+  <li><strong>Psychic Being (Chaitya Purusha):</strong> The evolving soul, source of psychological growth</li>
+  <li><strong>Subconscient &amp; Inconscient:</strong> Analogous to Freud's unconscious but broader in scope</li>
+  <li><strong>Triple Transformation:</strong> Psychicization (soul-centered), Spiritualization, Supramentalization</li>
+  <li><strong>Evolution of Consciousness:</strong> Matter → Life → Mind → Supermind — a grand developmental psychology</li>
+</ul>
+<div class="box box-example">
+  <div class="box-title">🌿 Example</div>
+  <p>Sri Aurobindo's concept of the <em>subliminal self</em> is broader than Freud's unconscious, containing not just repressed material but also psychic, spiritual, and cosmic dimensions of being — a "superconscious" above ordinary awareness.</p>
+</div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Psychology in India -->
+<div class="topic-section" id="u1-india">
+<h3><span class="topic-icon">🇮🇳</span> Academic Psychology in India</h3>
+
+<div class="subtopic">
+<h4>1.5 Pre-Independence Era</h4>
+<p>Psychology as a formal academic discipline in India began in the late 19th and early 20th centuries, primarily under British colonial influence. The establishment of psychology departments mirrored Western institutional models.</p>
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h5>1905 — First Psychology Lab</h5>
+      <p>The first experimental psychology laboratory in India was established at the University of Calcutta under <strong>N.N. Sengupta</strong>, who was trained under Hugo Münsterberg at Harvard.</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h5>1915–1930 — Departmental Growth</h5>
+      <p>Psychology departments established at Calcutta, Mysore, Patna universities. Focus on experimental and applied psychology modeled on German/American traditions.</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h5>1924 — Sinha's Contribution</h5>
+      <p><strong>Girishwar Misra</strong> later identified early Indian psychologists' tendency to apply Western tools without critically examining cultural fit — the "colonial psychology" problem.</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h5>1947 — Independence Era Begins</h5>
+      <p>Psychology in India inherited a Western framework; the challenge of culturally relevant psychological science began to emerge.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.6 Post-Independence Developments</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Decade</th><th>Focus</th><th>Key Developments</th></tr></thead>
+  <tbody>
+    <tr><td>1950s–60s</td><td>Expansion</td><td>Universities established psychology departments; focus on intelligence testing, applied psychology; modeled on Western paradigms</td></tr>
+    <tr><td>1970s</td><td>Social Issues</td><td>Shift toward poverty, rural development, industrial psychology; Durganand Sinha's work on deprivation &amp; cognition; psychology for Indian masses</td></tr>
+    <tr><td>1980s</td><td>Indigenization</td><td>Movement to develop culturally rooted concepts; Jai B.P. Sinha (nurturant-task leadership), J.P. Das (PASS model); Indian Council of Social Science Research support</td></tr>
+    <tr><td>1990s</td><td>Paradigm Crisis</td><td>Debates about disciplinary identity; post-colonial critique; is Western psychology applicable to Indian context?</td></tr>
+    <tr><td>2000s</td><td>Indian Psychology</td><td>Formal emergence of "Indian Psychology" as distinct field; ICPR conferences; Matthijs Cornelissen's work; integration of Yoga, Vedanta, Tantra into academic psychology</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.7 Key Issues in Indian Psychology</h4>
+<ul>
+  <li><strong>Colonial Encounter:</strong> Indian psychology was established under British colonial rule, leading to uncritical adoption of Western frameworks that may not fit Indian social/cultural realities. Key figures: Ashis Nandy's critique of colonial psychology.</li>
+  <li><strong>Post-Colonialism and Psychology:</strong> Challenges the hegemony of Euro-American psychology; advocates for decolonizing research methods, developing emic (insider) perspectives, and validating indigenous knowledge systems.</li>
+  <li><strong>Lack of Distinct Disciplinary Identity:</strong> Indian psychology occupies an ambiguous space between philosophy, spirituality, and empirical science. The question "Is Yoga psychology?" remains debated.</li>
+</ul>
+<div class="box box-alert">
+  <div class="box-title">⚠️ Exam Alert</div>
+  <p>Key scholars: <strong>Durganand Sinha</strong> (social issues), <strong>J.P. Das</strong> (PASS cognitive model), <strong>Jai B.P. Sinha</strong> (organizational behavior), <strong>Girishwar Misra</strong> (Indian psychology movement), <strong>Ajit Dalal</strong> (wellbeing). These names are frequently tested in NET exams.</p>
+</div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Western Psychology -->
+<div class="topic-section" id="u1-western">
+<h3><span class="topic-icon">🏛️</span> Western Psychology: History and Schools</h3>
+
+<div class="subtopic">
+<h4>1.8 Greek Heritage</h4>
+<ul>
+  <li><strong>Socrates (470–399 BCE):</strong> "Know thyself" — introspection as method; mind-body dualism; Socratic method of inquiry parallels clinical interviewing.</li>
+  <li><strong>Plato (428–348 BCE):</strong> Tripartite soul — Reason, Spirit, Appetite (cognition, emotion, desire); reminiscence theory of knowledge; idealism (ideas are primary reality).</li>
+  <li><strong>Aristotle (384–322 BCE):</strong> First systematic psychology in <em>De Anima</em> (On the Soul); soul as form of the body (not separate); association of ideas (contiguity, similarity, contrast) — precursor to associationist psychology; tabula rasa concept (mind as blank slate).</li>
+</ul>
+</div>
+
+<div class="subtopic">
+<h4>1.9 Four Founding Paths of Academic Psychology</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Founder</th><th>Contribution</th><th>Method</th><th>Focus</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Wilhelm Wundt</strong> (1832–1920)</td><td>First psychology lab (Leipzig, 1879); Structuralism; Voluntarism</td><td>Introspection (experimental)</td><td>Elements of conscious experience</td></tr>
+    <tr><td><strong>Sigmund Freud</strong> (1856–1939)</td><td>Psychoanalysis; unconscious mind; psychosexual development</td><td>Free association, dream analysis</td><td>Unconscious determinants of behavior</td></tr>
+    <tr><td><strong>William James</strong> (1842–1910)</td><td>Functionalism; Pragmatism; <em>Principles of Psychology</em> (1890)</td><td>Functional analysis; comparative</td><td>How mind helps organism adapt</td></tr>
+    <tr><td><strong>Wilhelm Dilthey</strong> (1833–1911)</td><td>Hermeneutics; Descriptive psychology (Geisteswissenschaften)</td><td>Understanding (Verstehen) not explaining</td><td>Lived experience, historical context</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box box-mnemonic">
+  <div class="box-title">🧠 Mnemonic</div>
+  <p><strong>"Wundt Freud James Dilthey"</strong> = <strong>"We Find Joy Daily"</strong> — four founding paths, in order: Wundt (W), Freud (F), James (J), Dilthey (D).</p>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.10 Major Schools of Psychology</h4>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Structuralism <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Structuralism</strong> (Wundt, Titchener) aimed to identify the basic elements (structures) of consciousness through trained introspection. Like chemistry seeks elements, structuralism sought the "atoms" of mind.</p></div>
+  <ul>
+    <li><strong>Method:</strong> Experimental introspection — trained observers reported their immediate conscious experiences</li>
+    <li><strong>Elements:</strong> Sensations, images, feelings</li>
+    <li><strong>E.B. Titchener</strong> brought structuralism to America; coined the term; distinguished sensation (quality, intensity, duration, clearness) from perception</li>
+    <li><strong>Limitations:</strong> Introspection unreliable; ignored unconscious processes; could not study children/animals; static view of mind</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Functionalism <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Functionalism</strong> (James, Dewey, Angell) studied the function (purpose) of mental processes in helping organisms adapt to their environment. Influenced by Darwin's evolutionary theory.</p></div>
+  <ul>
+    <li>Mind as a flowing <em>stream of consciousness</em> (James), not static elements</li>
+    <li>Emphasized practical applications — education, mental health</li>
+    <li>Led to applied psychology, educational psychology, industrial psychology</li>
+    <li><strong>John Dewey's</strong> reflex arc critique: behavior is holistic, not S-R chains</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Psychoanalysis <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Psychoanalysis</strong> (Freud) is a theory of personality, method of psychotherapy, and research method emphasizing the role of unconscious processes, childhood experiences, and internal conflicts in shaping behavior.</p></div>
+  <ul>
+    <li><strong>Topographic model:</strong> Conscious, Preconscious, Unconscious</li>
+    <li><strong>Structural model:</strong> Id (pleasure principle), Ego (reality principle), Superego (morality)</li>
+    <li><strong>Psychosexual stages:</strong> Oral, Anal, Phallic, Latency, Genital</li>
+    <li><strong>Defense mechanisms:</strong> Repression, Denial, Projection, Rationalization, Sublimation, Displacement, Reaction formation</li>
+    <li><strong>Techniques:</strong> Free association, dream analysis, transference analysis</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Gestalt Psychology <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Gestalt Psychology</strong> (Wertheimer, Köhler, Koffka) emphasizes that psychological phenomena must be understood as organized, structured wholes rather than the sum of their parts. "The whole is more than the sum of its parts."</p></div>
+  <ul>
+    <li><strong>Founded:</strong> Max Wertheimer's phi phenomenon experiment (1912) — apparent motion from stationary stimuli</li>
+    <li><strong>Köhler's</strong> insight learning (Sultan the chimp) — sudden problem-solving, not trial-and-error</li>
+    <li><strong>Kurt Lewin's</strong> field theory — behavior = f(Person × Environment); B = f(P,E)</li>
+    <li><strong>Laws of Perceptual Organization:</strong> Proximity, Similarity, Closure, Continuity, Figure-Ground</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Behaviorism <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Behaviorism</strong> (Watson, Skinner, Pavlov) holds that psychology should study only observable behavior, not subjective mental states. Behavior is determined by environmental stimuli and learned through conditioning.</p></div>
+  <ul>
+    <li><strong>Watson (1913):</strong> "Psychology as the Behaviorist Views It" — manifesto of behaviorism; S-R psychology</li>
+    <li><strong>Classical Conditioning:</strong> Pavlov — neutral stimulus paired with unconditioned stimulus produces conditioned response</li>
+    <li><strong>Operant Conditioning:</strong> Skinner — behavior shaped by consequences (reinforcement/punishment)</li>
+    <li><strong>Little Albert:</strong> Watson's fear conditioning experiment — ethical issues</li>
+    <li><strong>Radical Behaviorism:</strong> Skinner's view — even internal events (thoughts) are behaviors subject to learning principles</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Humanistic-Existential Psychology <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Humanistic Psychology</strong> (Maslow, Rogers) focuses on human potential, self-actualization, free will, and the inherent worth and dignity of individuals. Sometimes called the "Third Force" against psychoanalysis and behaviorism.</p></div>
+  <ul>
+    <li><strong>Maslow's Hierarchy of Needs:</strong> Physiological → Safety → Love/Belonging → Esteem → Self-actualization (+ Transcendence)</li>
+    <li><strong>Rogers' Person-Centered Approach:</strong> Unconditional positive regard, empathy, genuineness; actualizing tendency</li>
+    <li><strong>Existential Psychology:</strong> (May, Yalom, Frankl) — confronts "givens" of existence: death, freedom, isolation, meaninglessness; Frankl's logotherapy</li>
+    <li><strong>Phenomenology:</strong> Focus on lived experience as the primary source of knowledge</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Transpersonal Psychology <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p><strong>Transpersonal Psychology</strong> (Maslow, Grof, Wilber) extends psychological inquiry beyond the individual self to include spiritual experiences, mystical states, and transcendent levels of consciousness. Called the "Fourth Force."</p></div>
+  <ul>
+    <li>Incorporates Maslow's "peak experiences" and "B-values" (Being values)</li>
+    <li>Stanislav Grof's work on non-ordinary states of consciousness</li>
+    <li>Ken Wilber's Integral Theory (AQAL: All Quadrants, All Levels)</li>
+    <li>Incorporates insights from Eastern traditions (Buddhism, Vedanta, Sufism)</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Cognitive Revolution <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p>The <strong>Cognitive Revolution</strong> (1950s–1970s) returned mental processes (attention, memory, reasoning, language) to the center of psychological inquiry, using the computer as a metaphor for mind. Led by Chomsky, Miller, Neisser, Simon, and Bruner.</p></div>
+  <ul>
+    <li><strong>Chomsky (1959):</strong> Critique of Skinner's <em>Verbal Behavior</em> — language requires innate grammatical structures</li>
+    <li><strong>Miller (1956):</strong> "Magical number 7±2" — limits of working memory</li>
+    <li><strong>Ulric Neisser (1967):</strong> <em>Cognitive Psychology</em> — landmark text; information processing approach</li>
+    <li><strong>Information Processing Model:</strong> Input → Encoding → Storage → Retrieval → Output</li>
+    <li>Led to cognitive therapy (Aaron Beck), CBT, and modern neuroscience</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Multiculturalism <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <p><strong>Multicultural Psychology</strong> examines how cultural context shapes psychological processes, challenging the universality of Western psychological theories. Key aspects:</p>
+  <ul>
+    <li><strong>Emic vs. Etic distinction:</strong> Emic = culture-specific perspectives; Etic = cross-cultural universals</li>
+    <li>Critique of WEIRD psychology (Western, Educated, Industrialized, Rich, Democratic — Henrich et al., 2010)</li>
+    <li>Cultural psychology (Shweder, Cole) vs. cross-cultural psychology (Berry)</li>
+    <li>Individualism vs. Collectivism (Triandis, Hofstede)</li>
+  </ul>
+</div>
+</div><!-- /subtopic major schools -->
+
+<div class="subtopic">
+<h4>1.11 Crisis in Psychology</h4>
+<p>The <strong>crisis in psychology</strong> refers to concerns about the discipline's overreliance on the <strong>experimental-analytical paradigm (logical empiricism)</strong> at the expense of holistic, qualitative, and experiential approaches.</p>
+<ul>
+  <li><strong>Logical Empiricism:</strong> Only verifiable, observable phenomena count as scientific knowledge (Vienna Circle influence)</li>
+  <li><strong>Replication Crisis:</strong> Many landmark findings in social psychology failed to replicate (Bem's ESP studies, ego depletion, priming effects)</li>
+  <li><strong>Methodological critique:</strong> Over-reliance on laboratory experiments, student samples (WEIRD), self-report measures</li>
+  <li><strong>Indic Influences on Modern Psychology:</strong> Mindfulness-based therapies, yoga therapy, meditation neuroscience (Davidson, Kabat-Zinn) — Eastern approaches now integrated into mainstream psychology</li>
+</ul>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Paradigms -->
+<div class="topic-section" id="u1-paradigms">
+<h3><span class="topic-icon">🔬</span> Knowledge Paradigms</h3>
+
+<div class="subtopic">
+<h4>1.12 Essential Aspects: Ontology, Epistemology, Methodology</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Aspect</th><th>Definition</th><th>Key Question</th><th>Example in Psychology</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Ontology</strong></td><td>The nature of reality; what exists</td><td>Is there a real world independent of our perception?</td><td>Is consciousness a physical brain process (materialism) or something non-physical (dualism)?</td></tr>
+    <tr><td><strong>Epistemology</strong></td><td>The nature of knowledge; how we know</td><td>How can we acquire valid knowledge?</td><td>Can we know the mind through introspection? Is objective measurement possible?</td></tr>
+    <tr><td><strong>Methodology</strong></td><td>The methods used to generate knowledge</td><td>What procedures yield valid data?</td><td>Experimental vs. phenomenological vs. discourse analysis methods</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.13 Paradigms of Western Psychology</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Paradigm</th><th>Ontology</strong></th><th>Epistemology</th><th>Key Features</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Positivism</strong></td><td>Single objective reality</td><td>Objective knowledge through empirical observation</td><td>Value-free science; verification; measurement; Comte's philosophy; experimental method</td></tr>
+    <tr><td><strong>Post-Positivism</strong></td><td>Reality exists but imperfectly known</td><td>Probabilistic truth; falsificationism (Popper)</td><td>Modifies strict positivism; hypothesis testing; statistical inference</td></tr>
+    <tr><td><strong>Critical Perspective</strong></td><td>Reality shaped by power</td><td>Knowledge is value-laden; critique of ideology</td><td>Feminist psychology, critical race theory; Habermas; emancipatory goals</td></tr>
+    <tr><td><strong>Social Constructionism</strong></td><td>Reality is socially constructed</td><td>Knowledge through language and social interaction</td><td>Gergen; no objective truth; discourse analysis; narrative psychology</td></tr>
+    <tr><td><strong>Existential Phenomenology</strong></td><td>Lived experience is primary</td><td>Understanding through description of experience</td><td>Husserl, Heidegger, Merleau-Ponty; bracketing assumptions (epoché); interpretive phenomenological analysis (IPA)</td></tr>
+    <tr><td><strong>Co-operative Enquiry</strong></td><td>Multiple realities; participatory</td><td>Knowledge created with, not about, participants</td><td>Heron &amp; Reason; action research; participants as co-researchers</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box box-alert">
+  <div class="box-title">⚠️ Exam Alert</div>
+  <p><strong>Paradigmatic Controversies:</strong> Debates between positivism and constructionism; quantitative vs. qualitative research; value-free vs. value-laden science; reductionism vs. holism. These appear frequently in UGC NET questions.</p>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>1.14 Science and Spirituality in Indian Psychology</h4>
+<ul>
+  <li><strong>Avidya (Ignorance):</strong> Not mere lack of information, but fundamental misperception of reality (mistaking non-self for self); the root of psychological suffering in Indian thought</li>
+  <li><strong>Vidya (Knowledge/Wisdom):</strong> Correct perception of reality, particularly self-knowledge; the goal of Indian psychological practice</li>
+  <li><strong>Primacy of Self-Knowledge:</strong> In Vedanta, Buddhism, and Yoga, self-knowledge (Atma-jnana) is the highest form of knowledge, leading to liberation (Moksha/Nirvana) — psychological well-being in its deepest form</li>
+  <li>The Upanishads: "Aham Brahmasmi" (I am Brahman) — the self is identical with ultimate reality</li>
+</ul>
+</div>
+</div><!-- /topic-section -->
+
+<!-- MCQ Unit 1 -->
+<div class="topic-section" id="u1-mcq">
+<h3><span class="topic-icon">✅</span> Practice MCQs — Unit 1</h3>
+<div class="mcq-section">
+  <h4>🎯 Multiple Choice Questions</h4>
+
+  <div class="mcq" data-answer="2">
+    <div class="question">Q1. The first experimental psychology laboratory in India was established at:</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) University of Bombay</li>
+      <li onclick="checkMCQ(this,2)">B) University of Calcutta</li>
+      <li onclick="checkMCQ(this,3)">C) University of Madras</li>
+      <li onclick="checkMCQ(this,4)">D) University of Lahore</li>
+    </ul>
+    <div class="explanation">✅ N.N. Sengupta established the first psychology lab in India at Calcutta University in 1905, after training under Hugo Münsterberg at Harvard.</div>
+  </div>
+
+  <div class="mcq" data-answer="3">
+    <div class="question">Q2. The Bhagavad Gita's concept of "action without attachment to results" is called:</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Sthitaprajna</li>
+      <li onclick="checkMCQ(this,2)">B) Viveka</li>
+      <li onclick="checkMCQ(this,3)">C) Nishkama Karma</li>
+      <li onclick="checkMCQ(this,4)">D) Vairagya</li>
+    </ul>
+    <div class="explanation">✅ Nishkama Karma (desireless action) is performing one's duty without ego-driven attachment to outcomes — relates to intrinsic motivation in modern psychology.</div>
+  </div>
+
+  <div class="mcq" data-answer="1">
+    <div class="question">Q3. Who coined the term "stream of consciousness" in psychology?</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) William James</li>
+      <li onclick="checkMCQ(this,2)">B) Wilhelm Wundt</li>
+      <li onclick="checkMCQ(this,3)">C) Edward Titchener</li>
+      <li onclick="checkMCQ(this,4)">D) John Watson</li>
+    </ul>
+    <div class="explanation">✅ William James introduced "stream of consciousness" in his Principles of Psychology (1890), describing mental life as continuous, flowing, and purposeful — contrasting with Wundt's elementism.</div>
+  </div>
+
+  <div class="mcq" data-answer="4">
+    <div class="question">Q4. The "Phi Phenomenon," which was foundational to Gestalt psychology, was demonstrated by:</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Wolfgang Köhler</li>
+      <li onclick="checkMCQ(this,2)">B) Kurt Koffka</li>
+      <li onclick="checkMCQ(this,3)">C) Kurt Lewin</li>
+      <li onclick="checkMCQ(this,4)">D) Max Wertheimer</li>
+    </ul>
+    <div class="explanation">✅ Max Wertheimer demonstrated apparent motion (phi phenomenon) using stroboscopic light in 1912, founding Gestalt psychology. This is a very frequently tested question.</div>
+  </div>
+
+  <div class="mcq" data-answer="2">
+    <div class="question">Q5. In Sufism, the seven stages of the self (Nafs) begin with which stage?</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Mutmainnah (Tranquil self)</li>
+      <li onclick="checkMCQ(this,2)">B) Ammarah (Commanding self)</li>
+      <li onclick="checkMCQ(this,3)">C) Lawwamah (Self-reproaching)</li>
+      <li onclick="checkMCQ(this,4)">D) Kamilah (Perfect self)</li>
+    </ul>
+    <div class="explanation">✅ Ammarah is the lowest/first stage — dominated by base desires and ego. The progression is Ammarah → Lawwamah → Mulhimah → Mutmainnah → Radiyah → Mardiyyah → Kamilah.</div>
+  </div>
+
+  <div class="mcq" data-answer="3">
+    <div class="question">Q6. Which paradigm holds that "reality is socially constructed through language and interaction"?</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Post-Positivism</li>
+      <li onclick="checkMCQ(this,2)">B) Critical Perspective</li>
+      <li onclick="checkMCQ(this,3)">C) Social Constructionism</li>
+      <li onclick="checkMCQ(this,4)">D) Existential Phenomenology</li>
+    </ul>
+    <div class="explanation">✅ Social Constructionism (Gergen, Berger &amp; Luckmann) argues that all knowledge, including psychological knowledge, is constructed through social processes and language.</div>
+  </div>
+</div>
+</div><!-- /mcq section -->
+</section><!-- /unit1 -->
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════════════════════
+     UNIT 2 — RESEARCH METHODOLOGY AND STATISTICS
+════════════════════════════════════════════════════ -->
+<section id="unit2">
+<div class="unit-header" data-num="02">
+  <h2>Unit 2 — Research Methodology and Statistics</h2>
+  <p>Research Basics • Paradigms • Methods • Statistics • Correlation • Regression • Factor Analysis • Experimental Designs</p>
+</div>
+
+<!-- Research Basics -->
+<div class="topic-section" id="u2-basics">
+<h3><span class="topic-icon">🔭</span> Research: Meaning, Purpose, and Dimensions</h3>
+
+<div class="subtopic">
+<h4>2.1 What is Psychological Research?</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p><strong>Research</strong> is a systematic, empirical inquiry aimed at discovering, interpreting, and revising facts, events, behaviors, or theories. In psychology, it seeks to describe, explain, predict, and control behavior and mental processes.</p>
+</div>
+<h5>Purposes of Research</h5>
+<ul>
+  <li><strong>Descriptive:</strong> Accurately characterizing a phenomenon (e.g., what is the prevalence of depression in college students?)</li>
+  <li><strong>Explanatory:</strong> Identifying causes and mechanisms (e.g., does sleep deprivation cause impaired memory?)</li>
+  <li><strong>Predictive:</strong> Forecasting future behavior (e.g., can SAT scores predict academic success?)</li>
+  <li><strong>Applied:</strong> Solving practical problems (e.g., developing effective PTSD treatments)</li>
+</ul>
+
+<h5>Research Variables</h5>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Variable Type</th><th>Definition</th><th>Example</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Independent Variable (IV)</strong></td><td>Variable manipulated by researcher; presumed cause</td><td>Type of therapy (CBT vs. control)</td></tr>
+    <tr><td><strong>Dependent Variable (DV)</strong></td><td>Variable measured; presumed effect</td><td>Depression scores after therapy</td></tr>
+    <tr><td><strong>Extraneous Variable</strong></td><td>Uncontrolled variable that may influence DV</td><td>Participant's age, prior therapy history</td></tr>
+    <tr><td><strong>Confounding Variable</strong></td><td>Extraneous variable that correlates with IV and DV</td><td>Therapist skill level</td></tr>
+    <tr><td><strong>Moderator Variable</strong></td><td>Variable that changes strength/direction of IV-DV relationship</td><td>Gender moderates therapy outcomes</td></tr>
+    <tr><td><strong>Mediator Variable</strong></td><td>Variable through which IV affects DV</td><td>Cognitive restructuring mediates CBT effect</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h5>Operational Definitions</h5>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p>An <strong>operational definition</strong> specifies the exact procedures used to measure or manipulate a variable. It transforms abstract concepts into observable, measurable operations.</p>
+</div>
+<div class="box box-example">
+  <div class="box-title">🌿 Example</div>
+  <p>"Anxiety" operationally defined as: scores on the Hamilton Anxiety Rating Scale (HAM-A) measured at intake. This makes the concept concrete and replicable.</p>
+</div>
+
+<h5>Hypothesis</h5>
+<ul>
+  <li><strong>Research Hypothesis (H₁):</strong> A specific, testable prediction about the relationship between variables</li>
+  <li><strong>Null Hypothesis (H₀):</strong> States no relationship exists; what statistical tests aim to reject</li>
+  <li><strong>Directional Hypothesis:</strong> Specifies direction of effect (e.g., CBT group will have significantly lower depression than control)</li>
+  <li><strong>Non-directional Hypothesis:</strong> States a difference exists but not its direction</li>
+</ul>
+</div>
+
+<div class="subtopic">
+<h4>2.2 Sampling</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Sampling Method</th><th>Description</th><th>Pros</th><th>Cons</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Simple Random</strong></td><td>Every member of population has equal chance</td><td>Unbiased; generalizable</td><td>Requires full population list</td></tr>
+    <tr><td><strong>Stratified Random</strong></td><td>Population divided into strata; random sample from each</td><td>Ensures subgroup representation</td><td>Need to know strata proportions</td></tr>
+    <tr><td><strong>Cluster</strong></td><td>Population divided into clusters; entire clusters randomly selected</td><td>Practical for large populations</td><td>Higher sampling error</td></tr>
+    <tr><td><strong>Systematic</strong></td><td>Every kth member selected from list</td><td>Simple; efficient</td><td>Periodicity bias possible</td></tr>
+    <tr><td><strong>Purposive (Judgment)</strong></td><td>Researcher selects based on specific criteria</td><td>Focused; useful for qualitative</td><td>Subjective; not generalizable</td></tr>
+    <tr><td><strong>Snowball</strong></td><td>Existing participants recruit others</td><td>Accesses hidden populations</td><td>Self-selection bias</td></tr>
+    <tr><td><strong>Convenience</strong></td><td>Whoever is readily available</td><td>Easy; inexpensive</td><td>High bias; limited generalizability</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>2.3 Ethics in Research</h4>
+<div class="box box-alert">
+  <div class="box-title">⚠️ Critical for Exam</div>
+  <p>Ethics in psychological research is a high-priority exam topic. APA Ethics Code and Indian ethical guidelines are both relevant.</p>
+</div>
+<ul>
+  <li><strong>Informed Consent:</strong> Participants must be fully informed about nature, purpose, risks, and right to withdraw before participation</li>
+  <li><strong>Voluntary Participation:</strong> No coercion; right to withdraw at any time without penalty</li>
+  <li><strong>Confidentiality:</strong> Data identified only by codes; personal information protected</li>
+  <li><strong>Anonymity:</strong> Researcher cannot link data to individual (stronger than confidentiality)</li>
+  <li><strong>Deception:</strong> Permissible only when essential and study cannot be conducted otherwise; must be followed by full debriefing</li>
+  <li><strong>Debriefing:</strong> Full disclosure after study; addressing any deception; ensuring participant wellbeing</li>
+  <li><strong>Protection from Harm:</strong> Minimize physical and psychological risks; participant welfare paramount</li>
+  <li><strong>Special populations:</strong> Extra protections for children, prisoners, individuals with mental illness</li>
+  <li><strong>Institutional Review Board (IRB)/Ethical Committee:</strong> Mandatory review of research proposals</li>
+</ul>
+<div class="box box-example">
+  <div class="box-title">🌿 Historical Unethical Studies</div>
+  <p><strong>Milgram Obedience Study</strong> (1963) — serious deception and distress without proper debriefing. <strong>Zimbardo's Stanford Prison Experiment</strong> (1971) — stopped early due to extreme psychological harm. <strong>Tuskegee Syphilis Study</strong> — withholding treatment from Black patients. These cases led to the Belmont Report (1979) establishing principles of research ethics.</p>
+</div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Research Paradigms -->
+<div class="topic-section" id="u2-paradigms">
+<h3><span class="topic-icon">📐</span> Paradigms of Research</h3>
+
+<div class="subtopic">
+<h4>2.4 Quantitative vs. Qualitative vs. Mixed Methods</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Feature</th><th>Quantitative</th><th>Qualitative</th><th>Mixed Methods</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Purpose</strong></td><td>Measure, test hypotheses, generalize</td><td>Understand, explore, generate theory</td><td>Comprehensive understanding</td></tr>
+    <tr><td><strong>Data Type</strong></td><td>Numbers, statistics</td><td>Words, images, narratives</td><td>Both</td></tr>
+    <tr><td><strong>Design</strong></td><td>Experimental, survey, correlational</td><td>Phenomenology, grounded theory, ethnography</td><td>Sequential, concurrent, transformative</td></tr>
+    <tr><td><strong>Sample Size</strong></td><td>Large (statistical power)</td><td>Small (depth)</td><td>Varies</td></tr>
+    <tr><td><strong>Analysis</strong></td><td>Statistical (ANOVA, regression)</td><td>Thematic, content, discourse analysis</td><td>Both</td></tr>
+    <tr><td><strong>Philosophical basis</strong></td><td>Positivism, post-positivism</td><td>Constructivism, phenomenology</td><td>Pragmatism</td></tr>
+    <tr><td><strong>Strengths</strong></td><td>Objectivity, replication, generalizability</td><td>Rich data, contextual depth, participant voice</td><td>Complementary strengths</td></tr>
+    <tr><td><strong>Weaknesses</strong></td><td>Reductionistic; may miss context</td><td>Subjective; not generalizable</td><td>Complex; time-intensive</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- Research Methods -->
+<div class="topic-section" id="u2-methods">
+<h3><span class="topic-icon">🔍</span> Methods of Research</h3>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Observation Methods <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <ul>
+    <li><strong>Naturalistic Observation:</strong> Observing behavior in its natural setting without intervention; high ecological validity; Goodall's primate studies</li>
+    <li><strong>Systematic Observation:</strong> Using standardized coding systems; inter-rater reliability important</li>
+    <li><strong>Participant Observation:</strong> Researcher joins the group being studied; insider perspective; reactivity risk</li>
+    <li><strong>Controlled Observation:</strong> Behavior observed in structured setting (e.g., Strange Situation — Ainsworth's attachment assessment)</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Survey Methods: Interview &amp; Questionnaire <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h5>Interview</h5>
+      <ul>
+        <li>Structured: Fixed questions, same order</li>
+        <li>Semi-structured: Core questions + probes</li>
+        <li>Unstructured: Conversational, open-ended</li>
+        <li>Face-to-face, phone, online</li>
+        <li>High response rate; clarification possible</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>Questionnaire</h5>
+      <ul>
+        <li>Self-administered; standardized</li>
+        <li>Open-ended vs. closed-ended items</li>
+        <li>Likert scale, semantic differential, VAS</li>
+        <li>Cost-effective for large samples</li>
+        <li>Social desirability bias; response bias</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Experimental &amp; Quasi-Experimental Methods <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="box box-def"><div class="box-title">📖 Definition</div><p>An <strong>experiment</strong> is the gold standard of psychological research: random assignment to conditions, manipulation of independent variable(s), control of extraneous variables, and measurement of dependent variables.</p></div>
+  <ul>
+    <li><strong>Random Assignment:</strong> Ensures groups are equivalent before manipulation; controls individual differences</li>
+    <li><strong>Control Group:</strong> Receives no treatment or placebo; provides baseline for comparison</li>
+    <li><strong>Placebo Control:</strong> Controls for expectation effects</li>
+    <li><strong>Double-blind:</strong> Neither participants nor researchers know who received treatment — eliminates experimenter bias</li>
+    <li><strong>Internal Validity:</strong> Confidence that IV caused DV change; threats include history, maturation, instrumentation, selection bias</li>
+    <li><strong>External Validity:</strong> Generalizability of findings; threats include WEIRD samples, artificial lab settings</li>
+  </ul>
+  <p><strong>Quasi-experimental designs</strong> lack random assignment; used when randomization is impractical or unethical:</p>
+  <ul>
+    <li>Pre-test–post-test without control group</li>
+    <li>Non-equivalent control group design</li>
+    <li>Interrupted time series design</li>
+  </ul>
+</div>
+
+<button class="collapse-btn" onclick="toggleCollapse(this)">Qualitative Methods: Phenomenology, Grounded Theory, Narratives, Ethnography <span class="caret">▾</span></button>
+<div class="collapse-content">
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Method</th><th>Focus</th><th>Data Collection</th><th>Analysis</th><th>Key Theorists</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Phenomenology</strong></td><td>Lived experience of a phenomenon</td><td>In-depth interviews</td><td>IPA, Giorgi's method, epoché</td><td>Husserl, Heidegger, Merleau-Ponty; Smith (IPA)</td></tr>
+      <tr><td><strong>Grounded Theory</strong></td><td>Theory generated from data</td><td>Interviews, field notes</td><td>Open, axial, selective coding; constant comparison</td><td>Glaser &amp; Strauss (1967); Charmaz</td></tr>
+      <tr><td><strong>Focus Groups</strong></td><td>Group interaction data on a topic</td><td>Moderated group discussion</td><td>Thematic analysis</td><td>Merton; Morgan</td></tr>
+      <tr><td><strong>Narratives</strong></td><td>Life stories and personal accounts</td><td>Narrative interviews</td><td>Narrative analysis, thematic-content</td><td>McAdams; Ricoeur</td></tr>
+      <tr><td><strong>Case Studies</strong></td><td>In-depth single/multiple cases</td><td>Multiple sources (triangulation)</td><td>Within/across case analysis</td><td>Yin; Stake</td></tr>
+      <tr><td><strong>Ethnography</strong></td><td>Culture and practices of a group</td><td>Prolonged fieldwork, observation</td><td>Thick description</td><td>Geertz; Malinowski</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Statistics -->
+<div class="topic-section" id="u2-stats">
+<h3><span class="topic-icon">📊</span> Statistics in Psychology</h3>
+
+<div class="subtopic">
+<h4>2.5 Measures of Central Tendency</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Measure</th><th>Definition</th><th>Formula</th><th>Best Use</th><th>Limitation</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Mean (M/X̄)</strong></td><td>Arithmetic average</td><td>ΣX / N</td><td>Interval/ratio data; normal distribution</td><td>Sensitive to outliers</td></tr>
+    <tr><td><strong>Median (Mdn)</strong></td><td>Middle value when ordered</td><td>N+1/2 th value</td><td>Skewed distributions; ordinal data</td><td>Ignores actual values</td></tr>
+    <tr><td><strong>Mode</strong></td><td>Most frequent value</td><td>Highest frequency</td><td>Nominal data; bimodal distributions</td><td>May not be unique; unstable</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box box-tip">
+  <div class="box-title">💡 Relationship in Skewed Distributions</div>
+  <p><strong>Positively Skewed (right tail):</strong> Mode &lt; Median &lt; Mean</p>
+  <p><strong>Negatively Skewed (left tail):</strong> Mean &lt; Median &lt; Mode</p>
+  <p><strong>Normal Distribution:</strong> Mean = Median = Mode</p>
+</div>
+
+<h4>2.6 Measures of Dispersion (Variability)</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Measure</th><th>Formula</th><th>Properties</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Range</strong></td><td>Maximum − Minimum</td><td>Simple; affected by outliers</td></tr>
+    <tr><td><strong>Interquartile Range (IQR)</strong></td><td>Q₃ − Q₁</td><td>Robust to outliers; middle 50% spread</td></tr>
+    <tr><td><strong>Variance (σ²)</strong></td><td>Σ(X−M)² / N</td><td>Uses all data; in squared units</td></tr>
+    <tr><td><strong>Standard Deviation (SD/σ)</strong></td><td>√[Σ(X−M)² / N]</td><td>Most used; same units as data</td></tr>
+    <tr><td><strong>Coefficient of Variation</strong></td><td>(SD/Mean) × 100</td><td>Relative variability; unit-free comparison</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h4>2.7 Normal Probability Curve (NPC)</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p>The <strong>Normal Probability Curve</strong> (Bell Curve) is a symmetrical, unimodal distribution where mean = median = mode, and most scores cluster near the center, with progressively fewer scores toward the tails.</p>
+</div>
+<div class="diagram-wrap">
+  <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" style="max-width:600px;width:100%">
+    <defs>
+      <linearGradient id="npc-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#7c9eff;stop-opacity:0.4"/>
+        <stop offset="100%" style="stop-color:#7c9eff;stop-opacity:0.05"/>
+      </linearGradient>
+    </defs>
+    <path d="M 30 200 Q 90 200 150 180 Q 210 150 270 60 Q 330 150 390 180 Q 450 200 510 200 Z" fill="url(#npc-grad)" stroke="#7c9eff" stroke-width="2"/>
+    <line x1="270" y1="55" x2="270" y2="205" stroke="#ff8fa3" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <line x1="195" y1="55" x2="195" y2="195" stroke="#7fffd4" stroke-width="1" stroke-dasharray="4,3"/>
+    <line x1="345" y1="55" x2="345" y2="195" stroke="#7fffd4" stroke-width="1" stroke-dasharray="4,3"/>
+    <line x1="120" y1="55" x2="120" y2="188" stroke="#ffd166" stroke-width="1" stroke-dasharray="4,3"/>
+    <line x1="420" y1="55" x2="420" y2="188" stroke="#ffd166" stroke-width="1" stroke-dasharray="4,3"/>
+    <line x1="30" y1="205" x2="570" y2="205" stroke="#2a2f42" stroke-width="1.5"/>
+    <text x="270" y="220" text-anchor="middle" fill="#ff8fa3" font-size="11" font-family="JetBrains Mono, monospace">μ</text>
+    <text x="195" y="210" text-anchor="middle" fill="#7fffd4" font-size="10" font-family="JetBrains Mono, monospace">-1σ</text>
+    <text x="345" y="210" text-anchor="middle" fill="#7fffd4" font-size="10" font-family="JetBrains Mono, monospace">+1σ</text>
+    <text x="120" y="210" text-anchor="middle" fill="#ffd166" font-size="10" font-family="JetBrains Mono, monospace">-2σ</text>
+    <text x="420" y="210" text-anchor="middle" fill="#ffd166" font-size="10" font-family="JetBrains Mono, monospace">+2σ</text>
+    <text x="300" y="100" text-anchor="middle" fill="#7c9eff" font-size="11" font-family="Source Serif 4, serif">34.1%</text>
+    <text x="237" y="120" text-anchor="middle" fill="#7c9eff" font-size="11" font-family="Source Serif 4, serif">34.1%</text>
+    <text x="157" y="155" text-anchor="middle" fill="#c8b6ff" font-size="10" font-family="Source Serif 4, serif">13.6%</text>
+    <text x="383" y="155" text-anchor="middle" fill="#c8b6ff" font-size="10" font-family="Source Serif 4, serif">13.6%</text>
+    <text x="80" y="185" text-anchor="middle" fill="#ffd166" font-size="9" font-family="Source Serif 4, serif">2.1%</text>
+    <text x="465" y="185" text-anchor="middle" fill="#ffd166" font-size="9" font-family="Source Serif 4, serif">2.1%</text>
+    <text x="300" y="28" text-anchor="middle" fill="#a8adc0" font-size="12" font-family="Playfair Display, serif">Normal Probability Curve</text>
+  </svg>
+  <figcaption>Area under the normal curve: ±1σ = 68.26%, ±2σ = 95.44%, ±3σ = 99.74%</figcaption>
+</div>
+<div class="box box-formula">
+  <div class="box-title">📐 Key Formulas</div>
+  <p><strong>Z-score:</strong> z = (X − μ) / σ</p>
+  <p><strong>Standard Normal:</strong> μ = 0, σ = 1</p>
+  <p><strong>68-95-99.7 Rule:</strong> ±1σ → 68.26% | ±2σ → 95.44% | ±3σ → 99.74%</p>
+  <p><strong>Properties:</strong> Symmetrical; Asymptotic tails; Mean = Median = Mode; Total area = 1.0</p>
+</div>
+</div>
+
+<div class="subtopic">
+<h4>2.8 Parametric and Non-Parametric Tests</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Test</th><th>Type</th><th>Use Case</th><th>Key Assumption</th></tr></thead>
+  <tbody>
+    <tr><td><strong>t-test (Independent)</strong></td><td>Parametric</td><td>Compare means of 2 independent groups</td><td>Normality, equal variances (homoscedasticity)</td></tr>
+    <tr><td><strong>t-test (Paired/Dependent)</strong></td><td>Parametric</td><td>Compare means within same participants</td><td>Difference scores normally distributed</td></tr>
+    <tr><td><strong>Sign Test</strong></td><td>Non-parametric</td><td>Median difference; related samples</td><td>Ordinal data; no normality needed</td></tr>
+    <tr><td><strong>Wilcoxon Signed Rank</strong></td><td>Non-parametric</td><td>Related samples; ordinal; stronger than sign test</td><td>Symmetrical distribution of differences</td></tr>
+    <tr><td><strong>Mann-Whitney U</strong></td><td>Non-parametric</td><td>Independent samples; ordinal; alternative to t-test</td><td>Similar shaped distributions</td></tr>
+    <tr><td><strong>Kruskal-Wallis H</strong></td><td>Non-parametric</td><td>3+ independent groups; alternative to one-way ANOVA</td><td>Similar shaped distributions; ordinal+</td></tr>
+    <tr><td><strong>Friedman Test</strong></td><td>Non-parametric</td><td>3+ related groups; alternative to repeated ANOVA</td><td>Randomized complete block design</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box box-tip">
+  <div class="box-title">💡 Parametric vs. Non-Parametric</div>
+  <p><strong>Use Parametric</strong> when: data is interval/ratio, normally distributed, adequate sample size (N≥30 generally), homogeneous variance. <strong>Use Non-Parametric</strong> when: ordinal/nominal data, small samples, non-normal distribution, outliers present.</p>
+</div>
+<div class="box box-formula">
+  <div class="box-title">📐 Power Analysis &amp; Effect Size</div>
+  <p><strong>Statistical Power:</strong> Probability of correctly rejecting a false H₀ (avoiding Type II error β). Power = 1 − β. Target: ≥ 0.80</p>
+  <p><strong>Effect Size</strong> (Cohen's d) = (M₁ − M₂) / SD_pooled</p>
+  <p><strong>Cohen's benchmarks:</strong> d = 0.2 (small), d = 0.5 (medium), d = 0.8 (large)</p>
+  <p><strong>Other effect sizes:</strong> η² (eta-squared) for ANOVA; r for correlations; ω² (omega-squared, less biased than η²)</p>
+  <p><strong>G*Power:</strong> Standard software for power analysis; determines sample size needed</p>
+</div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Correlation & Regression -->
+<div class="topic-section" id="u2-correlation">
+<h3><span class="topic-icon">📈</span> Correlational Analysis</h3>
+<div class="subtopic">
+<h4>2.9 Correlation</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p><strong>Correlation</strong> is a statistical measure expressing the degree and direction of linear relationship between two variables. Range: −1.0 to +1.0. <em>Correlation does not imply causation.</em></p>
+</div>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Correlation Type</th><th>Formula / Symbol</th><th>Data Type</th><th>Use</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Pearson Product-Moment (r)</strong></td><td>r = Σ[(X−X̄)(Y−Ȳ)] / √[Σ(X−X̄)²·Σ(Y−Ȳ)²]</td><td>Interval/Ratio (both vars)</td><td>Linear relationship between continuous variables</td></tr>
+    <tr><td><strong>Spearman Rank Order (rₛ)</strong></td><td>rₛ = 1 − 6Σd²/N(N²−1)</td><td>Ordinal or ranked data</td><td>Non-normal distributions; ordinal data; alternative to Pearson</td></tr>
+    <tr><td><strong>Partial Correlation</strong></td><td>r₁₂.₃ = (r₁₂ − r₁₃·r₂₃) / √[(1−r₁₃²)(1−r₂₃²)]</td><td>Interval/Ratio</td><td>Correlation between 2 vars with 3rd var's influence removed</td></tr>
+    <tr><td><strong>Multiple Correlation (R)</strong></td><td>R = correlation of Y with multiple predictors</td><td>Interval/Ratio</td><td>Relationship between criterion and multiple predictors</td></tr>
+    <tr><td><strong>Biserial (r_b)</strong></td><td>Involves artificially dichotomized continuous variable</td><td>1 continuous + 1 artificial dichotomy</td><td>Test item analysis (pass/fail vs. total score)</td></tr>
+    <tr><td><strong>Point Biserial (r_pb)</strong></td><td>Genuine dichotomy × continuous variable</td><td>1 genuine dichotomy + 1 continuous</td><td>Gender × intelligence score</td></tr>
+    <tr><td><strong>Tetrachoric (r_t)</strong></td><td>Both variables artificially dichotomized</td><td>Both artificially dichotomous</td><td>Pass/fail on two tests from underlying continuous distributions</td></tr>
+    <tr><td><strong>Phi Coefficient (φ)</strong></td><td>φ = (ad−bc) / √[(a+b)(c+d)(a+c)(b+d)]</td><td>Both genuinely dichotomous</td><td>Association between two true binaries (e.g., alive/dead × treated/untreated)</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box box-mnemonic">
+  <div class="box-title">🧠 Mnemonic — Special Correlations</div>
+  <p><strong>"Bi-Point-Tetra-Phi"</strong> — <strong>B</strong>iserial (artificial dichotomy + continuous), <strong>P</strong>oint biserial (genuine dichotomy + continuous), <strong>T</strong>etrachoric (both artificial), <strong>P</strong>hi (both genuine). Remember: "Always Genuine → Phi; Both Artificial → Tetra"</p>
+</div>
+
+<h4>2.10 Regression Analysis</h4>
+<div class="box box-formula">
+  <div class="box-title">📐 Regression Formulas</div>
+  <p><strong>Simple Linear Regression:</strong> Y = a + bX + ε</p>
+  <p>Where: Y = predicted criterion, a = intercept, b = regression coefficient (slope), X = predictor, ε = error</p>
+  <p><strong>Multiple Regression:</strong> Y = a + b₁X₁ + b₂X₂ + ... + bₙXₙ + ε</p>
+  <p><strong>Coefficient of Determination (R²):</strong> Proportion of variance in Y explained by predictor(s). R² × 100 = % variance explained.</p>
+  <p><strong>Standardized Regression Coefficient (β):</strong> Effect of predictor in standard deviation units; used to compare predictors with different scales.</p>
+</div>
+<ul>
+  <li><strong>Assumptions of Regression:</strong> Linearity, Independence of errors, Normality of residuals, Homoscedasticity (equal variance), No multicollinearity (multiple regression)</li>
+  <li><strong>Multicollinearity:</strong> When predictors are highly correlated — VIF > 10 indicates problem</li>
+  <li><strong>Adjusted R²:</strong> Accounts for number of predictors; more honest than R² for multiple regression</li>
+</ul>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Factor Analysis -->
+<div class="topic-section" id="u2-factor">
+<h3><span class="topic-icon">🔷</span> Factor Analysis</h3>
+<div class="subtopic">
+<h4>2.11 Factor Analysis</h4>
+<div class="box box-def">
+  <div class="box-title">📖 Definition</div>
+  <p><strong>Factor Analysis (FA)</strong> is a statistical technique used to identify a smaller number of underlying latent variables (factors) that explain the pattern of correlations among a larger set of observed variables. Used extensively in scale development and personality research.</p>
+</div>
+<h5>Types of Factor Analysis</h5>
+<ul>
+  <li><strong>Exploratory FA (EFA):</strong> Data-driven; no pre-specified factor structure; identifies underlying dimensions. Used in scale development.</li>
+  <li><strong>Confirmatory FA (CFA):</strong> Theory-driven; tests whether data fit a pre-specified model. Used in construct validity assessment. Part of SEM.</li>
+</ul>
+<h5>Key Assumptions</h5>
+<ul>
+  <li>Adequate sample size (N ≥ 200 or 10:1 ratio of cases to variables)</li>
+  <li>Interval/ratio data; approximately normal distributions</li>
+  <li>Variables must be intercorrelated (KMO ≥ 0.60; Bartlett's test of sphericity significant)</li>
+  <li>Linear relationships between variables</li>
+</ul>
+<h5>Methods of Extraction</h5>
+<ul>
+  <li><strong>Principal Components Analysis (PCA):</strong> Accounts for maximum variance; technically not FA but often used together</li>
+  <li><strong>Principal Axis Factoring (PAF):</strong> Extracts shared variance (communalities); true FA method</li>
+  <li><strong>Maximum Likelihood:</strong> Statistical model-based; provides chi-square test of fit</li>
+</ul>
+<h5>Rotation Methods</h5>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Rotation Type</th><th>Method</th><th>Assumption</th><th>Best Use</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Orthogonal</strong></td><td>Varimax (maximize variance per factor); Quartimax; Equimax</td><td>Factors are uncorrelated</td><td>When factors are theoretically independent; simpler interpretation</td></tr>
+    <tr><td><strong>Oblique</strong></td><td>Oblimin; Promax; Geomin</td><td>Factors are correlated</td><td>When factors are theoretically related (more realistic in psychology)</td></tr>
+  </tbody>
+</table>
+</div>
+<h5>Interpretation</h5>
+<ul>
+  <li><strong>Factor Loading:</strong> Correlation of a variable with a factor. Loading ≥ 0.40 typically considered meaningful</li>
+  <li><strong>Communality (h²):</strong> Proportion of variance in a variable explained by all factors together</li>
+  <li><strong>Eigenvalue:</strong> Amount of variance explained by a factor. Retain factors with eigenvalue ≥ 1 (Kaiser criterion)</li>
+  <li><strong>Scree Plot:</strong> Plot of eigenvalues; retain factors before the "elbow"</li>
+</ul>
+<div class="box box-example">
+  <div class="box-title">🌿 Example</div>
+  <p>Cattell's 16PF personality test emerged from factor analysis of hundreds of personality descriptors. Eysenck's PEN model (Psychoticism, Extraversion, Neuroticism) was derived through factor analysis. The Big Five (OCEAN) personality model is entirely factor-analytically derived.</p>
+</div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- Experimental Designs -->
+<div class="topic-section" id="u2-designs">
+<h3><span class="topic-icon">🧪</span> Experimental Designs</h3>
+<div class="subtopic">
+<h4>2.12 ANOVA and Complex Designs</h4>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Design</th><th>Description</th><th>F-ratio</th><th>Key Feature</th></tr></thead>
+  <tbody>
+    <tr><td><strong>One-Way ANOVA</strong></td><td>One IV with 3+ levels; one DV; between-subjects</td><td>F = MS_between / MS_within</td><td>Omnibus test; post-hoc tests (Tukey, Bonferroni) needed for pairwise comparisons</td></tr>
+    <tr><td><strong>Factorial ANOVA</strong></td><td>Two or more IVs; examines main effects and interactions</td><td>F for each effect and interaction</td><td>Interaction = combined effect of IVs differs from additive prediction; 2×2, 2×3 etc.</td></tr>
+    <tr><td><strong>Randomized Block Design</strong></td><td>Subjects matched on nuisance variable; one per block</td><td>F with block variance removed</td><td>Reduces error variance; increases power</td></tr>
+    <tr><td><strong>Repeated Measures Design</strong></td><td>Same participants in all conditions; within-subjects</td><td>F = MS_treatment / MS_error (within)</td><td>Controls individual differences; smaller N needed; order effects/carryover risks</td></tr>
+    <tr><td><strong>Latin Square Design</strong></td><td>Counterbalancing rows, columns, and treatments equally</td><td>Removes row and column effects</td><td>Controls sequence effects; each treatment appears once per row and column</td></tr>
+    <tr><td><strong>MANOVA</strong></td><td>Multiple DVs simultaneously</td><td>Wilks' Lambda, Pillai's Trace, Hotelling's T²</td><td>Controls Type I error inflation from multiple ANOVAs; examines linear combinations of DVs</td></tr>
+    <tr><td><strong>ANCOVA</strong></td><td>ANOVA with covariate(s) statistically controlled</td><td>F after removing covariate variance</td><td>Reduces error variance; equates groups on pre-existing differences</td></tr>
+    <tr><td><strong>Single-Subject Designs</strong></td><td>N=1 or small N; intensive repeated measurement</td><td>Visual analysis; effect size</td><td>ABA reversal; multiple baseline; changing criterion</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="box box-tip">
+  <div class="box-title">💡 Post-Hoc Tests</div>
+  <p><strong>Tukey's HSD:</strong> Recommended when equal group sizes; controls familywise error rate. <strong>Bonferroni:</strong> Most conservative; divide α by number of comparisons. <strong>Scheffé:</strong> Most conservative; good for unequal N. <strong>Duncan's MRT &amp; Newman-Keuls:</strong> Less conservative; higher power but higher Type I error.</p>
+</div>
+<div class="box box-tip">
+  <div class="box-title">💡 Cohort Studies &amp; Time Series</div>
+  <p><strong>Cohort Study:</strong> Follows a group (cohort) over time; prospective (follow forward) or retrospective (look back). Important for developmental and epidemiological research.</p>
+  <p><strong>Time Series Design:</strong> Multiple observations before and after intervention; tests trend change; controls for history effects.</p>
+</div>
+</div>
+</div><!-- /topic-section -->
+
+<!-- MCQ Unit 2 -->
+<div class="topic-section" id="u2-mcq">
+<h3><span class="topic-icon">✅</span> Practice MCQs — Unit 2</h3>
+<div class="mcq-section">
+  <h4>🎯 Multiple Choice Questions</h4>
+
+  <div class="mcq" data-answer="3">
+    <div class="question">Q1. Which correlation is appropriate when one variable is a genuine dichotomy and the other is continuous?</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Biserial correlation</li>
+      <li onclick="checkMCQ(this,2)">B) Tetrachoric correlation</li>
+      <li onclick="checkMCQ(this,3)">C) Point biserial correlation</li>
+      <li onclick="checkMCQ(this,4)">D) Phi coefficient</li>
+    </ul>
+    <div class="explanation">✅ Point biserial: genuine dichotomy (like biological sex) × continuous variable (like IQ). Biserial uses an artificial dichotomy of an underlying continuous variable.</div>
+  </div>
+
+  <div class="mcq" data-answer="2">
+    <div class="question">Q2. In a normal distribution, what percentage of scores fall between ±2 standard deviations of the mean?</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) 68.26%</li>
+      <li onclick="checkMCQ(this,2)">B) 95.44%</li>
+      <li onclick="checkMCQ(this,3)">C) 99.74%</li>
+      <li onclick="checkMCQ(this,4)">D) 90.00%</li>
+    </ul>
+    <div class="explanation">✅ ±1σ = 68.26%, ±2σ = 95.44%, ±3σ = 99.74%. This is a very frequently tested formula in UGC NET Psychology statistics.</div>
+  </div>
+
+  <div class="mcq" data-answer="1">
+    <div class="question">Q3. The Kruskal-Wallis test is the non-parametric equivalent of:</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) One-Way ANOVA</li>
+      <li onclick="checkMCQ(this,2)">B) Repeated Measures ANOVA</li>
+      <li onclick="checkMCQ(this,3)">C) Factorial ANOVA</li>
+      <li onclick="checkMCQ(this,4)">D) MANOVA</li>
+    </ul>
+    <div class="explanation">✅ Kruskal-Wallis H test is used for 3+ independent groups with ordinal/non-normal data — the non-parametric alternative to one-way between-subjects ANOVA.</div>
+  </div>
+
+  <div class="mcq" data-answer="4">
+    <div class="question">Q4. In factor analysis, "Varimax" is a type of:</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Oblique rotation</li>
+      <li onclick="checkMCQ(this,2)">B) Factor extraction method</li>
+      <li onclick="checkMCQ(this,3)">C) Sampling technique</li>
+      <li onclick="checkMCQ(this,4)">D) Orthogonal rotation</li>
+    </ul>
+    <div class="explanation">✅ Varimax is the most commonly used orthogonal rotation method — it maximizes the variance of squared loadings within factors, producing simpler, more interpretable factor structures.</div>
+  </div>
+
+  <div class="mcq" data-answer="2">
+    <div class="question">Q5. An ANCOVA is used to:</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Analyze multiple dependent variables simultaneously</li>
+      <li onclick="checkMCQ(this,2)">B) Control for a covariate while comparing group means on a DV</li>
+      <li onclick="checkMCQ(this,3)">C) Test correlation between ranked variables</li>
+      <li onclick="checkMCQ(this,4)">D) Compare medians across groups</li>
+    </ul>
+    <div class="explanation">✅ Analysis of Covariance (ANCOVA) statistically controls for the influence of a covariate (pre-existing continuous variable like pre-test scores) on the DV, increasing precision of group comparisons.</div>
+  </div>
+
+  <div class="mcq" data-answer="3">
+    <div class="question">Q6. Cohen's d of 0.5 represents which effect size?</div>
+    <ul class="options">
+      <li onclick="checkMCQ(this,1)">A) Small</li>
+      <li onclick="checkMCQ(this,2)">B) Large</li>
+      <li onclick="checkMCQ(this,3)">C) Medium</li>
+      <li onclick="checkMCQ(this,4)">D) Negligible</li>
+    </ul>
+    <div class="explanation">✅ Cohen's benchmarks: d=0.2 (small), d=0.5 (medium), d=0.8 (large). Effect size is a critical concept in modern psychology — tells us the practical significance beyond statistical significance.</div>
+  </div>
+</div>
+</div><!-- /mcq -->
+</section><!-- /unit2 -->

@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGC NET Psychology 2026 - Complete Study Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 300px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .nav-section {
+            margin-bottom: 15px;
+        }
+
+        .nav-section h3 {
+            font-size: 13px;
+            color: #667eea;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-section h3:hover {
+            color: #764ba2;
+        }
+
+        .nav-section ul {
+            list-style: none;
+            margin-left: 10px;
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .nav-section.active ul {
+            display: block;
+            max-height: 500px;
+        }
+
+        .nav-section ul li {
+            margin: 6px 0;
+        }
+
+        .nav-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+            display: block;
+            padding: 5px;
+            border-left: 2px solid transparent;
+            padding-left: 10px;
+        }
+
+        .nav-section ul li a:hover {
+            color: #667eea;
+            border-left-color: #667eea;
+            padding-left: 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+            background: white;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Search */
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Units and Sections */
+        .unit {
+            margin-bottom: 50px;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+        }
+
+        .unit h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .topic {
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .topic h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topic h3:hover {
+            color: #667eea;
+        }
+
+        .toggle-icon {
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+
+        .topic.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .topic-content {
+            display: block;
+            max-height: none;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .topic.collapsed .topic-content {
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        /* Definition Boxes */
+        .definition {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .definition strong {
+            color: #1976d2;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Important Points */
+        .important {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .important strong {
+            color: #e65100;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Key Concepts */
+        .key-concept {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .key-concept strong {
+            color: #6a1b9a;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Examples */
+        .example {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .example strong {
+            color: #1b5e20;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Exam Tips */
+        .exam-tip {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .exam-tip strong {
+            color: #ad1457;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* Formulas and Code */
+        .formula {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        /* Questions */
+        .question-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 5px;
+        }
+
+        .question-section h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question:hover {
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .question p {
+            margin: 8px 0;
+        }
+
+        .answer {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: none;
+            border-left: 4px solid #4caf50;
+        }
+
+        .answer.show {
+            display: block;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-tracker h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .progress-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Mnemonics */
+        .mnemonic {
+            background: #fff9e6;
+            border: 2px dashed #ffa500;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .mnemonic strong {
+            color: #ff6b00;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .topic h3 {
+                cursor: default;
+            }
+
+            .topic {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+            }
+
+            .main-content {
+                margin-left: 250px;
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .unit {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            header h1 {
+                font-size: 20px;
+            }
+        }
+
+        /* Revision Checklist */
+        .revision-checklist {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .revision-checklist h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Scroll to Top */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2>📚 Navigation</h2>
+        <div class="search-container" style="padding: 10px 0;">
+            <input type="text" class="search-input" id="sidebarSearch" placeholder="Search...">
+        </div>
+
+        <div class="nav-section active">
+            <h3>Unit 1 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit1">Emergence of Psychology</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 2 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit2">Research Methodology</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 3 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit3">Psychological Testing</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 4 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit4">Biological Basis</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 5 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit5">Cognition & Memory</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 6 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit6">Thinking & Intelligence</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 7 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit7">Personality & Motivation</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 8 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit8">Social Psychology</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 9 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit9">Development & Interventions</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-section">
+            <h3>Unit 10 <span>▼</span></h3>
+            <ul>
+                <li><a href="#unit10">Emerging Areas</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <h1>🎓 UGC NET Psychology 2026</h1>
+            <p>Complete Study Notes | Code: 04 | Comprehensive Coverage of All Units</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="mainSearch" placeholder="🔍 Search through all notes...">
+        </div>
+
+        <div class="progress-tracker">
+            <h3>📋 Study Progress Tracker</h3>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog1">
+                <label for="prog1">Unit 1: Emergence of Psychology</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog2">
+                <label for="prog2">Unit 2: Research Methodology</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog3">
+                <label for="prog3">Unit 3: Psychological Testing</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog4">
+                <label for="prog4">Unit 4: Biological Basis</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog5">
+                <label for="prog5">Unit 5: Cognition & Memory</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog6">
+                <label for="prog6">Unit 6: Thinking & Intelligence</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog7">
+                <label for="prog7">Unit 7: Personality & Motivation</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog8">
+                <label for="prog8">Unit 8: Social Psychology</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog9">
+                <label for="prog9">Unit 9: Development & Interventions</label>
+            </div>
+            <div class="progress-item">
+                <input type="checkbox" class="checkbox" id="prog10">
+                <label for="prog10">Unit 10: Emerging Areas</label>
+            </div>
+        </div>
+
+        <!-- UNIT 1: EMERGENCE OF PSYCHOLOGY -->
+        <div class="unit" id="unit1">
+            <h2>Unit 1: Emergence of Psychology</h2>
+
+            <!-- Eastern Systems -->
+            <div class="topic">
+                <h3>Psychological Thought in Eastern Systems <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <p>Eastern philosophy has contributed significantly to psychological understanding through various ancient systems:</p>
+
+                    <div class="key-concept">
+                        <strong>Bhagavad Gita</strong>
+                        Hindu philosophical text emphasizing mental discipline, duty (Dharma), and self-realization. Key concepts include:
+                        <ul>
+                            <li>Yoga of action (Karma Yoga) - dispassionate action</li>
+                            <li>Yoga of knowledge (Jnana Yoga) - understanding self</li>
+                            <li>Yoga of devotion (Bhakti Yoga) - emotional discipline</li>
+                            <li>Mind control and emotional regulation through practice</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Buddhism</strong>
+                        Offers a systematic approach to understanding consciousness and suffering:
+                        <ul>
+                            <li>Four Noble Truths - nature of suffering</li>
+                            <li>Eight-fold path - practical psychology of ethical living</li>
+                            <li>Mindfulness (Sati) and meditation for mental development</li>
+                            <li>Concept of non-self (Anatman) challenging ego psychology</li>
+                            <li>Five aggregates (Skandhas) - components of human experience</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Sufism</strong>
+                        Islamic mystical tradition focusing on:
+                        <ul>
+                            <li>Spiritual psychology and transformation</li>
+                            <li>Ego dissolution and self-transcendence</li>
+                            <li>Heart-centered knowledge</li>
+                            <li>Stages of spiritual development</li>
+                            <li>Integration of emotion and intellect</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Integral Yoga (Sri Aurobindo)</strong>
+                        Synthesis of spirituality and modern psychology:
+                        <ul>
+                            <li>Evolution of consciousness</li>
+                            <li>Integration of physical, mental, and spiritual aspects</li>
+                            <li>Transcendence through integral development</li>
+                            <li>Supramental consciousness as goal</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-tip">
+                        <strong>Frequently Asked Question</strong>
+                        Explain the concept of self-knowledge in Indian psychology and how it differs from Western introspection.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Psychology in India -->
+            <div class="topic">
+                <h3>Academic Psychology in India <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Era</th>
+                            <th>Characteristics</th>
+                            <th>Key Issues</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Pre-Independence</strong></td>
+                            <td>Psychology taught through philosophy and traditional systems; limited scientific approach; focus on mental philosophy</td>
+                            <td>Colonial influence; lack of systematic psychology curriculum</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Post-Independence (1947-1970)</strong></td>
+                            <td>Establishment of psychology departments; adoption of Western models; focus on universal principles</td>
+                            <td>Over-reliance on Western theories; neglect of Indian systems</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1970s: Social Issues</strong></td>
+                            <td>Shift toward addressing social problems; community psychology emergence; focus on rural areas</td>
+                            <td>Resource limitations; inadequate training in applied areas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1980s: Indigenization</strong></td>
+                            <td>Recognition of Indian systems; integration with traditional knowledge; Emic approach</td>
+                            <td>Balancing traditional and modern perspectives</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1990s: Paradigmatic Concerns</strong></td>
+                            <td>Identity crisis; questioning disciplinary boundaries; interdisciplinary approaches</td>
+                            <td>Fragmentation across various sub-disciplines</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2000s: Indian Psychology</strong></td>
+                            <td>Emergence of Indian psychology as recognized sub-discipline; research on Indian concepts</td>
+                            <td>Integration into mainstream psychology</td>
+                        </tr>
+                    </table>
+
+                    <div class="important">
+                        <strong>Key Issues in Indian Psychology</strong>
+                        <ul>
+                            <li><strong>Colonial Encounter:</strong> Western psychology imposed during colonialism; creation of psychological inferiority complex</li>
+                            <li><strong>Post-colonialism:</strong> Decolonizing psychology; reclaiming indigenous knowledge systems</li>
+                            <li><strong>Distinct Identity:</strong> Struggle to establish psychology distinct from philosophy and spirituality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Western Psychology -->
+            <div class="topic">
+                <h3>Western Psychology: Historical Development <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <div class="definition">
+                        <strong>Greek Heritage</strong>
+                        <ul>
+                            <li>Plato (428-348 BCE) - Theory of forms; immortal soul; tripartite soul (reason, spirit, appetite)</li>
+                            <li>Aristotle (384-322 BCE) - Empirical observation; soul as form of body; actuality and potentiality</li>
+                            <li>Hippocrates (460-370 BCE) - Humoral theory; biological basis of temperament</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Medieval Period</strong>
+                        <ul>
+                            <li>Scholasticism - Integration of Aristotelian logic with theology</li>
+                            <li>Islamic scholars - Preservation and advancement of Greek knowledge</li>
+                            <li>St. Thomas Aquinas - Soul and body relationship</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Modern Period Foundations</strong>
+                        <ul>
+                            <li>Descartes (1596-1650) - Mind-body dualism; cogito ergo sum</li>
+                            <li>Locke (1632-1704) - Empiricism; tabula rasa (blank slate)</li>
+                            <li>Hume (1711-1776) - Association of ideas</li>
+                            <li>Kant (1724-1804) - Categories of mind; synthetic knowledge</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Major Schools of Western Psychology</strong>
+                    </div>
+
+                    <table class="comparison-table">
+                        <tr>
+                            <th>School</th>
+                            <th>Focus</th>
+                            <th>Key Figures</th>
+                            <th>Core Concepts</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Structuralism</strong></td>
+                            <td>Structure of consciousness</td>
+                            <td>Wundt, Titchener</td>
+                            <td>Introspection; elements of consciousness; sensations, images, feelings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Functionalism</strong></td>
+                            <td>Purpose of consciousness</td>
+                            <td>James, Dewey</td>
+                            <td>Adaptive behavior; stream of consciousness; mental operations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Psychoanalysis</strong></td>
+                            <td>Unconscious mind</td>
+                            <td>Freud, Jung, Adler</td>
+                            <td>Defense mechanisms; libido; unconscious conflicts; symbolism</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gestalt</strong></td>
+                            <td>Perception and organization</td>
+                            <td>Wertheimer, Kohler</td>
+                            <td>Whole greater than parts; field theory; insight learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Behaviorism</strong></td>
+                            <td>Observable behavior</td>
+                            <td>Watson, Skinner</td>
+                            <td>Stimulus-response; conditioning; environmental determinism</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Humanistic-Existential</strong></td>
+                            <td>Human potential and meaning</td>
+                            <td>Rogers, Maslow, Sartre</td>
+                            <td>Self-actualization; freedom; authenticity; personal growth</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transpersonal</strong></td>
+                            <td>Higher consciousness</td>
+                            <td>Grof, Maslow</td>
+                            <td>Spiritual experiences; altered states; transcendence</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cognitive</strong></td>
+                            <td>Mental processes</td>
+                            <td>Neisser, Beck, Bandura</td>
+                            <td>Information processing; schemas; cognitive distortions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multiculturalism</strong></td>
+                            <td>Cultural diversity</td>
+                            <td>Sue, Triandis</td>
+                            <td>Cultural differences; etic and emic perspectives; diversity</td>
+                        </tr>
+                    </table>
+
+                    <div class="key-concept">
+                        <strong>Four Founding Paths of Academic Psychology</strong>
+                        <ul>
+                            <li><strong>Wilhelm Wundt (1832-1920):</strong> Founder of experimental psychology; established first psychology laboratory (1879)</li>
+                            <li><strong>Sigmund Freud (1856-1939):</strong> Psychoanalysis; unconscious mind; psychosexual development</li>
+                            <li><strong>William James (1842-1910):</strong> American psychology; functionalism; stream of consciousness</li>
+                            <li><strong>Wilhelm Dilthey (1833-1911):</strong> Hermeneutics; understanding vs. explanation; idiographic approach</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Crisis in Psychology</strong>
+                        The strict adherence to experimental-analytical paradigm (logical empiricism) led to:
+                        <ul>
+                            <li>Reductionism - oversimplification of complex phenomena</li>
+                            <li>Inability to address meaningful human experiences</li>
+                            <li>Neglect of subjective meaning and consciousness</li>
+                            <li>Limited applicability to real-world problems</li>
+                            <li>Rise of alternative paradigms (qualitative, phenomenological)</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-tip">
+                        <strong>Remember This</strong>
+                        Contrast between Wundt's laboratory psychology and Wundt's Völkerpsychologie (folk psychology) - he believed some psychological phenomena could only be understood historically and culturally.
+                    </div>
+
+                    <div class="mnemonic">
+                        <strong>Four Founding Fathers Mnemonic: WFJ-D</strong>
+                        <ul>
+                            <li><strong>W</strong>undt - Experimental</li>
+                            <li><strong>F</strong>reud - Psychoanalytic</li>
+                            <li><strong>J</strong>ames - Functionalist</li>
+                            <li><strong>D</strong>ilthey - Hermeneutic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Psychological Knowledge Paradigms -->
+            <div class="topic">
+                <h3>Paradigms of Psychological Knowledge <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <div class="important">
+                        <strong>Essential Aspects of Knowledge Paradigms</strong>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Ontology</strong>
+                        Nature of reality being studied:
+                        <ul>
+                            <li>What exists? (objective reality vs. socially constructed reality)</li>
+                            <li>Is mind separate from body? (Dualism vs. Monism)</li>
+                            <li>Is human nature fixed or malleable?</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Epistemology</strong>
+                        How we know what we know:
+                        <ul>
+                            <li>What counts as valid knowledge?</li>
+                            <li>Role of observer in knowledge production</li>
+                            <li>Objective vs. subjective knowledge</li>
+                            <li>How is knowledge validated?</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Methodology</strong>
+                        How we conduct research:
+                        <ul>
+                            <li>Quantitative vs. Qualitative methods</li>
+                            <li>Experimental vs. Natural observation</li>
+                            <li>Data collection and analysis techniques</li>
+                            <li>Role of statistics and interpretation</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Western Paradigms of Psychological Knowledge</strong>
+                    </div>
+
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Paradigm</th>
+                            <th>Ontology</th>
+                            <th>Epistemology</th>
+                            <th>Methodology</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Positivism</strong></td>
+                            <td>Objective, mind-independent reality</td>
+                            <td>Scientific knowledge through observation and logic</td>
+                            <td>Experimental, quantitative, reductionist</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Post-Positivism</strong></td>
+                            <td>Reality exists but is imperfectly known</td>
+                            <td>Critical examination; multiple methods</td>
+                            <td>Mixed methods; emphasis on falsification</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Critical Perspective</strong></td>
+                            <td>Reality shaped by power relations</td>
+                            <td>Knowledge influenced by ideology and interests</td>
+                            <td>Critical inquiry; dialectical analysis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Social Constructionism</strong></td>
+                            <td>Reality socially and culturally constructed</td>
+                            <td>Knowledge co-created through social processes</td>
+                            <td>Qualitative, interpretive, discourse analysis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Existential Phenomenology</strong></td>
+                            <td>Lived experience is primary reality</td>
+                            <td>Understanding through description of experience</td>
+                            <td>Phenomenological analysis; depth interviews</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Co-operative Enquiry</strong></td>
+                            <td>Reality explored collaboratively</td>
+                            <td>Participants and researchers co-create knowledge</td>
+                            <td>Participatory, democratic, iterative cycles</td>
+                        </tr>
+                    </table>
+
+                    <div class="key-concept">
+                        <strong>Paradigmatic Controversies</strong>
+                        <ul>
+                            <li><strong>Nomothetic vs. Idiographic:</strong> Universal laws vs. individual uniqueness</li>
+                            <li><strong>Reductionism vs. Holism:</strong> Breaking down vs. studying wholes</li>
+                            <li><strong>Determinism vs. Free Will:</strong> Causality vs. human agency</li>
+                            <li><strong>Objectivity vs. Subjectivity:</strong> Researcher neutrality vs. involvement</li>
+                            <li><strong>Quantitative vs. Qualitative:</strong> Numbers vs. meanings and experiences</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Indian Paradigms of Psychological Knowledge</strong>
+                    </div>
+
+                    <div class="important">
+                        <strong>Yoga Philosophy</strong>
+                        <ul>
+                            <li>Eight-fold path (Ashtanga Yoga) - systematic development of mind</li>
+                            <li>Consciousness (Chitta) as primary focus</li>
+                            <li>Mental modifications (Vrittis) and their control</li>
+                            <li>Samadhi (absorption) as ultimate knowledge state</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Bhagavad Gita</strong>
+                        <ul>
+                            <li>Practical psychology of action and emotion</li>
+                            <li>Integration of knowledge, devotion, and action</li>
+                            <li>Self-realization as knowledge outcome</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Buddhism</strong>
+                        <ul>
+                            <li>Consciousness as stream of momentary states</li>
+                            <li>Experiential knowledge (prajña) vs. conceptual</li>
+                            <li>Mindfulness as epistemological tool</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Sufism</strong>
+                        <ul>
+                            <li>Heart-centered knowledge</li>
+                            <li>Experiential rather than intellectual</li>
+                            <li>Integration of being and knowing</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Science and Spirituality (Avidya and Vidya)</strong>
+                        In Indian psychology:
+                        <ul>
+                            <li><strong>Avidya (Ignorance):</strong> Superficial knowledge; identification with material phenomena; ego-centered perspective</li>
+                            <li><strong>Vidya (True Knowledge):</strong> Direct experiential knowledge of reality; self-realization; transcendence of ego</li>
+                            <li><strong>Integration:</strong> Science (Avidya) and spirituality (Vidya) as complementary paths to complete understanding</li>
+                            <li><strong>Primacy of Self-Knowledge:</strong> Understanding the nature of consciousness is primary; all other knowledge follows</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-tip">
+                        <strong>Key Distinction</strong>
+                        Indian psychology emphasizes self-knowledge (Atma-jnana) as prerequisite for all other knowledge, while Western psychology focuses on external reality and universal principles.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indic Influences on Modern Psychology -->
+            <div class="topic">
+                <h3>Indic Influences on Modern Psychology <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <div class="important">
+                        <strong>Historical Influence</strong>
+                        <ul>
+                            <li>Theosophy movement brought Indian concepts to Western scholars</li>
+                            <li>Jung's interest in Eastern philosophy and symbolism</li>
+                            <li>Influence on depth psychology and transpersonal psychology</li>
+                            <li>Meditation research in cognitive science</li>
+                            <li>Mindfulness-Based Cognitive Therapy (MBCT)</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Specific Areas of Influence</strong>
+                    </div>
+
+                    <ul>
+                        <li><strong>Consciousness Studies:</strong> Indian concepts of consciousness inform current neuroscience research</li>
+                        <li><strong>Emotion Regulation:</strong> Yoga and meditation techniques adopted in clinical practice</li>
+                        <li><strong>Personality Development:</strong> Indian models of personality integrated with Western theories</li>
+                        <li><strong>Spiritual Psychology:</strong> Emergence of field recognizing spiritual dimensions of development</li>
+                        <li><strong>Cultural Psychology:</strong> Recognition that psychological phenomena are culturally embedded</li>
+                        <li><strong>Holistic Health:</strong> Integration of mind-body-spirit in health psychology</li>
+                    </ul>
+
+                    <div class="example">
+                        <strong>Example: Mindfulness in Psychology</strong>
+                        Buddhist concept of mindfulness (Sati) now central to cognitive behavioral therapy, stress management, and clinical psychology. Research shows effectiveness for anxiety, depression, and chronic pain management.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Section -->
+            <div class="question-section">
+                <h4>💡 Key Questions for Revision</h4>
+
+                <div class="question">
+                    <strong>Q1: Discuss the evolution of academic psychology in India from pre-independence to 2000s.</strong>
+                    <div class="answer">
+                        <p><strong>Answer:</strong></p>
+                        <p><strong>Pre-Independence (until 1947):</strong> Psychology was primarily philosophical and spiritual in nature, taught as part of philosophy departments. Little scientific rigor; traditional Indian systems dominated.</p>
+                        <p><strong>Post-Independence (1947-1970):</strong> Formal psychology departments established; heavy influence from Western psychology; adoption of experimental methods; focus on universal principles; neglect of indigenous systems.</p>
+                        <p><strong>1970s - Social Issues Focus:</strong> Recognition of psychology's role in addressing social problems; community psychology emerged; attention to rural psychology; development of applied areas.</p>
+                        <p><strong>1980s - Indigenization Movement:</strong> Conscious effort to integrate Indian philosophical and spiritual systems with academic psychology; recognition of Emic perspective; Indian concepts studied scientifically.</p>
+                        <p><strong>1990s - Identity Crisis:</strong> Questioning disciplinary boundaries; recognition of multiple paradigms; efforts to establish distinct Indian psychology identity; interdisciplinary approaches.</p>
+                        <p><strong>2000s - Emergence of Indian Psychology:</strong> Recognition as legitimate sub-discipline; research on concepts like Yoga, Bhagavad Gita, Buddhist psychology; international recognition.</p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <strong>Q2: Compare Western and Indian approaches to psychological knowledge.</strong>
+                    <div class="answer">
+                        <p><strong>Answer:</strong></p>
+                        <p><strong>Western Approach:</strong></p>
+                        <ul>
+                            <li>Focus on external, objective reality</li>
+                            <li>Scientific method, experimental design</li>
+                            <li>Emphasis on universal principles</li>
+                            <li>Reductionist, analytical</li>
+                            <li>Mind-body dualism (historically)</li>
+                            <li>Secular, materialist orientation</li>
+                        </ul>
+                        <p><strong>Indian Approach:</strong></p>
+                        <ul>
+                            <li>Focus on subjective experience and consciousness</li>
+                            <li>Experiential and contemplative methods</li>
+                            <li>Recognition of individual uniqueness</li>
+                            <li>Holistic, integrated approach</li>
+                            <li>Mind-body-spirit unity</li>
+                            <li>Integration with spirituality and ethics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <strong>Q3: Explain the crisis in psychology due to strict adherence to experimental-analytical paradigm.</strong>
+                    <div class="answer">
+                        <p><strong>Answer:</strong></p>
+                        <p>Psychology's over-reliance on logical empiricism and experimental methods created several problems:</p>
+                        <p><strong>Limitations:</strong></p>
+                        <ul>
+                            <li><strong>Reductionism:</strong> Complex human phenomena reduced to simple variables, losing nuance</li>
+                            <li><strong>Laboratory Artificiality:</strong> Findings from labs often don't translate to real-world settings</li>
+                            <li><strong>Neglect of Meaning:</strong> Focus on measurable behavior ignores subjective meaning and experience</li>
+                            <li><strong>Determinism:</strong> Mechanistic view denies human agency and free will</li>
+                            <li><strong>Cultural Blindness:</strong> Universal principles ignore cultural context and differences</li>
+                            <li><strong>Limited Scope:</strong> Spiritual, existential, and transcendent experiences excluded from study</li>
+                        </ul>
+                        <p><strong>Response:</strong> Led to emergence of alternative paradigms (qualitative, phenomenological, critical) and recognition of psychology's limitations in understanding full spectrum of human experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revision Checklist -->
+            <div class="revision-checklist">
+                <h4>✓ Revision Checklist - Unit 1</h4>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Bhagavad Gita - Three yoga paths and mental discipline</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Buddhism - Four noble truths and eight-fold path</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Sufism - Spiritual transformation and ego dissolution</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Integral Yoga - Evolution of consciousness</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Indian psychology eras - Pre-independence through 2000s</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Four founding fathers - Wundt, Freud, James, Dilthey</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Eight schools of psychology - Characteristics and founders</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Paradigms - Ontology, epistemology, methodology</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Avidya and Vidya - Ignorance vs. true knowledge</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Paradigmatic controversies and crisis in psychology</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- UNIT 2: RESEARCH METHODOLOGY AND STATISTICS -->
+        <div class="unit" id="unit2">
+            <h2>Unit 2: Research Methodology and Statistics</h2>
+
+            <!-- Research Fundamentals -->
+            <div class="topic">
+                <h3>Research Fundamentals <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <div class="definition">
+                        <strong>Research</strong>
+                        Systematic investigation to discover or verify facts, establish relationships, or develop theories.
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Meaning of Research</strong>
+                        <ul>
+                            <li>From "re-search" = searching again/afresh</li>
+                            <li>Systematic, controlled, empirical investigation</li>
+                            <li>Aims to understand, predict, or control phenomena</li>
+                            <li>Based on observation and experimentation</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Purpose of Research</strong>
+                        <ul>
+                            <li><strong>Exploratory:</strong> Discover new phenomena; preliminary investigation</li>
+                            <li><strong>Descriptive:</strong> Describe characteristics of phenomena; what exists</li>
+                            <li><strong>Explanatory:</strong> Explain relationships and causes; why things happen</li>
+                            <li><strong>Predictive:</strong> Predict future behavior; what will happen</li>
+                            <li><strong>Applied:</strong> Solve practical problems; improve conditions</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Dimensions of Research</strong>
+                        <ul>
+                            <li><strong>Basic vs. Applied:</strong> Fundamental knowledge vs. practical solutions</li>
+                            <li><strong>Quantitative vs. Qualitative:</strong> Numbers vs. meanings</li>
+                            <li><strong>Experimental vs. Non-experimental:</strong> Manipulation vs. observation</li>
+                            <li><strong>Etic vs. Emic:</strong> Outsider vs. insider perspective</li>
+                            <li><strong>Nomothetic vs. Idiographic:</strong> General laws vs. individual cases</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Key Concepts in Research</strong>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Variables</strong>
+                        Characteristics that can take different values:
+                        <ul>
+                            <li><strong>Independent Variable (IV):</strong> Variable manipulated by researcher; cause</li>
+                            <li><strong>Dependent Variable (DV):</strong> Variable measured; effect</li>
+                            <li><strong>Moderating Variable:</strong> Affects relationship between IV and DV</li>
+                            <li><strong>Confounding Variable:</strong> Uncontrolled variable affecting results</li>
+                            <li><strong>Mediating Variable:</strong> Through which effect occurs</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Operational Definitions</strong>
+                        <ul>
+                            <li>Precise definition of variable in terms of operations/procedures to measure it</li>
+                            <li>Example: "Anxiety" operationally defined as score on State-Trait Anxiety Inventory</li>
+                            <li>Makes variables measurable and concrete</li>
+                            <li>Enables replication of research</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Hypothesis</strong>
+                        Testable prediction about relationship between variables:
+                        <ul>
+                            <li><strong>Null Hypothesis (H0):</strong> No relationship/difference exists</li>
+                            <li><strong>Alternative Hypothesis (H1):</strong> Relationship/difference exists</li>
+                            <li><strong>Directional:</strong> Predicts direction of relationship</li>
+                            <li><strong>Non-directional:</strong> Predicts relationship exists but not direction</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Sampling</strong>
+                        Process of selecting subset from population:
+                        <ul>
+                            <li><strong>Population:</strong> Entire group of interest</li>
+                            <li><strong>Sample:</strong> Subset of population</li>
+                            <li><strong>Sampling Frame:</strong> List from which sample drawn</li>
+                            <li><strong>Probability Sampling:</strong> Random selection; representative</li>
+                            <li><strong>Non-probability Sampling:</strong> Non-random; may be biased</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Ethics in Research</strong>
+                        <ul>
+                            <li><strong>Informed Consent:</strong> Participants understand research and risks</li>
+                            <li><strong>Confidentiality:</strong> Participant information protected</li>
+                            <li><strong>Beneficence:</strong> Research benefits outweigh risks</li>
+                            <li><strong>Justice:</strong> Fair distribution of research benefits/burdens</li>
+                            <li><strong>No Deception:</strong> Unless absolutely necessary and justified</li>
+                            <li><strong>Right to Withdraw:</strong> Participants can stop at any time</li>
+                            <li><strong>Institutional Review Board (IRB):</strong> Approval required before research</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-tip">
+                        <strong>Remember</strong>
+                        The four principles of research ethics: Autonomy (informed consent), Beneficence (maximize benefits), Non-maleficence (minimize harm), Justice (fair treatment).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Research Paradigms -->
+            <div class="topic">
+                <h3>Paradigms and Methods of Research <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <div class="definition">
+                        <strong>Quantitative Research</strong>
+                        <ul>
+                            <li>Numbers and statistics as primary data</li>
+                            <li>Objective, controlled experimentation</li>
+                            <li>Large sample sizes</li>
+                            <li>Statistical analysis and generalization</li>
+                            <li>Hypothesis testing</li>
+                            <li>Strengths: Objective, generalizable, precise</li>
+                            <li>Limitations: Loses nuance, artificial settings, reductionist</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Qualitative Research</strong>
+                        <ul>
+                            <li>Words, meanings, and descriptions as primary data</li>
+                            <li>Natural settings, participant immersion</li>
+                            <li>Small, purposive samples</li>
+                            <li>Thematic and interpretive analysis</li>
+                            <li>Exploration and discovery</li>
+                            <li>Strengths: Rich detail, contextual understanding, flexible</li>
+                            <li>Limitations: Subjective, limited generalizability, time-consuming</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Mixed Methods Approach</strong>
+                        <ul>
+                            <li>Integration of quantitative and qualitative data</li>
+                            <li>Triangulation - corroboration from multiple sources</li>
+                            <li>Sequential (one then other) or concurrent (simultaneous)</li>
+                            <li>Complementary strengths of both approaches</li>
+                            <li>Example: Survey (quantitative) + interviews (qualitative)</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Major Research Methods</strong>
+                    </div>
+
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Method</th>
+                            <th>Definition</th>
+                            <th>Advantages</th>
+                            <th>Disadvantages</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Observation</strong></td>
+                            <td>Systematic watching and recording of behavior</td>
+                            <td>Natural behavior, rich data, flexible</td>
+                            <td>Observer bias, limited scope, time-consuming</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Survey</strong></td>
+                            <td>Questionnaires/interviews gathering self-report data</td>
+                            <td>Large samples, efficient, standardizable</td>
+                            <td>Social desirability bias, self-report limitations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Experiment</strong></td>
+                            <td>Researcher manipulates IV, measures DV</td>
+                            <td>Establish causality, controlled, replicable</td>
+                            <td>Artificial, limited external validity, ethical concerns</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Quasi-Experiment</strong></td>
+                            <td>No random assignment, some control</td>
+                            <td>More natural, practical, causal inference</td>
+                            <td>Cannot rule out all alternative explanations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Field Study</strong></td>
+                            <td>Research in natural real-world setting</td>
+                            <td>High external validity, natural behavior</td>
+                            <td>Less control, confounding variables, costly</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cross-Cultural Study</strong></td>
+                            <td>Comparison across different cultures</td>
+                            <td>Identify cultural universals/differences</td>
+                            <td>Complex design, multiple confounds, interpretation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phenomenology</strong></td>
+                            <td>In-depth study of lived experience</td>
+                            <td>Deep understanding of meaning, authentic</td>
+                            <td>Small samples, interpretive, not generalizable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grounded Theory</strong></td>
+                            <td>Theory developed from data systematically</td>
+                            <td>Generate new theories, data-driven</td>
+                            <td>Requires skill, time-consuming, emerging validity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Focus Groups</strong></td>
+                            <td>Group discussion on specific topic</td>
+                            <td>Rich interaction, efficient, practical</td>
+                            <td>Group dynamics bias, moderator influence</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Narratives</strong></td>
+                            <td>Analysis of personal stories and accounts</td>
+                            <td>Understand lived experience, meaning-making</td>
+                            <td>Subjective, generalizability limited</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Case Study</strong></td>
+                            <td>In-depth analysis of single case</td>
+                            <td>Detailed understanding, practical insights</td>
+                            <td>Limited generalizability, researcher bias</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ethnography</strong></td>
+                            <td>Immersion in culture/community</td>
+                            <td>Holistic understanding, insider perspective</td>
+                            <td>Time-intensive, observer effects, subjectivity</td>
+                        </tr>
+                    </table>
+
+                    <div class="mnemonic">
+                        <strong>Methods Mnemonic: OSCENF-GNE</strong>
+                        <ul>
+                            <li><strong>O</strong>bservation</li>
+                            <li><strong>S</strong>urvey</li>
+                            <li><strong>C</strong>ase study</li>
+                            <li><strong>E</strong>xperiment</li>
+                            <li><strong>N</strong>arratives</li>
+                            <li><strong>F</strong>ocus groups</li>
+                            <li><strong>G</strong>rounded theory</li>
+                            <li><strong>N</strong>aturalistic/Field studies</li>
+                            <li><strong>E</strong>thnography</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="topic">
+                <h3>Statistics in Psychology <span class="toggle-icon">▼</span></h3>
+                <div class="topic-content">
+                    <div class="definition">
+                        <strong>Descriptive Statistics</strong>
+                        Organize, summarize, describe data characteristics.
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Measures of Central Tendency</strong>
+                        Describe middle/typical value:
+                    </div>
+
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Measure</th>
+                            <th>Definition</th>
+                            <th>Formula</th>
+                            <th>Use</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Mean</strong></td>
+                            <td>Average of all values</td>
+                            <td>Σ X / N</td>
+                            <td>Most common; affected by extremes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Median</strong></td>
+                            <td>Middle value when ordered</td>
+                            <td>-</td>
+                            <td>Less affected by outliers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mode</strong></td>
+                            <td>Most frequently occurring value</td>
+                            <td>-</td>
+                            <td>Categorical data, skewed distributions</td>
+                        </tr>
+                    </table>
+
+                    <div class="key-concept">
+                        <strong>Measures of Dispersion/Variability</strong>
+                        Describe spread of data:
+                    </div>
+
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Measure</th>
+                            <th>Definition</th>
+                            <th>Formula</th>
+                            <th>Use</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Range</strong></td>
+                            <td>Highest - Lowest value</td>
+                            <td>Max - Min</td>
+                            <td>Quick estimate; crude measure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Variance</strong></td>
+                            <td>Average squared deviation from mean</td>
+                            <td>Σ(X - M)² / N</td>
+                            <td>Foundation for other statistics</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Standard Deviation</strong></td>
+                            <td>Square root of variance</td>
+                            <td>√Variance</td>
+                            <td>Most common; same units as data</td>
+                        </tr>
+                    </table>
+
+                    <div class="definition">
+                        <strong>Normal Probability Curve (Normal Distribution)</strong>
+                        <ul>
+                            <li>Bell-shaped, symmetric distribution</li>
+                            <li>Mean = Median = Mode</li>
+                            <li>68% data within ±1 SD, 95% within ±2 SD, 99.7% within ±3 SD</li>
+                            <li>Used for standardization and interpretation</li>
+                            <li>Basis for many statistical tests</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Parametric Tests</strong>
+                        Assume normal distribution, homogeneity of variance, interval/ratio data:
+                    </div>
+
+                    <div class="important">
+                        <strong>t-test</strong>
+                        Compares means of two groups:
+                        <ul>
+                            <li><strong>Independent t-test:</strong> Two different groups</li>
+                            <li><strong>Paired t-test:</strong> Same group measured twice</li>
+                            <li><strong>Formula:</strong> t = (M1 - M2) / SE</li>
+                            <li><strong>Assumptions:</strong> Normal distribution, equal variances</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Non-parametric Tests</strong>
+                        No assumptions about distribution; use ranks:
+                        <ul>
+                            <li><strong>Sign Test:</strong> Compare paired data, simple</li>
+                            <li><strong>Wilcoxon Signed Rank Test:</strong> Paired data, more powerful</li>
+                            <li><strong>Mann-Whitney U Test:</strong> Compare two independent groups</li>
+                            <li><strong>Kruskal-Wallis Test:</strong> Compare multiple independent groups</li>
+                            <li><strong>Friedman Test:</strong> Compare multiple related groups</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-concept">
+                        <strong>Power Analysis and Effect Size</strong>
+                        <ul>
+                            <li><strong>Statistical Power:</strong> Probability of detecting real effect; typically 0.80 (80%)</li>
+                            <li><strong>Type I Error (α):</strong> Rejecting true null hypothesis; typically 0.05</li>
+                            <li><strong>Type II Error (β):</strong> Failing to reject false null hypothesis</li>
+                            <li><strong>Effect Size:</strong> Magnitude of difference/relationship; Cohen's d, r, eta-squared</li>
+                            <li><strong>Sample Size:</strong> Larger needed for smaller effect sizes and lower power</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Correlational Analysis</strong>
+                        Examining relationships between variables:
+                    </div>
+
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Type</th>
+                            <th>Use</th>
+                            <th>Range</th>
+                            <th>Interpretation</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Product Moment (Pearson r)</strong></td>
+                            <td>Two continuous variables</td>
+                            <td>-1 to +1</td>
+                            <td>r² = proportion of variance shared</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rank Order (Spearman rho)</strong></td>
+                            <td>Ordinal data or non-normal</td>
+                            <td>-1 to +1</td>
+                            <td>Non-parametric version of r</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Partial Correlation</strong></td>
+                            <td>Relationship controlling third variable</td>
+                            <td>-1 to +1</td>
+                            <td>Effect of confounding variables removed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multiple Correlation</strong></td>
+                            <td>One DV with multiple IVs</td>
+                            <td>0 to 1</td>
+                            <td>Prediction from multiple predictors</td>
+                        </tr>
+                    </table>
+
+                    <div class="definition">
+                        <strong>Special Correlation Methods</strong>
+                        <ul>
+                            <li><strong>Biserial:</strong> One continuous, one dichotomous variable (assumed continuous)</li>
+                            <li><strong>Point Biserial:</strong> One continuous, one truly dichotomous variable</li>
+                            <li><strong>Tetrachoric:</strong> Two dichotomous variables (assumed continuous)</li>
+                            <li><strong>Phi Coefficient:</strong> Two truly dichotomous variables</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Regression Analysis</strong>
+                    </div>
+
+                    <div class="important">
+                        <strong>Simple Linear Regression</strong>
+                        <ul>
+                            <li>Predicting one DV from one IV</li>
+                            <li>Equation: Y' = a + bX</li>
+                            <li>b = regression coefficient (slope)</li>
+                            <li>a = intercept (Y when X = 0)</li>
+                            <li>R² = proportion of variance in Y explained by X</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Multiple Regression</strong>
+                        <ul>
+                            <li>Predicting one DV from multiple IVs</li>
+                            <li>Equation: Y' = a + b₁X₁ + b₂X₂ + b₃X₃...</li>
+                            <li>Each b shows effect of that predictor</li>
+                            <li>R² = total variance explained</li>
+                            <li>Adjusted R² = correction for number of predictors</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Factor Analysis</strong>
+                        Identifying underlying factors/dimensions in data:
+                        <ul>
+                            <li><strong>Assumptions:</strong> Correlations exist, sample size > 100, normal distribution</li>
+                            <li><strong>Exploratory FA:</strong> Discover factors</li>
+                            <li><strong>Confirmatory FA:</strong> Test pre-specified factor structure</li>
+                            <li><strong>Rotation Methods:</strong> Orthogonal (factors uncorrelated), Oblique (correlated)</li>
+                            <li><strong>Factor Loadings:</strong> Correlation of variable with factor</li>
+                            <li><strong>Interpretation:</strong> Group variables by loadings on factors</li>
+                        </ul>
+                    </div>
+
+                    <div class="definition">
+                        <strong>Experimental Designs</strong>
+                    </div>
+
+                    <div class="important">
+                        <strong>ANOVA (Analysis of Variance)</strong>
+                        Compares means across multiple groups:
+                        <ul>
+                            <li><strong>One-way ANOVA:</strong> One IV with 2+ levels; basic omnibus test</li>
+                            <li><strong>Factorial ANOVA:</strong> Multiple IVs; examines main effects and interactions</li>
+                            <li><strong>Assumptions:</strong> Normal distribution, homogeneity of variance, independence</li>
+                            <li><strong>F-ratio:</strong> Between-group variance / Within-group variance</li>
+                            <li><strong>Post-hoc Tests:</strong> Tukey, Bonferroni (if significant ANOVA)</li>
+                        </ul>
+                    </div>
+
+                    <div class="important">
+                        <strong>Advanced Designs</strong>
+                        <ul>
+                            <li><strong>Randomized Block Design:</strong> Blocks out confounding variable</li>
+                            <li><strong>Repeated Measures Design:</strong> Same subjects, multiple measurements</li>
+                            <li><strong>Latin Square:</strong> Controls two confounding variables</li>
+                            <li><strong>Cohort Studies:</strong> Following groups over time</li>
+                            <li><strong>Time Series:</strong> Multiple measurements over extended time</li>
+                            <li><strong>MANOVA:</strong> Multiple dependent variables</li>
+                            <li><strong>ANCOVA:</strong> Control for covariate before analyzing main IV</li>
+                            <li><strong>Single-Subject Designs:</strong> N-of-1; intense study of individual</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-tip">
+                        <strong>Key Point</strong>
+                        Choose statistical test based on: number of IVs/DVs, groups, data level, distribution, and assumptions met.
+                    </div>
+
+                    <div class="mnemonic">
+                        <strong>Statistical Tests Decision Tree</strong>
+                        <ul>
+                            <li>2 groups, parametric → t-test</li>
+                            <li>2 groups, non-parametric → Mann-Whitney</li>
+                            <li>3+ groups, parametric → ANOVA</li>
+                            <li>3+ groups, non-parametric → Kruskal-Wallis</li>
+                            <li>Correlation → Pearson r or Spearman rho</li>
+                            <li>Prediction → Regression</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Section -->
+            <div class="question-section">
+                <h4>💡 Key Questions for Revision</h4>
+
+                <div class="question">
+                    <strong>Q1: Explain the differences between parametric and non-parametric tests.</strong>
+                    <div class="answer">
+                        <p><strong>Answer:</strong></p>
+                        <p><strong>Parametric Tests:</strong></p>
+                        <ul>
+                            <li>Assume specific distribution (usually normal)</li>
+                            <li>Require homogeneity of variance</li>
+                            <li>Use interval/ratio data</li>
+                            <li>More powerful (better at detecting real effects)</li>
+                            <li>Examples: t-test, ANOVA, Pearson correlation</li>
+                        </ul>
+                        <p><strong>Non-parametric Tests:</strong></p>
+                        <ul>
+                            <li>Make no assumptions about distribution</li>
+                            <li>Use rank-ordered data</li>
+                            <li>Work with ordinal/categorical data</li>
+                            <li>Less powerful than parametric alternatives</li>
+                            <li>Examples: Mann-Whitney U, Kruskal-Wallis, Wilcoxon</li>
+                        </ul>
+                        <p><strong>When to use:</strong> Use parametric if assumptions met; non-parametric if data non-normal or small sample</p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <strong>Q2: What is effect size and why is it important in psychology research?</strong>
+                    <div class="answer">
+                        <p><strong>Answer:</strong></p>
+                        <p><strong>Definition:</strong> Effect size quantifies magnitude of difference or relationship; independent of sample size.</p>
+                        <p><strong>Common Measures:</strong></p>
+                        <ul>
+                            <li>Cohen's d - standardized difference between means</li>
+                            <li>Correlation coefficient r - strength of relationship</li>
+                            <li>Eta-squared (η²) - proportion of variance explained</li>
+                        </ul>
+                        <p><strong>Importance:</strong></p>
+                        <ul>
+                            <li>Statistical significance ≠ practical significance</li>
+                            <li>Large samples can show significant but small effects</li>
+                            <li>Effect size aids meta-analysis</li>
+                            <li>Needed for power analysis and sample size calculation</li>
+                            <li>Helps interpret real-world importance of findings</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <strong>Q3: Distinguish between correlation and causation. Why is this distinction important?</strong>
+                    <div class="answer">
+                        <p><strong>Answer:</strong></p>
+                        <p><strong>Correlation:</strong> Two variables covary/relationship exists; r coefficient shows strength and direction.</p>
+                        <p><strong>Causation:</strong> Changes in one variable cause changes in other; temporal precedence and exclusion of alternatives required.</p>
+                        <p><strong>Why Distinction Matters:</strong></p>
+                        <ul>
+                            <li>Correlational studies cannot establish causation</li>
+                            <li>Third variables may explain relationship (confounds)</li>
+                            <li>Direction of causality unclear in correlation</li>
+                            <li>Only experimental designs can establish causation</li>
+                            <li>Misinterpreting causation leads to wrong conclusions and policies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revision Checklist -->
+            <div class="revision-checklist">
+                <h4>✓ Revision Checklist - Unit 2</h4>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Research purpose - exploratory to applied</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Variables - IV, DV, moderating, confounding</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Operational definitions and hypotheses</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Research ethics - informed consent, confidentiality</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Quantitative vs. qualitative vs. mixed methods</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>12 research methods - characteristics and uses</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Measures of central tendency and dispersion</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Normal distribution and standardization</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Parametric and non-parametric tests</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Correlation, regression, and factor analysis</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>ANOVA and advanced experimental designs</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <label>Power analysis and effect size</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Continue with remaining units... -->
+        <div style="text-align: center; padding: 40px; background: #f0f4ff; border-radius: 8px; margin: 30px 0;">
+            <p style="color: #667eea; font-size: 16px; margin-bottom: 20px;">
+                <strong>📘 Note:</strong> This is the first part of the comprehensive study material. The document continues with Units 3-10 covering:
+            </p>
+            <ul style="text-align: left; display: inline-block; color: #333;">
+                <li><strong>Unit 3:</strong> Psychological Testing (types, construction, standardization, applications)</li>
+                <li><strong>Unit 4:</strong> Biological Basis of Behavior (nervous system, neurotransmitters, genetics)</li>
+                <li><strong>Unit 5:</strong> Attention, Perception, Learning, Memory and Forgetting</li>
+                <li><strong>Unit 6:</strong> Thinking, Intelligence and Creativity</li>
+                <li><strong>Unit 7:</strong> Personality, Motivation, Emotion, Stress and Coping</li>
+                <li><strong>Unit 8:</strong> Social Psychology</li>
+                <li><strong>Unit 9:</strong> Human Development and Interventions</li>
+                <li><strong>Unit 10:</strong> Emerging Areas</li>
+            </ul>
+            <p style="color: #764ba2; margin-top: 20px; font-weight: bold;">
+                Due to file size constraints, the complete document with all 10 units will be generated as a separate comprehensive file.
+            </p>
+        </div>
+
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #e0e0e0; color: #666;">
+            <p><strong>UGC NET Psychology 2026 Study Material</strong></p>
+            <p>Last Updated: December 2025 | Code: 04</p>
+            <p>Use this material along with the official UGC NET syllabus and recommended textbooks for comprehensive preparation.</p>
+        </footer>
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">↑</div>
+
+    <!-- JavaScript -->
+    <script>
+        // Navigation Toggle
+        document.querySelectorAll('.nav-section h3').forEach(header => {
+            header.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+            });
+        });
+
+        // Topic Collapse/Expand
+        document.querySelectorAll('.topic h3').forEach(header => {
+            header.addEventListener('click', function() {
+                this.parentElement.classList.toggle('collapsed');
+            });
+        });
+
+        // Question Answer Toggle
+        document.querySelectorAll('.question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.querySelector('.answer');
+                if (answer) {
+                    answer.classList.toggle('show');
+                }
+            });
+        });
+
+        // Search Functionality
+        function setupSearch(inputId) {
+            const searchInput = document.getElementById(inputId);
+            if (!searchInput) return;
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = this.value.toLowerCase();
+                const units = document.querySelectorAll('.unit');
+
+                units.forEach(unit => {
+                    let found = false;
+                    const topics = unit.querySelectorAll('.topic');
+
+                    topics.forEach(topic => {
+                        const text = topic.textContent.toLowerCase();
+                        if (text.includes(searchTerm) || searchTerm === '') {
+                            topic.style.display = 'block';
+                            found = true;
+                        } else if (searchTerm.length > 0) {
+                            topic.style.display = 'none';
+                        } else {
+                            topic.style.display = 'block';
+                        }
+                    });
+
+                    if (searchTerm === '') {
+                        unit.style.display = 'block';
+                    } else {
+                        unit.style.display = found ? 'block' : 'none';
+                    }
+                });
+            });
+        }
+
+        setupSearch('mainSearch');
+        setupSearch('sidebarSearch');
+
+        // Scroll to Top Button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth Scroll for Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Progress Tracker Save to LocalStorage
+        document.querySelectorAll('.checkbox, .checklist-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                localStorage.setItem('progress_' + this.id, this.checked);
+            });
+
+            // Load saved progress
+            const saved = localStorage.getItem('progress_' + checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+        });
+
+        // Print Optimization
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.topic.collapsed').forEach(topic => {
+                topic.classList.remove('collapsed');
+            });
+        });
+
+        console.log('Study Material Loaded Successfully!');
+    </script>
+</body>
+</html>
